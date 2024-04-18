@@ -1,15 +1,24 @@
 
 import {createRouter, createWebHistory} from "vue-router";
-import LoginComoponent from "../authentication/login-clients.comoponent.vue";
-import MainUserComponent from "../user/main-user.component.vue";
+import loginCustomerComponent from "../login/login-customer.component.vue";
+import registerAdministrationComponent from "../register/register-administration.component.vue";
+import loginAdministrationComponent from "../login/login-administration.component.vue";
+import mainAdmiComponent from "../admi/main-admi.component.vue";
+import registerCustomerComponent from "../register/register-customer.component.vue";
+import generalLoginComponent from "../login/general-login.component.vue";
+
 const router=createRouter({
 
     history: createWebHistory(),
     routes: [
-        {path:'/', component:LoginComoponent},
-        {path:'/', redirect:'/login'},
+        {path:'/', component:generalLoginComponent},
+        {path:'/login-administration', component:loginAdministrationComponent},
+        {path:'/login-customer', component:loginCustomerComponent},
+        {path: '/register-administration', component:registerAdministrationComponent},
+        {path: '/register-customer', component:registerCustomerComponent},
+        {path: '/main-admi', component:mainAdmiComponent}
 
-        {path:'/main-user', redirect:MainUserComponent,meta:{title:'main user'}},
+
     ]
 
 

@@ -1,11 +1,15 @@
 
 
 <template>
- <login></login>
+<main>
+  <nav>
+  </nav>
+  <router-view></router-view>
+</main>
 </template>
 
 <script setup>
-import Login from "./authentication/login-clients.comoponent.vue";
+
 </script>
 
 <style scoped>

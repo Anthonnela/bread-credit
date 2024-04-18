@@ -1,7 +1,90 @@
 {
-  "admin": {
-    "nombre": "Nombre del administrador",
-    "email": "admin@example.com",
-    "contraseña": "123456"
-  }
+  "admin": [
+    {
+      "id": 1,
+      "nombre": "Dorothy ",
+      "apellido": "Quinto",
+      "DNI": "12345678",
+      "contrasena": "admin",
+      "celular": "987654231",
+      "correo": "admin1@gmail.com",
+      "negocio": "Panaderia",
+      "nombrenegocio": "Buen Gusto"
+    },
+    {
+      "nombre": "CHRISTIAN ANTHONY",
+      "apellido": "BARZOLA MONTALVO",
+      "dni": "71644564",
+      "contrasena": "123",
+      "celular": "#7777",
+      "correo": "u20@upc",
+      "negocio": "Panaderia",
+      "nombrenegocio": "La Tia",
+      "id": 2
+    },
+    {
+      "nombre": "Valve",
+      "apellido": "Corporation",
+      "dni": "25555",
+      "contrasena": "1111",
+      "celular": "7896541",
+      "correo": "@jjk",
+      "negocio": "pan",
+      "nombrenegocio": "hbkhb",
+      "id": 3
+    },
+    {
+      "nombre": "Piero",
+      "apellido": "Salinas",
+      "dni": "789",
+      "contrasena": "123",
+      "celular": "456",
+      "correo": "Upc@piero",
+      "negocio": "Panaderia",
+      "nombrenegocio": "Molino",
+      "id": 4
+    }
+  ],
+  "customer": [
+    {
+      "id": 1,
+      "dni": "11111111",
+      "nombre": "Jorge ",
+      "apellido": "Juan de Dios",
+      "contrasena": "cust",
+      "celular": "985632147",
+      "correo": "cust1@gmail.com",
+      "cuenta": {
+        "idCuenta": "17241111 ",
+        "tipoTasa": "Nominal",
+        "diaPago": "17",
+        "tasaInteres": "0.2%"
+      }
+
+    },
+    {
+      "id": 1,
+      "dni": "11111111",
+      "nombre": "Jorge ",
+      "apellido": "Juan de Dios",
+      "contrasena": "cust",
+      "celular": "985632147",
+      "correo": "cust1@gmail.com",
+      "cuenta": {
+        "idCuenta": "17241111 ",
+        "tipoTasa": "Nominal",
+        "diaPago": "17",
+        "tasaInteres": "0.2%"
+      }
+    },
+    {
+      "dni": "",
+      "nombre": "",
+      "apellido": "",
+      "contrasena": "",
+      "celular": "",
+      "correo": "",
+      "id": 2
+    }
+  ]
 }
