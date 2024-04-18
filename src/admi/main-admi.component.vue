@@ -19,5 +19,5 @@ export default {
 </template>
 
 <style scoped>
-
+/*holi*/
 </style>
