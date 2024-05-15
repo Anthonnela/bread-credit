@@ -15,23 +15,18 @@ export default {
       phone: "",
       email: "",
 
-      //cuenta de credito
-      max_credit: "",
-      current_credit: "",
-      credit_type_of_rate: "",
-      credit_rate: "",
-      //tasa moratoria pago unico
-      penalty_rate: "",
-      //tasa moratorio en cuotas
-      installment_penalty_rate: "",
-      //tasa compensatorio pago unico
-      compensatory_rate: "",
-      //tasa compensatorio en cuotas
-      installment_compensatory_rate: "",
-
+        customer_id:"1",
+        max_credit: "200",
+        current_credit: "200",
+        credit_type_of_rate: "TEM",
+        credit_rate: "5%",
+        penalty_rate: "2%",
+        installment_penalty_rate: "2%",
+        compensatory_rate: "2%",
+        installment_compensatory_rate: "2%",
 
       customerApiService: new CustomerApiService(),
-      creditAccount: new AccountApiService()
+      accountApiService: new AccountApiService(),
     };
   },
 
@@ -49,20 +44,21 @@ export default {
         //diaPago: "10",
         //tasaInteres: "5%",
       };
-      const response = await this.customerApiService.create(customer);
 
       const account = { 
-        customer_id:"1",
-        max_credit: "200",
-        current_credit: "200",
-        credit_type_of_rate: "TEM",
-        credit_rate: "5%",
-        penalty_rate: "2%",
-        installment_penalty_rate: "2%",
-        compensatory_rate: "2%",
-        installment_compensatory_rate: "2%",
+        customer_id:this.customer_id,
+        max_credit: this.max_credit,
+        current_credit: this.current_credit,
+        credit_type_of_rate: this.credit_type_of_rate,
+        credit_rate: this.credit_rate,
+        penalty_rate: this.penalty_rate,
+        installment_penalty_rate: this.installment_penalty_rate,
+        compensatory_rate: this.compensatory_rate,
+        installment_compensatory_rate: this.installment_compensatory_rate,
       };
-      const response1 = await this.AccountApiService.create(account);
+      
+      const response = await this.customerApiService.create(customer);
+      const response1 = await this.accountApiService.create(account);
       if (response.status === 201) {
         alert("Cliente Correctamente Registrado.");
         router.push({ path: "register-customer" });
