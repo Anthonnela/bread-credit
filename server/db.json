@@ -60,7 +60,6 @@
         "diaPago": "17",
         "tasaInteres": "0.2%"
       }
-
     },
     {
       "id": 1,
@@ -85,6 +84,153 @@
       "celular": "",
       "correo": "",
       "id": 2
+    },
+    {
+      "dni": "123456",
+      "nombre": "juan",
+      "apellido": "pepe",
+      "contraseña": "000",
+      "celular": "123",
+      "correo": "juan@gmial",
+      "id": 3
+    },
+    {
+      "dni": "11",
+      "nombre": "1111",
+      "apellido": "11",
+      "contraseña": "111",
+      "celular": "11",
+      "correo": "11",
+      "id": 4
+    },
+    {
+      "dni": "33",
+      "nombre": "33",
+      "apellido": "33",
+      "contraseña": "33",
+      "celular": "33",
+      "correo": "33",
+      "tipoTasa": "Efectiva",
+      "diaPago": "10",
+      "tasaInteres": "5%",
+      "id": 5
+    },
+    {
+      "dni": "4",
+      "id": 6
+    },
+    {
+      "dni": "4",
+      "id": 7
+    },
+    {
+      "dni": "4",
+      "id": 8
+    },
+    {
+      "dni": "4",
+      "id": 9
+    },
+    {
+      "dni": "4",
+      "id": 10
+    },
+    {
+      "dni": "4",
+      "id": 11
+    },
+    {
+      "dni": "5",
+      "first_name": "5",
+      "last_name": "55",
+      "password": "5",
+      "phone": "5",
+      "email": "5",
+      "id": 12
+    },
+    {
+      "dni": "6",
+      "first_name": "6",
+      "last_name": "6",
+      "password": "6",
+      "phone": "6",
+      "email": "6",
+      "id": 13
+    },
+    {
+      "dni": "7",
+      "first_name": "7",
+      "last_name": "7",
+      "password": "7",
+      "phone": "7",
+      "email": "7",
+      "id": 14
+    },
+    {
+      "dni": "7",
+      "first_name": "7",
+      "last_name": "7",
+      "password": "7",
+      "phone": "7",
+      "email": "7",
+      "id": 15
+    },
+    {
+      "dni": "7",
+      "first_name": "7",
+      "last_name": "7",
+      "password": "7",
+      "phone": "7",
+      "email": "7",
+      "id": 16
+    },
+    {
+      "dni": "7",
+      "first_name": "7",
+      "last_name": "7",
+      "password": "7",
+      "phone": "7",
+      "email": "7",
+      "id": 17
+    },
+    {
+      "dni": "7",
+      "first_name": "7",
+      "last_name": "7",
+      "password": "7",
+      "phone": "7",
+      "email": "7",
+      "id": 18
+    },
+    {
+      "dni": "7",
+      "first_name": "7",
+      "last_name": "7",
+      "password": "7",
+      "phone": "7",
+      "email": "7",
+      "id": 19
+    },
+    {
+      "dni": "7",
+      "first_name": "7",
+      "last_name": "7",
+      "password": "7",
+      "phone": "7",
+      "email": "7",
+      "id": 20
+    },
+    {
+      "dni": "7",
+      "first_name": "7",
+      "last_name": "7",
+      "password": "7",
+      "phone": "7",
+      "email": "7",
+      "id": 21
     }
+  ],
+  "account": [
+    {}
   ]
 }
