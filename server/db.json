@@ -111,9 +111,59 @@
       "phone": "1",
       "email": "1",
       "id": 29
+    },
+    {
+      "dni": "1",
+      "first_name": "1",
+      "last_name": "1",
+      "password": "1",
+      "phone": "1",
+      "email": "1",
+      "id": 30
+    },
+    {
+      "dni": "2",
+      "first_name": "2",
+      "last_name": "2",
+      "password": "2",
+      "phone": "2",
+      "email": "2",
+      "id": 31
     }
   ],
   "account": [
-    {}
+    {
+      "dni": "1",
+      "first_name": "1",
+      "last_name": "1",
+      "password": "1",
+      "phone": "1",
+      "email": "1",
+      "id": 29
+    },
+    {
+      "customer_id": "1",
+      "max_credit": "200",
+      "current_credit": "200",
+      "credit_type_of_rate": "TEM",
+      "credit_rate": "5%",
+      "penalty_rate": "2%",
+      "installment_penalty_rate": "2%",
+      "compensatory_rate": "2%",
+      "installment_compensatory_rate": "2%",
+      "id": 30
+    },
+    {
+      "customer_id": "1",
+      "max_credit": "200",
+      "current_credit": "200",
+      "credit_type_of_rate": "TEM",
+      "credit_rate": "5%",
+      "penalty_rate": "2%",
+      "installment_penalty_rate": "2%",
+      "compensatory_rate": "2%",
+      "installment_compensatory_rate": "2%",
+      "id": 31
+    }
   ]
 }

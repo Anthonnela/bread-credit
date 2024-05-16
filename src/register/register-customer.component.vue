@@ -81,7 +81,7 @@ export default {
 
 <template>
   <div>
-    <label>      Registrar al CLiente    </label>
+    <h2>      Registrar al CLiente    </h2>
 
     <div class="row">
       <label>DNI</label>
@@ -117,5 +117,37 @@ export default {
 
 
 <style scoped>
+ 
+ button{
+  background-color: lightskyblue;
+  color:black;
+}
+
+button{
+  margin-bottom: 15px;
+  font-size: 20px;
+}
+
+div{
+  margin: 20px 10px;
+}
+
+label{
+  font-size: 20px;
+  text-align: center;
+  margin-right: 10px;
+}
+
+input{
+  background-color: grey;
+  margin-left: 20px;
+}
+
+h2{
+  font-style: italic;
+  font-size: 24px;
+}
+
+
 
 </style>
