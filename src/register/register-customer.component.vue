@@ -79,48 +79,65 @@ export default {
 };
 </script>
 
+
+
 <template>
+  <body>
   <div>
-    <h2>      Registrar al CLiente    </h2>
-
-    <div class="row">
-      <label>DNI</label>
-      <pv-input-text id="dni" v-model="dni"></pv-input-text>
+    <h1>"EL BUEN SABOR"</h1>
+    <div class="background-image">
+    <h2>Registrar al Cliente</h2>
+      <!-- Contenido del formulario aquí -->
+      <div class="row">
+        <label>DNI</label>
+        <pv-input-text id="dni" v-model="dni"></pv-input-text>
+      </div>
+      <div class="row">
+        <label>Nombre</label>
+        <pv-input-text id="first_name" v-model="first_name"></pv-input-text>
+      </div>
+      <div class="row">
+        <label>Apellido</label>
+        <pv-input-text id="last_name" v-model="last_name"></pv-input-text>
+      </div>
+      <div class="row">
+        <label>Contraseña</label>
+        <pv-input-text id="password" v-model="password"></pv-input-text>
+      </div>
+      <div class="row">
+        <label>Celular</label>
+        <pv-input-text id="phone" v-model="phone"></pv-input-text>
+      </div>
+      <div class="row">
+        <label>Correo</label>
+        <pv-input-text id="email" v-model="email"></pv-input-text>
+      </div>
+      <pv-button @click="create()">save</pv-button>
     </div>
-    <div class="row">
-      <label>Nombre</label>
-      <pv-input-text id="first_name" v-model="first_name"></pv-input-text>
-    </div>
-    <div class="row">
-      <label>Apellido</label>
-      <pv-input-text id="last_name" v-model="last_name"></pv-input-text>
-    </div>
-    <div class="row">
-      <label>Contraseña</label>
-      <pv-input-text id="password" v-model="password"></pv-input-text>
-    </div>
-    <div class="row">
-      <label>Celular</label>
-      <pv-input-text id="phone" v-model="phone"></pv-input-text>
-    </div>
-    <div class="row">
-      <label>Correo</label>
-      <pv-input-text id="email" v-model="email"></pv-input-text>
-    </div>
-    <pv-button @click="create()">save</pv-button>
   </div>
-
-
+</body>
 </template>
 
 
 
 
 <style scoped>
+body {
+  background-color: #A0C1E2;
+}
+
+.background-image {
+  background-image: url("../src/assets/fondo.jpg");  /* Replace with your image path */
+  background-repeat: no-repeat;  /* Optional: Control how the image repeats */
+  background-size: cover;        /* Optional: Control how the image fills the area */
+  background-position: center;   /* Optional: Control image position */
+  height: 100vh;                   /* Set the height to fill the viewport */
+}
+
  
  button{
-  background-color: lightskyblue;
-  color:black;
+  background-color: #A0C1E2;
+  color:white;
 }
 
 button{
@@ -139,7 +156,7 @@ label{
 }
 
 input{
-  background-color: grey;
+  background-color: #A0C1E2;
   margin-left: 20px;
 }
 
@@ -147,7 +164,5 @@ h2{
   font-style: italic;
   font-size: 24px;
 }
-
-
 
 </style>
