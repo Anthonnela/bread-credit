@@ -26,13 +26,6 @@ export class AdministrationApiService {
         return await http.delete('admin/' + id);
     }
 
-
-
-
-
-
-
-
   async Loginadministration (dni,contrasena){
         return http.get(`admin?dni=${dni}&contrasena=${contrasena}`);
     }

@@ -27,6 +27,10 @@ export class CustomerApiService {
         return await http.delete('customer/' + id);
     }
 
+    async Logincustomer (dni,contrasena){
+        return http.get(`customer?dni=${dni}&contrasena=${contrasena}`);
+    }
+
 
 
 }
