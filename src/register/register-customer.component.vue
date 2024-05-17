@@ -127,7 +127,7 @@ body {
 }
 
 .background-image {
-  background-image: url('../assets/fondo.jpg');  /* Replace with your image path */
+  background-image: url('..src/assets/fondo.jpg');  /* Replace with your image path */
   background-repeat: no-repeat;  /* Optional: Control how the image repeats */
   background-size: cover;        /* Optional: Control how the image fills the area */
   background-position: center;   /* Optional: Control image position */
