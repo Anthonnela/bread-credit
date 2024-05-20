@@ -15,15 +15,27 @@ export default {
       phone: "",
       email: "",
 
-        customer_id:"1",
-        max_credit: "200",
-        current_credit: "200",
-        credit_type_of_rate: "TEM",
-        credit_rate: "5%",
-        penalty_rate: "2%",
-        installment_penalty_rate: "2%",
-        compensatory_rate: "2%",
-        installment_compensatory_rate: "2%",
+      
+    
+      admin_id: "1",
+      active: "T",
+      max_credit: "200",
+      current_credit: "200",
+      credit_type_of_rate: "TEM",
+      credit_rate: "5%",
+      credit_compounding: "D",
+      invoice_penalty_rate_type: "TEM",
+      invoice_penalty_rate: "2%",
+      invoice_penalty_compounding: "D",
+      installment_penalty_rate_type: "TEM",
+      installment_penalty_rate: "2%",
+      installment_penalty_compounding: "D",
+      invoice_compensatory_rate_type: "TEM",
+      invoice_compensatory_rate: "2%",
+      invoice_compensatory_compounding:"D",
+      installment_compensatory_rate_type: "TEM",
+      installment_compensatory_rate: "2%",
+      installment_compensatory_compounding: "D",
 
       customerApiService: new CustomerApiService(),
       accountApiService: new AccountApiService(),
@@ -39,25 +51,40 @@ export default {
         password: this.password,
         phone: this.phone,
         email: this.email,
-        //cuenta de credito
-        //tipoTasa: "Efectiva",
-        //diaPago: "10",
-        //tasaInteres: "5%",
+        
+
       };
 
-      const account = { 
-        customer_id:this.customer_id,
-        max_credit: this.max_credit,
-        current_credit: this.current_credit,
-        credit_type_of_rate: this.credit_type_of_rate,
-        credit_rate: this.credit_rate,
-        penalty_rate: this.penalty_rate,
-        installment_penalty_rate: this.installment_penalty_rate,
-        compensatory_rate: this.compensatory_rate,
-        installment_compensatory_rate: this.installment_compensatory_rate,
-      };
+
       
       const response = await this.customerApiService.create(customer);
+
+      const account = { 
+      
+      customer: customer,
+      admin_id: this.admin_id,
+      active: this.active,
+      max_credit: this.max_credit,
+      current_credit: this.current_credit,
+      credit_type_of_rate: this.credit_type_of_rate,
+      credit_rate: this.credit_rate,
+      credit_compounding: this.credit_compounding,
+      invoice_penalty_rate_type: this.invoice_penalty_rate_type,
+      invoice_penalty_rate: this.invoice_penalty_rate,
+      invoice_penalty_compounding: this.invoice_penalty_compounding,
+      installment_penalty_rate_type: this.installment_penalty_rate_type,
+      installment_penalty_rate: this.installment_penalty_rate,
+      installment_penalty_compounding: this.installment_penalty_compounding,
+      invoice_compensatory_rate_type: this.invoice_compensatory_rate_type,
+      invoice_compensatory_rate: this.invoice_compensatory_rate,
+      invoice_compensatory_compounding:this.invoice_compensatory_compounding,
+      installment_compensatory_rate_type: this.installment_compensatory_rate_type,
+      installment_compensatory_rate: this.installment_compensatory_rate,
+      installment_compensatory_compounding: this.installment_compensatory_compounding,
+
+      };
+      
+      
       const response1 = await this.accountApiService.create(account);
       if (response.status === 201) {
         alert("Cliente Correctamente Registrado.");
