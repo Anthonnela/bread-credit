@@ -57,6 +57,7 @@ export default {
       correo: "",
       negocio: "",
       nombrenegocio: "",
+      cuenta: "",
       administrationApiService: new AdministrationApiService()
     };
   },
@@ -71,7 +72,10 @@ export default {
         celular: this.celular,
         correo: this.correo,
         negocio: this.negocio,
-        nombrenegocio: this.nombrenegocio
+        nombrenegocio: this.nombrenegocio,
+        cuenta : {
+
+      }
       };
       const response = await this.administrationApiService.create(body);
       if (response.status === 201) {

@@ -43,6 +43,18 @@
       "negocio": "Panaderia",
       "nombrenegocio": "Molino",
       "id": 4
+    },
+    {
+      "nombre": "Jorge",
+      "apellido": "Suarez ",
+      "dni": "963258",
+      "contrasena": "1234",
+      "celular": "9654782",
+      "correo": "Jorge@gmail",
+      "negocio": "Panaderia",
+      "nombrenegocio": "Buen Trato",
+      "cuenta": {},
+      "id": 5
     }
   ],
   "customer": [
@@ -156,6 +168,15 @@
       "phone": "6",
       "email": "6",
       "id": 34
+    },
+    {
+      "dni": "1",
+      "first_name": "1",
+      "last_name": "1",
+      "password": "1",
+      "phone": "19328",
+      "email": "123@gmail.com",
+      "id": 35
     }
   ],
   "account": [
@@ -227,6 +248,18 @@
       "compensatory_rate": "2%",
       "installment_compensatory_rate": "2%",
       "id": 34
+    },
+    {
+      "customer_id": "1",
+      "max_credit": "200",
+      "current_credit": "200",
+      "credit_type_of_rate": "TEM",
+      "credit_rate": "5%",
+      "penalty_rate": "2%",
+      "installment_penalty_rate": "2%",
+      "compensatory_rate": "2%",
+      "installment_compensatory_rate": "2%",
+      "id": 35
     }
   ]
 }

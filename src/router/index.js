@@ -6,6 +6,7 @@ import loginAdministrationComponent from "../login/login-administration.componen
 import mainAdmiComponent from "../admi/main-admi.component.vue";
 import registerCustomerComponent from "../register/register-customer.component.vue";
 import generalLoginComponent from "../login/general-login.component.vue";
+import toolbarAdminComponent from "../admi/toolbar-admin.component.vue";
 
 const router=createRouter({
 
@@ -16,7 +17,8 @@ const router=createRouter({
         {path:'/login-customer', component:loginCustomerComponent},
         {path: '/register-administration', component:registerAdministrationComponent},
         {path: '/register-customer', component:registerCustomerComponent},
-        {path: '/main-admi', component:mainAdmiComponent}
+        {path: '/main-admi', component:mainAdmiComponent},
+        {path: '/toolbar-admin', component:toolbarAdminComponent},
 
 
     ]
