@@ -12,7 +12,7 @@
           </div>
           <div class="p-field p-col">
             <label for="contrasena">Contraseña</label>
-            <input id="contrasena" v-model="contrasena" type="password" class="p-inputtext" :style="{ backgroundColor: 'blue' }">
+            <input id="contrasena" v-model="contrasena" type="password" class="p-inputtext"q :style="{ backgroundColor: 'blue' }">
           </div>
         </div>
       </div>
