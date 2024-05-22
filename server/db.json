@@ -1,76 +1,62 @@
 {
   "admin": [
     {
-      "id": 1,
-      "nombre": "Dorothy ",
-      "apellido": "Quinto",
-      "DNI": "12345678",
-      "contrasena": "admin",
-      "celular": "987654231",
-      "correo": "admin1@gmail.com",
-      "negocio": "Panaderia",
-      "nombrenegocio": "Buen Gusto"
-    },
-    {
-      "nombre": "CHRISTIAN ANTHONY",
-      "apellido": "BARZOLA MONTALVO",
-      "dni": "71644564",
-      "contrasena": "123",
-      "celular": "#7777",
-      "correo": "u20@upc",
-      "negocio": "Panaderia",
-      "nombrenegocio": "La Tia",
-      "id": 2
-    },
-    {
-      "nombre": "Valve",
-      "apellido": "Corporation",
-      "dni": "25555",
-      "contrasena": "1111",
-      "celular": "7896541",
-      "correo": "@jjk",
-      "negocio": "pan",
-      "nombrenegocio": "hbkhb",
-      "id": 3
-    },
-    {
-      "nombre": "Piero",
-      "apellido": "Salinas",
-      "dni": "789",
-      "contrasena": "123",
-      "celular": "456",
-      "correo": "Upc@piero",
-      "negocio": "Panaderia",
-      "nombrenegocio": "Molino",
-      "id": 4
-    },
-    {
-      "nombre": "Jorge",
-      "apellido": "Suarez ",
-      "dni": "963258",
+      "nombreadmin": "Antonella",
+      "apellido": "Gonzales",
+      "dni": "12345678",
       "contrasena": "1234",
-      "celular": "9654782",
-      "correo": "Jorge@gmail",
+      "celular": "929954897",
+      "correo": "upc@.edu",
       "negocio": "Panaderia",
-      "nombrenegocio": "Buen Trato",
-      "cuenta": {},
-      "id": 5
+      "nombrenegocio": "pancitos calientes",
+      "id": 1
+    },
+    {
+      "nombreadmin": "Chris",
+      "apellido": "Barzola",
+      "dni": "87654321",
+      "contrasena": "12345",
+      "celular": "929954898",
+      "correo": "upc@.chis",
+      "negocio": "Panaderia",
+      "nombrenegocio": "Yts",
+      "id": 2
+    }
+  ],
+  "productos": [
+    {
+      "id": 1,
+      "admin": 1,
+      "nombre": "Bollo",
+      "precio": "0.30",
+      "imagen": "https://cdn.discordapp.com/attachments/1227800643784151040/1239617124893327473/9k.png?ex=664e1ee9&is=664ccd69&hm=88ae94df1640f87406026c3982fe4fe7e258bb442fa9ac56113d93c460ca563b&"
+    },
+
+    {
+      "nombre": "pan bollo",
+      "imagen": "",
+      "precio": "10",
+      "admin": 1,
+      "id": 4
     }
   ],
   "customer": [
     {
       "id": 1,
-      "dni": "11111111",
-      "nombre": "Jorge ",
-      "apellido": "Juan de Dios",
-      "contrasena": "cust",
-      "celular": "985632147",
-      "correo": "cust1@gmail.com",
+      "dni": "80035414",
+      "nombre": "maria",
+      "apellido": "Barzola",
+      "contraseña": "12345",
+      "celular": "",
+      "correo": "upc@",
+      "direccion": "lima",
       "cuenta": {
-        "idCuenta": "17241111 ",
-        "tipoTasa": "Nominal",
-        "diaPago": "17",
-        "tasaInteres": "0.2%"
+        "numerocuenta": "723910",
+        "saldoDeCredito": 300,
+        "tipoPasa": "TEM",
+        "diaPago": "2024-05-30",
+        "diaFactura": "2024-05-31",
+        "tasaInteres": "2%"
       }
     },
     {
@@ -89,94 +75,40 @@
       }
     },
     {
-      "dni": "5",
-      "first_name": "5",
-      "last_name": "5",
-      "password": "5",
-      "phone": "5",
-      "email": "5",
-      "id": 26
+      "dni": "71853889",
+      "nombre": "maria",
+      "apellido": "daef",
+      "contraseña": "1234",
+      "celular": "929954897",
+      "correo": "upc@.edu",
+      "direccion": "lima",
+      "cuenta": {
+        "numerocuenta": "339049",
+        "saldoDeCredito": 300,
+        "tipoPasa": "TEM",
+        "diaPago": "2024-05-09",
+        "diaFactura": "2024-06-07",
+        "tasaInteres": "2%"
+      },
+      "id": 2
     },
     {
-      "dni": "1",
-      "first_name": "1",
-      "last_name": "1",
-      "password": "1",
-      "phone": "1",
-      "email": "1",
-      "id": 27
-    },
-    {
-      "dni": "1",
-      "first_name": "1",
-      "last_name": "1",
-      "password": "1",
-      "phone": "1",
-      "email": "1",
-      "id": 28
-    },
-    {
-      "dni": "1",
-      "first_name": "1",
-      "last_name": "1",
-      "password": "1",
-      "phone": "1",
-      "email": "1",
-      "id": 29
-    },
-    {
-      "dni": "1",
-      "first_name": "1",
-      "last_name": "1",
-      "password": "1",
-      "phone": "1",
-      "email": "1",
-      "id": 30
-    },
-    {
-      "dni": "2",
-      "first_name": "2",
-      "last_name": "2",
-      "password": "2",
-      "phone": "2",
-      "email": "2",
-      "id": 31
-    },
-    {
-      "dni": "8",
-      "first_name": "8",
-      "last_name": "8",
-      "password": "8",
-      "phone": "8",
-      "email": "8",
-      "id": 32
-    },
-    {
-      "dni": "12",
-      "first_name": "12",
-      "last_name": "21",
-      "password": "12",
-      "phone": "12",
-      "email": "12",
-      "id": 33
-    },
-    {
-      "dni": "6",
-      "first_name": "6",
-      "last_name": "6",
-      "password": "6",
-      "phone": "6",
-      "email": "6",
-      "id": 34
-    },
-    {
-      "dni": "1",
-      "first_name": "1",
-      "last_name": "1",
-      "password": "1",
-      "phone": "19328",
-      "email": "123@gmail.com",
-      "id": 35
+      "dni": "12345678",
+      "nombre": "Antonella",
+      "apellido": "Gonzales",
+      "contraseña": "1234",
+      "celular": "929954897",
+      "correo": "upc@.edupe",
+      "direccion": "lima",
+      "cuenta": {
+        "numerocuenta": "644740",
+        "saldoDeCredito": 300,
+        "tipoPasa": "TEM",
+        "diaPago": "",
+        "diaFactura": "",
+        "tasaInteres": "2%"
+      },
+      "id": 3
     }
   ],
   "account": [
@@ -260,6 +192,36 @@
       "compensatory_rate": "2%",
       "installment_compensatory_rate": "2%",
       "id": 35
+    },
+    {
+      "customer": {
+        "dni": "12345678",
+        "first_name": "fvg tb",
+        "last_name": "fcvg",
+        "password": "gfdg",
+        "phone": "fdg",
+        "email": "gdg"
+      },
+      "admin_id": "1",
+      "active": "T",
+      "max_credit": "200",
+      "current_credit": "200",
+      "credit_type_of_rate": "TEM",
+      "credit_rate": "5%",
+      "credit_compounding": "D",
+      "invoice_penalty_rate_type": "TEM",
+      "invoice_penalty_rate": "2%",
+      "invoice_penalty_compounding": "D",
+      "installment_penalty_rate_type": "TEM",
+      "installment_penalty_rate": "2%",
+      "installment_penalty_compounding": "D",
+      "invoice_compensatory_rate_type": "TEM",
+      "invoice_compensatory_rate": "2%",
+      "invoice_compensatory_compounding": "D",
+      "installment_compensatory_rate_type": "TEM",
+      "installment_compensatory_rate": "2%",
+      "installment_compensatory_compounding": "D",
+      "id": 36
     }
   ]
 }

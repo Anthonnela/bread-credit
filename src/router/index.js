@@ -7,6 +7,15 @@ import mainAdmiComponent from "../admi/main-admi.component.vue";
 import registerCustomerComponent from "../register/register-customer.component.vue";
 import generalLoginComponent from "../login/general-login.component.vue";
 import toolbarAdminComponent from "../admi/toolbar-admin.component.vue";
+import addCustomerComponent from "../admi/add-customer.component.vue";
+import addProductComponent from "../admi/add-product.component.vue";
+import payCreditComponent from "../admi/pay-credit.component.vue";
+import salesCreditComponent from "../admi/sales-credit.component.vue";
+import listCustomerComponent from "../admi/list-customer.component.vue";
+import historyCreditComponent from "../admi/history-credit.component.vue";
+import mainCustomerComponent from "../customer/main-customer.component.vue";
+import toolbarCustomerCompoenent from "../customer/toolbar-customer.compoenent.vue";
+
 
 const router=createRouter({
 
@@ -19,6 +28,15 @@ const router=createRouter({
         {path: '/register-customer', component:registerCustomerComponent},
         {path: '/main-admi', component:mainAdmiComponent},
         {path: '/toolbar-admin', component:toolbarAdminComponent},
+        {path: '/add-customer', component:addCustomerComponent},
+        {path: '/list-customer', component:listCustomerComponent},
+        {path: '/sales-credit', component:salesCreditComponent},
+        {path:'/pay-credit', component:payCreditComponent},
+        {path:'/history-credit', component:historyCreditComponent},
+       {path:'/main-customer', component:mainCustomerComponent},
+        {path: '/toolbar-customer', component:toolbarCustomerCompoenent},
+        {path: '/add-product', component:addProductComponent},
+
 
 
     ]

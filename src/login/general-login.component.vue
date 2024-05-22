@@ -33,7 +33,7 @@
 export default {
   name: "GeneralLogin",
   methods:{
-    goToLoginCustomer(){
+    goToLogInCustomer(){
       this.$router.push('/login-customer');
     },
     goToLogInAdmi(){
@@ -48,7 +48,7 @@ export default {
   text-align: center;
   width: 100%;
   padding: 50px;
-  background: linear-gradient(to bottom, rgba(125, 243, 173, 0.19) 60%, rgb(36, 213, 30) 50%);
+  background: linear-gradient(to bottom, rgb(199, 236, 232) 60%, rgb(172, 214, 228) 50%);
 }
 
 .content {
