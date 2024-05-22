@@ -21,6 +21,17 @@
       "negocio": "Panaderia",
       "nombrenegocio": "Yts",
       "id": 2
+    },
+    {
+      "nombreadmin": "11",
+      "apellido": "11",
+      "dni": "11",
+      "contrasena": "11",
+      "celular": "11",
+      "correo": "11",
+      "negocio": "11",
+      "nombrenegocio": "11",
+      "id": 3
     }
   ],
   "productos": [
@@ -31,7 +42,6 @@
       "precio": "0.30",
       "imagen": "https://cdn.discordapp.com/attachments/1227800643784151040/1239617124893327473/9k.png?ex=664e1ee9&is=664ccd69&hm=88ae94df1640f87406026c3982fe4fe7e258bb442fa9ac56113d93c460ca563b&"
     },
-
     {
       "nombre": "pan bollo",
       "imagen": "",
@@ -109,6 +119,44 @@
         "tasaInteres": "2%"
       },
       "id": 3
+    },
+    {
+      "dni": "12",
+      "nombre": "12",
+      "apellido": "12",
+      "contraseña": "1212",
+      "celular": "12",
+      "correo": "12",
+      "direccion": "12",
+      "cuenta": {
+        "numerocuenta": "881294",
+        "saldoDeCredito": 300,
+        "tipoPasa": "TEM",
+        "diaPago": "",
+        "diaFactura": "",
+        "tasaInteres": "2%"
+      },
+      "id": 4
+    },
+    {
+      "dni": "44",
+      "first_name": "4",
+      "last_name": "4",
+      "password": "4",
+      "phone": "4",
+      "email": "4",
+      "address": "4",
+      "id": 5
+    },
+    {
+      "dni": "3",
+      "first_name": "3",
+      "last_name": "3",
+      "password": "3",
+      "phone": "3",
+      "email": "3",
+      "address": "3",
+      "id": 6
     }
   ],
   "account": [
@@ -222,6 +270,78 @@
       "installment_compensatory_rate": "2%",
       "installment_compensatory_compounding": "D",
       "id": 36
+    },
+    {
+      "customer": {
+        "dni": "44",
+        "first_name": "4",
+        "last_name": "4",
+        "password": "4",
+        "phone": "4",
+        "email": "4",
+        "address": "4"
+      },
+      "admin_id": "1",
+      "active": "T",
+      "max_credit": "200",
+      "current_credit": "200",
+      "credit_type_of_rate": "TEM",
+      "credit_rate": "5%",
+      "credit_compounding": "D",
+      "penalty_rate": "2%",
+      "penalty_rate_type": "TEM",
+      "compensatory_rate_type": "2%",
+      "compensatory_rate": "TEM",
+      "invoice_penalty_rate_type": "TEM",
+      "invoice_penalty_rate": "2%",
+      "invoice_penalty_compounding": "D",
+      "installment_penalty_rate_type": "TEM",
+      "installment_penalty_rate": "2%",
+      "installment_penalty_compounding": "D",
+      "invoice_compensatory_rate_type": "TEM",
+      "invoice_compensatory_rate": "2%",
+      "invoice_compensatory_compounding": "D",
+      "installment_compensatory_rate_type": "TEM",
+      "installment_compensatory_rate": "2%",
+      "installment_compensatory_compounding": "D",
+      "diaFactura": "2024-05-31",
+      "id": 37
+    },
+    {
+      "customer": {
+        "dni": "3",
+        "first_name": "3",
+        "last_name": "3",
+        "password": "3",
+        "phone": "3",
+        "email": "3",
+        "address": "3"
+      },
+      "admin_id": "1",
+      "active": "T",
+      "max_credit": "200",
+      "current_credit": "200",
+      "credit_type_of_rate": "TEM",
+      "credit_rate": "5%",
+      "credit_compounding": "D",
+      "penalty_rate": "2%",
+      "penalty_rate_type": "TEM",
+      "compensatory_rate_type": "2%",
+      "compensatory_rate": "TEM",
+      "invoice_penalty_rate_type": "TEM",
+      "invoice_penalty_rate": "2%",
+      "invoice_penalty_compounding": "D",
+      "installment_penalty_rate_type": "TEM",
+      "installment_penalty_rate": "2%",
+      "installment_penalty_compounding": "D",
+      "invoice_compensatory_rate_type": "TEM",
+      "invoice_compensatory_rate": "2%",
+      "invoice_compensatory_compounding": "D",
+      "installment_compensatory_rate_type": "TEM",
+      "installment_compensatory_rate": "2%",
+      "installment_compensatory_compounding": "D",
+      "diaFactura": "",
+      "id": 38
     }
   ]
 }
