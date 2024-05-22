@@ -23,14 +23,14 @@
       "id": 2
     },
     {
-      "nombreadmin": "11",
-      "apellido": "11",
-      "dni": "11",
-      "contrasena": "11",
-      "celular": "11",
-      "correo": "11",
-      "negocio": "11",
-      "nombrenegocio": "11",
+      "nombreadmin": "CHRISTIAN ANTHONY",
+      "apellido": "BARZOLA MONTALVO",
+      "dni": "71644564",
+      "contrasena": "123456",
+      "celular": "964002284",
+      "correo": "chris@gmail.com",
+      "negocio": "Panaderia",
+      "nombrenegocio": "Pedrito",
       "id": 3
     }
   ],
@@ -48,6 +48,13 @@
       "precio": "10",
       "admin": 1,
       "id": 4
+    },
+    {
+      "nombre": "Bizcocho ",
+      "imagen": "https://www.google.com.pe/imgres?q=bizcocho&imgurl=https%3A%2F%2Fcdn.recetasderechupete.com%2Fwp-content%2Fuploads%2F2024%2F01%2FReceta_bizcocho_yogur.jpg&imgrefurl=https%3A%2F%2Fwww.abc.es%2Frecetasderechupete%2Fbizcocho-casero-de-yogur%2F10463%2F&docid=LiCJVRuc7KVRTM&tbnid=tgJM9FUHNuSYFM&vet=12ahUKEwjR8o-Tq6CGAxUsElkFHdJBDfYQM3oECBgQAA..i&w=1200&h=797&hcb=2&itg=1&ved=2ahUKEwjR8o-Tq6CGAxUsElkFHdJBDfYQM3oECBgQAA",
+      "precio": "1",
+      "admin": 1,
+      "id": 5
     }
   ],
   "customer": [
@@ -85,7 +92,7 @@
       }
     },
     {
-      "dni": "71853889",
+      "dni": "71853887",
       "nombre": "maria",
       "apellido": "daef",
       "contraseña": "1234",
@@ -121,42 +128,22 @@
       "id": 3
     },
     {
-      "dni": "12",
-      "nombre": "12",
-      "apellido": "12",
-      "contraseña": "1212",
-      "celular": "12",
-      "correo": "12",
-      "direccion": "12",
+      "dni": "71853889",
+      "nombre": "Antonella",
+      "apellido": "GG",
+      "contraseña": "1234",
+      "celular": "952985321",
+      "correo": "upc@gmial",
+      "direccion": "Lima",
       "cuenta": {
-        "numerocuenta": "881294",
+        "numerocuenta": "88982",
         "saldoDeCredito": 300,
         "tipoPasa": "TEM",
-        "diaPago": "",
-        "diaFactura": "",
-        "tasaInteres": "2%"
+        "diaPago": "2024-05-31",
+        "diaFactura": "2024-06-10",
+        "tasaInteres": "0.8%"
       },
       "id": 4
-    },
-    {
-      "dni": "44",
-      "first_name": "4",
-      "last_name": "4",
-      "password": "4",
-      "phone": "4",
-      "email": "4",
-      "address": "4",
-      "id": 5
-    },
-    {
-      "dni": "3",
-      "first_name": "3",
-      "last_name": "3",
-      "password": "3",
-      "phone": "3",
-      "email": "3",
-      "address": "3",
-      "id": 6
     }
   ],
   "account": [
@@ -270,78 +257,6 @@
       "installment_compensatory_rate": "2%",
       "installment_compensatory_compounding": "D",
       "id": 36
-    },
-    {
-      "customer": {
-        "dni": "44",
-        "first_name": "4",
-        "last_name": "4",
-        "password": "4",
-        "phone": "4",
-        "email": "4",
-        "address": "4"
-      },
-      "admin_id": "1",
-      "active": "T",
-      "max_credit": "200",
-      "current_credit": "200",
-      "credit_type_of_rate": "TEM",
-      "credit_rate": "5%",
-      "credit_compounding": "D",
-      "penalty_rate": "2%",
-      "penalty_rate_type": "TEM",
-      "compensatory_rate_type": "2%",
-      "compensatory_rate": "TEM",
-      "invoice_penalty_rate_type": "TEM",
-      "invoice_penalty_rate": "2%",
-      "invoice_penalty_compounding": "D",
-      "installment_penalty_rate_type": "TEM",
-      "installment_penalty_rate": "2%",
-      "installment_penalty_compounding": "D",
-      "invoice_compensatory_rate_type": "TEM",
-      "invoice_compensatory_rate": "2%",
-      "invoice_compensatory_compounding": "D",
-      "installment_compensatory_rate_type": "TEM",
-      "installment_compensatory_rate": "2%",
-      "installment_compensatory_compounding": "D",
-      "diaFactura": "2024-05-31",
-      "id": 37
-    },
-    {
-      "customer": {
-        "dni": "3",
-        "first_name": "3",
-        "last_name": "3",
-        "password": "3",
-        "phone": "3",
-        "email": "3",
-        "address": "3"
-      },
-      "admin_id": "1",
-      "active": "T",
-      "max_credit": "200",
-      "current_credit": "200",
-      "credit_type_of_rate": "TEM",
-      "credit_rate": "5%",
-      "credit_compounding": "D",
-      "penalty_rate": "2%",
-      "penalty_rate_type": "TEM",
-      "compensatory_rate_type": "2%",
-      "compensatory_rate": "TEM",
-      "invoice_penalty_rate_type": "TEM",
-      "invoice_penalty_rate": "2%",
-      "invoice_penalty_compounding": "D",
-      "installment_penalty_rate_type": "TEM",
-      "installment_penalty_rate": "2%",
-      "installment_penalty_compounding": "D",
-      "invoice_compensatory_rate_type": "TEM",
-      "invoice_compensatory_rate": "2%",
-      "invoice_compensatory_compounding": "D",
-      "installment_compensatory_rate_type": "TEM",
-      "installment_compensatory_rate": "2%",
-      "installment_compensatory_compounding": "D",
-      "diaFactura": "",
-      "id": 38
     }
   ]
 }

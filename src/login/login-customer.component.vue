@@ -1,9 +1,8 @@
 <template>
-  <div><h1 class="big-title">¡Bienvenido, estimado cliente!</h1></div>
   <div class="container">
     <div class="p-card login-card">
       <div class="p-card-header">
-        BreadCredit
+        Iniciar Sesión
       </div>
       <div class="p-card-body">
         <div class="p-fluid p-formgrid">
@@ -18,7 +17,7 @@
         </div>
       </div>
       <div class="p-card-footer">
-        <pv-button class="boton-inicisesion-costumer" @click="login">Iniciar Sesión</pv-button>
+        <pv-button @click="login">Iniciar Sesión</pv-button>
       </div>
     </div>
   </div>
@@ -64,13 +63,11 @@ export default {
 </script>
 
 <style scoped>
-
 .container {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 90vh;
-  margin-top: -100px;
+  height: 100vh;
 }
 
 .p-card {
@@ -91,17 +88,6 @@ export default {
   padding: 1rem;
 }
 
-.big-title {
-  margin-top: 225px;
-  font-size: 48px; /* Ajusta el tamaño según tus necesidades */
-  font-weight: bold; /* Opcional: para hacer el texto más grueso */
-  margin-bottom: -200px;
-}
-
-
-.boton-inicisesion-costumer{
-  color: #ffffff;
-}
 .p-card-footer {
   text-align: center;
   padding: 10px;
