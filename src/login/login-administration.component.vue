@@ -1,4 +1,5 @@
 <template>
+  <div><h1 class="big-title">¡Bienvenido, estimado administrador!</h1></div>
   <div class="container">
     <div class="p-card login-card">
       <div class="p-card-header">
@@ -17,7 +18,7 @@
         </div>
       </div>
       <div class="p-card-footer">
-        <button @click="login" class="p-button p-button-primary">Iniciar Sesión</button>
+        <button @click="login" class="p-button">Iniciar Sesión</button>
         <div class="p-mt-3">
           ¿No tienes una cuenta? <router-link to="/register-administration" class="register-link">Regístrate aquí</router-link>
         </div>
@@ -66,11 +67,20 @@ export default {
 </script>
 
 <style scoped>
+
+.big-title {
+  margin-top: 225px;
+  font-size: 48px; /* Ajusta el tamaño según tus necesidades */
+  font-weight: bold; /* Opcional: para hacer el texto más grueso */
+  margin-bottom: -200px;
+}
+
 .container {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100%;
+  height: 90vh;
+  margin-top: -100px;
 }
 
 .p-card {
@@ -97,12 +107,17 @@ export default {
 
 .p-mt-3 {
   margin-top: 3rem;
+  margin-bottom: 15px
 }
 
 .p-inputtext {
   width: 100%;
 }
 
+
+.p-button{
+  color: #ffffff;
+}
 .register-link {
   color: #007bff;
   text-decoration: underline;
