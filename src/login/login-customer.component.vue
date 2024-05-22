@@ -1,113 +1,99 @@
-
-
 <template>
   <div class="container">
-    <div class="row">
-    </div>
-    <div class="login-section">
-      <h2>Bienvenido</h2>
-      <form @submit.prevent="handleLogin">
-        <div class="input-group">
-          <label for="dni">DNI</label>
-          <input type="text" id="dni" v-model="dni" />
+    <div class="p-card login-card">
+      <div class="p-card-header">
+        Iniciar Sesión
+      </div>
+      <div class="p-card-body">
+        <div class="p-fluid p-formgrid">
+          <div class="p-field p-col">
+            <label for="email">Correo</label>
+            <pv-input-text id="email" v-model="email" type="text"></pv-input-text>
+          </div>
+          <div class="p-field p-col">
+            <label for="password">Contraseña</label>
+            <pv-input-text id="password" v-model="password" type="password"></pv-input-text>
+          </div>
         </div>
-        <div class="input-group">
-          <label for="password">Contraseña</label>
-          <input type="password" id="password" v-model="password" />
-        </div>
-        <button type="submit">Iniciar sesión</button>
-      </form>
+      </div>
+      <div class="p-card-footer">
+        <pv-button @click="login">Iniciar Sesión</pv-button>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
+import { CustomerApiService } from "../services/customer-api.service.js";
+import router from "../router/index.js";
+
 export default {
   name: "login-customer",
   data() {
     return {
-      dni: '',
-      password: ''
+      email: "",
+      password: "",
+      customerApiService: new CustomerApiService()
     };
   },
   methods: {
-    handleLogin() {
-      // Lógica de inicio de sesión
-      console.log('DNI:', this.dni);
-      console.log('Contraseña:', this.password);
+    async login() {
+      console.log("Intentando iniciar sesión con:", this.email, this.password);
+      try {
+        const response = await this.customerApiService.Logincustomer(
+            this.email,
+            this.password
+        );
+
+        if (response && response.data && response.data.length > 0) {
+          alert("Inicio de sesión exitoso.");
+          const customerId = response.data[0].id;
+          sessionStorage.setItem("customerId", customerId);
+          router.push("/main-customer");
+        } else {
+          alert("Correo o contraseña inválidos.");
+        }
+      } catch (error) {
+        console.error("Error al iniciar sesión:", error);
+        alert("Ocurrió un error al intentar iniciar sesión. Por favor, intenta nuevamente.");
+      }
     }
   }
 };
 </script>
 
 <style scoped>
-.login-container {
+.container {
   display: flex;
-  justify-content: space-around;
+  justify-content: center;
   align-items: center;
   height: 100vh;
-  background-size: cover;
 }
 
-.image-section {
+.p-card {
+  width: 400px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.p-card-header {
   text-align: center;
+  background-color: #007bff; /* Azul */
+  color: #ffffff; /* Blanco */
+  border-radius: 8px 8px 0 0;
+  padding: 10px;
 }
 
-.panaderia-image {
-  width: 300px;
-  height: auto;
+.p-card-body {
+  padding: 1rem;
 }
 
-.title {
-  font-size: 2em;
-  color: #000;
-}
-
-.subtitle {
-  font-size: 1.5em;
-  color: #000;
-}
-
-.login-section {
-  background: rgba(255, 255, 255, 0.8);
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-
-.login-section h2 {
+.p-card-footer {
   text-align: center;
-  margin-bottom: 20px;
-}
-
-.input-group {
-  margin-bottom: 15px;
-}
-
-.input-group label {
-  display: block;
-  margin-bottom: 5px;
-}
-
-.input-group input {
-  width: 100%;
   padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
 }
 
-button {
+.p-inputtext {
   width: 100%;
-  padding: 10px;
-  background: #90CAF9;
-  border: none;
-  border-radius: 5px;
-  color: white;
-  font-size: 1em;
-  cursor: pointer;
-}
-
-button:hover {
-  background: #64B5F6;
 }
 </style>

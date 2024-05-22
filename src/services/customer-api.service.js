@@ -9,28 +9,31 @@ export class CustomerApiService {
         return await http.get('customer');
     }
 
-
-
     async getById(id) {
-        return await http.get('customer/' + id);
+        return await http.get('/customer/' + id);
     }
-
-    async create(body) {
+//modificado
+    async CreateCustomer(body) {
         return await http.post('customer', body);
     }
 
     async update(body, id) {
-        return await http.put('customer/' + id, body);
+        return await http.put('/customer/' + id, body);
     }
 
     async delete(id) {
         return await http.delete('customer/' + id);
     }
 
-    async Logincustomer (dni,contrasena){
-        return http.get(`customer?dni=${dni}&contrasena=${contrasena}`);
+    async getByDNI(dni) {
+        return await http.get(`/customer?dni=${dni}`);
     }
 
-
-
+    async Logincustomer(correo, contraseña){
+        return await http.get(`/customer?correo=${correo}&contraseña=${contraseña}`);
+    }
+//añadido
+    async GetCustomerByAdmin(adminId) {
+        return await http.get(`/customer?adminId=${adminId}`);
+    }
 }

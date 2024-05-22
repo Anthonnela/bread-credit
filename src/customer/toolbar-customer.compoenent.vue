@@ -2,7 +2,7 @@
   <header>
     <div class="welcome">
       <span class="icon">&#128100;</span>
-      <span> <strong>Hola Administrador Bienvenido</strong></span>
+      <span> <strong>Hola Cliente Bienvenido</strong></span>
     </div>
     <div class="logout">
       <span class="icon">&#8594;</span> <span class="icon" style="border-radius: 50%;">&#9723;</span>
@@ -13,7 +13,7 @@
 
 <script>
 export default {
-  name: "toolbar-admin",
+  name: "toolbar-customer",
 
 }
 </script>

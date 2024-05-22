@@ -1,13 +1,3 @@
-<script>
-import ToolbarAdmin from "./toolbar-admin.component.vue";
-
-export default {
-  name: "main-admi",
-  components: {ToolbarAdmin},
-}
-</script>
-
-
 <template>
   <toolbar-admin></toolbar-admin>
   <div class="main-container">
@@ -16,35 +6,87 @@ export default {
         <div class="profile">
           <div class="profile-icon">&#128100;</div>
           <div class="profile-info">
-            <p><strong>Nombres</strong></p>
-            <p>N° de Clientes</p>
-            <p>Nombre del Negocio</p>
+            <p><strong>{{ nombreadmin }} {{ apellido }}</strong></p>
+            <p>DNI: {{ dni }}</p>
+            <p>Celular: {{ celular }}</p>
+            <p>Correo: {{ correo }}</p>
+            <p>Negocio: {{ negocio }}</p>
+            <p>N° de Cliente</p>
+            <p>Nombre del negocio <strong>{{ nombrenegocio }}</strong></p>
           </div>
         </div>
         <button class="edit-button">Editar mis datos</button>
       </div>
       <div class="main-menu">
-        <button>Agregar Cliente</button>
-        <button>Lista De Clientes</button>
-        <button>Agregar Producto</button>
-        <button>Pagar Cuenta De Credito</button>
-        <button>Ver Historial Crediticio</button>
+        <button @click="navigateTo('/add-product')">agregar mis productos</button>
+        <button @click="navigateTo('/add-customer')">Agregar Cliente</button>
+        <button @click="navigateTo('/list-customer')">Lista De Clientes</button>
+        <button @click="navigateTo('/sales-credit')">Ventas de crédito al cliente</button>
+        <button @click="navigateTo('/pay-credit')">Pagar Cuenta De Crédito</button>
+        <button @click="navigateTo('/history-credit')">Ver Historial Crediticio</button>
       </div>
     </div>
   </div>
+
 </template>
+
+<script>
+
+import { AdministrationApiService } from "../services/administration-api.service.js";
+import ToolbarAdmin from "../admi/toolbar-admin.component.vue";
+
+export default {
+  name: "main-admi",
+  components: {ToolbarAdmin},
+  data() {
+    return {
+      nombreadmin: "",
+      apellido: "",
+      dni: "",
+      celular: "",
+      correo: "",
+      negocio: "",
+      nombrenegocio: ""
+    };
+  },
+  methods: {
+    navigateTo(route) {
+      this.$router.push(route);
+    }
+  },
+  async created() {
+    try {
+      // Recupera los datos del administrador desde el servidor utilizando el API Service
+      const administrationService = new AdministrationApiService();
+      const userId = sessionStorage.getItem("userId");
+      const response = await administrationService.getById(userId);
+
+      // Asigna los datos del administrador a las propiedades de datos
+      this.nombreadmin = response.data.nombreadmin;
+      this.apellido = response.data.apellido;
+      this.dni = response.data.dni;
+      this.celular = response.data.celular;
+      this.correo = response.data.correo;
+      this.negocio = response.data.negocio;
+      this.nombrenegocio = response.data.nombrenegocio;
+    } catch (error) {
+      console.error("Error al recuperar los datos del administrador:", error);
+    }
+  }
+};
+</script>
 
 <style scoped>
 .main-container {
   display: flex;
   flex-direction: column;
-  width: 100%;
   height: 100%;
+  width: 100%;
   max-width: 1200px;
   margin: auto;
-  background-color: #fff;
+  background-color: rgba(43, 220, 226, 0.14);
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  border-radius: 0px;
+
 }
 
 .content {
@@ -54,8 +96,8 @@ export default {
 }
 
 .sidebar {
-  width: 30%;
-  background-color: #f9f9f9;
+  width: 30vw;
+  background-color: #ffffff;
   padding: 20px;
   border-radius: 8px;
   margin-right: 20px;
@@ -63,6 +105,8 @@ export default {
   flex-direction: column;
   align-items: center;
   box-sizing: border-box;
+
+
 }
 
 .sidebar .profile {
@@ -70,6 +114,8 @@ export default {
   flex-direction: column;
   align-items: center;
   text-align: center;
+
+
 }
 
 .sidebar .profile-icon {
@@ -83,8 +129,8 @@ export default {
 
 .edit-button {
   width: 100%;
-  padding: 10px;
-  background-color: #add8e6;
+  padding: 15px;
+  background-color: #000000;
   border: none;
   border-radius: 5px;
   font-size: 16px;
@@ -93,20 +139,22 @@ export default {
 }
 
 .main-menu {
-  width: 70%;
+  width: 70vw;
   display: flex;
   flex-direction: column;
   justify-content: center;
 }
 
 .main-menu button {
-  padding: 15px;
+  padding: 20px;
   margin-bottom: 10px;
-  background-color: #add8e6;
+  background-color: #007bff;
   border: none;
   border-radius: 5px;
-  font-size: 18px;
+  font-size: 22px;
   cursor: pointer;
   box-sizing: border-box;
 }
+
+
 </style>
