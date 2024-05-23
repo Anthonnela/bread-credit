@@ -27,6 +27,7 @@
 </template>
 
 <script>
+import eventBus from "../eventBus.js";
 import router from "../router/index.js";
 import { AdministrationApiService } from "../services/administration-api.service.js";
 
@@ -41,6 +42,9 @@ export default {
   },
   methods: {
     async login() {
+
+      eventBus.emit("EMIT",dni.value);
+
       const body = {
         dni: this.dni,
         contrasena: this.contrasena,
@@ -55,7 +59,7 @@ export default {
         sessionStorage.setItem("userId", userId);
         sessionStorage.setItem("isAdministration", isAdministration);
         router.push('/main-admi');
-        this.$store.commit("SET_ADMIN", response.data[0]);
+        //this.$store.commit("SET_ADMIN", response.data[0]);
       } else {
         alert("DNI o contraseña inválidos.");
       }

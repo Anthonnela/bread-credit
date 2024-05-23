@@ -32,6 +32,17 @@
       "negocio": "Panaderia",
       "nombrenegocio": "Pedrito",
       "id": 3
+    },
+    {
+      "nombreadmin": "11",
+      "apellido": "11",
+      "dni": "11",
+      "contrasena": "11",
+      "celular": "11",
+      "correo": "11",
+      "negocio": "11",
+      "nombrenegocio": "11",
+      "id": 4
     }
   ],
   "productos": [

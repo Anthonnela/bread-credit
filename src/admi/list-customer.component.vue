@@ -2,6 +2,7 @@
   <toolbar-admin></toolbar-admin>
   <div class="container">
     <h3>Lista de Clientes Registrados</h3>
+    <h1>{{ testdata }}</h1>
     <table class="customer-table">
       <thead>
       <tr>
@@ -27,7 +28,7 @@
         <td>{{ customer.correo }}</td>
         <td>{{ customer.celular }}</td>
         <td>{{ customer.direccion }}</td>
-        <td>{{ customer.cuenta.numerocuenta }}</td>
+        <td>{{ testdata }}</td>
         <td>{{ customer.cuenta.saldoDeCredito }}</td>
         <td>{{ customer.cuenta.tipoPasa }}</td>
         <td>{{ customer.cuenta.diaPago }}</td>
@@ -41,19 +42,27 @@
 </template>
 
 <script>
+import eventBus from "../eventBus.js";
 import { CustomerApiService } from "../services/customer-api.service.js";
 import ToolbarAdmin from "./toolbar-admin.component.vue";
+
+
+
 
 export default {
   name: "list-customer",
   components: { ToolbarAdmin },
   data() {
     return {
-      customers: []
+      customers: [],
+      testdata: "",
+      
     };
   },
   async created() {
     await this.loadCustomers();
+
+    
   },
   methods: {
     async loadCustomers() {
@@ -64,6 +73,9 @@ export default {
       } catch (error) {
         console.error("Error al obtener la lista de clientes:", error);
       }
+      eventBus.on('EVENT', (data) =>  {
+      this.testdata = String(data) ;
+      });
     }
   }
 };
@@ -99,5 +111,13 @@ export default {
 
 .customer-table tr:hover {
   background-color: #ddd;
+}
+
+td{
+  color: black;
+}
+
+h3{
+  color: black;
 }
 </style>
