@@ -27,13 +27,15 @@
         <td>{{ customer.correo }}</td>
         <td>{{ customer.celular }}</td>
         <td>{{ customer.direccion }}</td>
+        <td> {{ score }}</td>
+        <!--
         <td>{{ customer.cuenta.numerocuenta }}</td>
         <td>{{ customer.cuenta.saldoDeCredito }}</td>
         <td>{{ customer.cuenta.tipoPasa }}</td>
         <td>{{ customer.cuenta.diaPago }}</td>
         <td>{{ customer.cuenta.diaFactura }}</td>
         <td>{{ customer.cuenta.tasaInteres }}</td>
-
+        -->
       </tr>
       </tbody>
     </table>
@@ -41,22 +43,31 @@
 </template>
 
 <script>
+import eventBus from "../eventBus.js";
 import { CustomerApiService } from "../services/customer-api.service.js";
 import ToolbarAdmin from "./toolbar-admin.component.vue";
+
 
 export default {
   name: "list-customer",
   components: { ToolbarAdmin },
   data() {
     return {
-      customers: []
+      customers: [],
+      score: '100'
     };
   },
   async created() {
     await this.loadCustomers();
+    eventBus.on("EVENT", (data)=>{
+  score = data; 
+});
+    
   },
   methods: {
+    
     async loadCustomers() {
+      
       try {
         const customerApiService = new CustomerApiService();
         const response = await customerApiService.getAll();

@@ -17,6 +17,7 @@
           </div>
         </div>
       </div>
+      
       <div class="p-card-footer">
         <button @click="login" class="p-button">Iniciar Sesión</button>
         <div class="p-mt-3">
@@ -28,11 +29,14 @@
 </template>
 
 <script>
+import ListCustomerComponent from "../admi/list-customer.component.vue";
+import eventBus from "../eventBus.js";
 import router from "../router/index.js";
 import { AdministrationApiService } from "../services/administration-api.service.js";
 
 export default {
   name: "login-administration",
+
   data() {
     return {
       dni: "",
@@ -41,7 +45,10 @@ export default {
     };
   },
   methods: {
+    
+
     async login() {
+      eventBus.emit("EMIT", dni.value)
       const body = {
         dni: this.dni,
         contrasena: this.contrasena,
@@ -56,7 +63,7 @@ export default {
         sessionStorage.setItem("userId", userId);
         sessionStorage.setItem("isAdministration", isAdministration);
         router.push('/main-admi');
-        this.$store.commit("SET_ADMIN", response.data[0]);
+        //this.$store.commit("SET_ADMIN", response.data[0]);
       } else {
         alert("DNI o contraseña inválidos.");
       }
