@@ -156,5 +156,8 @@ export default {
   box-sizing: border-box;
 }
 
+p{
+  color: black ;
+}
 
 </style>

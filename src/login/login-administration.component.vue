@@ -55,7 +55,7 @@ export default {
         sessionStorage.setItem("userId", userId);
 
         router.push('/main-admi');
-        this.$store.commit("SET_ADMIN", response.data[0]);
+        //this.$store.commit("SET_ADMIN", response.data[0]);
       } else {
         alert("DNI o contraseña inválidos.");
       }

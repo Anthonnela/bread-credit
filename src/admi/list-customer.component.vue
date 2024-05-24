@@ -112,4 +112,8 @@ export default {
 .customer-table tr:hover {
   background-color: #ddd;
 }
+
+td{
+  color: black;
+}
 </style>

@@ -21,6 +21,17 @@
       "negocio": "Panaderia",
       "nombrenegocio": "aza",
       "id": 2
+    },
+    {
+      "nombreadmin": "11",
+      "apellido": "11",
+      "dni": "11",
+      "contrasena": "11",
+      "celular": "11",
+      "correo": "11",
+      "negocio": "11",
+      "nombrenegocio": "11",
+      "id": 3
     }
   ],
   "productos": [
@@ -89,90 +100,48 @@
         "tasaInteres": "2%"
       },
       "id": 3
+    },
+    {
+      "dni": "22",
+      "nombre": "22",
+      "apellido": "22",
+      "contraseña": "22",
+      "celular": "22",
+      "correo": "22",
+      "direccion": "22",
+      "adminId": "3",
+      "cuenta": {
+        "numerocuenta": "725738",
+        "saldoDeCredito": 300,
+        "tipoPasa": "TEM",
+        "diaPago": "",
+        "diaFactura": "",
+        "tasaInteres": "2%"
+      },
+      "id": 4
+    },
+    {
+      "dni": "33",
+      "first_name": "33",
+      "last_name": "33",
+      "password": "33",
+      "phone": "33",
+      "email": "33",
+      "address": "33",
+      "id": 5
+    },
+    {
+      "dni": "44",
+      "first_name": "44",
+      "last_name": "44",
+      "password": "44",
+      "phone": "44",
+      "email": "44",
+      "address": "44",
+      "id": 6
     }
   ],
   "account": [
-    {
-      "dni": "1",
-      "first_name": "1",
-      "last_name": "1",
-      "password": "1",
-      "phone": "1",
-      "email": "1",
-      "id": 29
-    },
-    {
-      "customer_id": "1",
-      "max_credit": "200",
-      "current_credit": "200",
-      "credit_type_of_rate": "TEM",
-      "credit_rate": "5%",
-      "penalty_rate": "2%",
-      "installment_penalty_rate": "2%",
-      "compensatory_rate": "2%",
-      "installment_compensatory_rate": "2%",
-      "id": 30
-    },
-    {
-      "customer_id": "1",
-      "max_credit": "200",
-      "current_credit": "200",
-      "credit_type_of_rate": "TEM",
-      "credit_rate": "5%",
-      "penalty_rate": "2%",
-      "installment_penalty_rate": "2%",
-      "compensatory_rate": "2%",
-      "installment_compensatory_rate": "2%",
-      "id": 31
-    },
-    {
-      "customer_id": "1",
-      "max_credit": "200",
-      "current_credit": "200",
-      "credit_type_of_rate": "TEM",
-      "credit_rate": "5%",
-      "penalty_rate": "2%",
-      "installment_penalty_rate": "2%",
-      "compensatory_rate": "2%",
-      "installment_compensatory_rate": "2%",
-      "id": 32
-    },
-    {
-      "customer_id": "1",
-      "max_credit": "200",
-      "current_credit": "200",
-      "credit_type_of_rate": "TEM",
-      "credit_rate": "5%",
-      "penalty_rate": "2%",
-      "installment_penalty_rate": "2%",
-      "compensatory_rate": "2%",
-      "installment_compensatory_rate": "2%",
-      "id": 33
-    },
-    {
-      "customer_id": "1",
-      "max_credit": "200",
-      "current_credit": "200",
-      "credit_type_of_rate": "TEM",
-      "credit_rate": "5%",
-      "penalty_rate": "2%",
-      "installment_penalty_rate": "2%",
-      "compensatory_rate": "2%",
-      "installment_compensatory_rate": "2%",
-      "id": 34
-    },
-    {
-      "customer_id": "1",
-      "max_credit": "200",
-      "current_credit": "200",
-      "credit_type_of_rate": "TEM",
-      "credit_rate": "5%",
-      "penalty_rate": "2%",
-      "installment_penalty_rate": "2%",
-      "compensatory_rate": "2%",
-      "installment_compensatory_rate": "2%",
-      "id": 35
-    },
     {
       "customer": {
         "dni": "12345678",
@@ -202,6 +171,78 @@
       "installment_compensatory_rate": "2%",
       "installment_compensatory_compounding": "D",
       "id": 36
+    },
+    {
+      "customer": {
+        "dni": "33",
+        "first_name": "33",
+        "last_name": "33",
+        "password": "33",
+        "phone": "33",
+        "email": "33",
+        "address": "33"
+      },
+      "admin_id": "1",
+      "active": "T",
+      "max_credit": "200",
+      "current_credit": "200",
+      "credit_type_of_rate": "TEM",
+      "credit_rate": "5%",
+      "credit_compounding": "D",
+      "penalty_rate": "2%",
+      "penalty_rate_type": "TEM",
+      "compensatory_rate_type": "2%",
+      "compensatory_rate": "TEM",
+      "invoice_penalty_rate_type": "TEM",
+      "invoice_penalty_rate": "2%",
+      "invoice_penalty_compounding": "D",
+      "installment_penalty_rate_type": "TEM",
+      "installment_penalty_rate": "2%",
+      "installment_penalty_compounding": "D",
+      "invoice_compensatory_rate_type": "TEM",
+      "invoice_compensatory_rate": "2%",
+      "invoice_compensatory_compounding": "D",
+      "installment_compensatory_rate_type": "TEM",
+      "installment_compensatory_rate": "2%",
+      "installment_compensatory_compounding": "D",
+      "diaFactura": "",
+      "id": 37
+    },
+    {
+      "customer": {
+        "dni": "44",
+        "first_name": "44",
+        "last_name": "44",
+        "password": "44",
+        "phone": "44",
+        "email": "44",
+        "address": "44"
+      },
+      "admin_id": "1",
+      "active": "T",
+      "max_credit": "200",
+      "current_credit": "200",
+      "credit_type_of_rate": "TEM",
+      "credit_rate": "5%",
+      "credit_compounding": "D",
+      "penalty_rate": "2%",
+      "penalty_rate_type": "TEM",
+      "compensatory_rate_type": "2%",
+      "compensatory_rate": "TEM",
+      "invoice_penalty_rate_type": "TEM",
+      "invoice_penalty_rate": "2%",
+      "invoice_penalty_compounding": "D",
+      "installment_penalty_rate_type": "TEM",
+      "installment_penalty_rate": "2%",
+      "installment_penalty_compounding": "D",
+      "invoice_compensatory_rate_type": "TEM",
+      "invoice_compensatory_rate": "2%",
+      "invoice_compensatory_compounding": "D",
+      "installment_compensatory_rate_type": "TEM",
+      "installment_compensatory_rate": "2%",
+      "installment_compensatory_compounding": "D",
+      "diaFactura": "",
+      "id": 38
     }
   ]
 }
