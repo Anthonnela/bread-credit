@@ -44,6 +44,7 @@ export default {
 </script>
 
 <style scoped>
+
 .container {
   text-align: center;
   width: 100%;

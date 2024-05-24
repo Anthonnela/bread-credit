@@ -2,6 +2,7 @@ import { createApp } from 'vue'
 import './style.css'
 import App from './App.vue'
 import PrimeVue from "primevue/config";
+import mitt from 'mitt';
 
 // App Theme
 import 'primevue/resources/themes/lara-dark-indigo/theme.css';
@@ -28,7 +29,10 @@ import Divider from "primevue/divider";
 import router from "./router/index.js";
 
 
+
 createApp(App)
+    
+
     .use(PrimeVue, { ripple: true })
     .component('pv-card', Card)
     .component('pv-button', Button)

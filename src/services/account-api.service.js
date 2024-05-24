@@ -9,8 +9,6 @@ export class AccountApiService {
         return await http.get('account');
     }
 
-
-
     async getById(id) {
         return await http.get('account/' + id);
     }
