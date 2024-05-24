@@ -83,7 +83,7 @@ export default {
         nombre: "",
         imagen: "",
         precio: "",
-        admin: 1 // Reset admin ID as well
+        admin: 1
       };
     }
   }
