@@ -36,4 +36,5 @@ export class CustomerApiService {
     async GetCustomerByAdmin(adminId) {
         return await http.get(`/customer?adminId=${adminId}`);
     }
+
 }

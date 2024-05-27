@@ -94,10 +94,10 @@
             
             </div>
           </div>
-          <div class="form-card-footer">
-            <pv-button @click="create()">Guardar</pv-button>
-          </div>
         </div>
+      <div class="form-card-footer">
+        <pv-button @click="create()">Guardar</pv-button>
+      </div>
       </div>
     </div>
   
@@ -171,7 +171,7 @@ export default {
 
       const account = { 
       customer: customer,
-      admin_id: this.admin_id,
+      admin_id: sessionStorage.getItem('adminId'),
       active: this.active,
       max_credit: this.max_credit,
       current_credit: this.current_credit,
@@ -240,7 +240,7 @@ export default {
 }
 
 .form-card {
-  width:400px;
+  width:500px;
   border-radius: 8px;
   box-shadow: 0 4px 8px rgb(172, 214, 228);
 }

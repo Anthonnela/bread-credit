@@ -20,19 +20,19 @@
       </tr>
       </thead>
       <tbody>
-      <tr v-for="customer in customers" :key="customer.id">
-        <td>{{ customer.dni }}</td>
-        <td>{{ customer.nombre }}</td>
-        <td>{{ customer.apellido }}</td>
-        <td>{{ customer.correo }}</td>
-        <td>{{ customer.celular }}</td>
-        <td>{{ customer.direccion }}</td>
-        <td>{{ customer.cuenta.numerocuenta }}</td>
-        <td>{{ customer.cuenta.saldoDeCredito }}</td>
-        <td>{{ customer.cuenta.tipoPasa }}</td>
-        <td>{{ customer.cuenta.diaPago }}</td>
-        <td>{{ customer.cuenta.diaFactura }}</td>
-        <td>{{ customer.cuenta.tasaInteres }}</td>
+      <tr v-for="cuenta in cuentas" :key="cuenta.id">
+        <td>{{ cuenta.customer.dni }}</td>
+        <td>{{ cuenta.customer.first_name }}</td>
+        <td>{{ cuenta.customer.last_name }}</td>
+        <td>{{ cuenta.customer.email }}</td>
+        <td>{{ cuenta.customer.phone }}</td>
+        <td>{{ cuenta.customer.address }}</td>
+        <td>{{ cuenta.id }}</td>
+        <td>{{ cuenta.current_credit }}</td>
+        <td>{{ cuenta.credit_type_of_rate }}</td>
+        <td>{{ cuenta.diaFactura }}</td>
+        <td>{{ cuenta.diaFactura }}</td>
+        <td>{{ cuenta.credit_rate }}</td>
 
       </tr>
       </tbody>
@@ -41,6 +41,7 @@
 </template>
 
 <script>
+import { AccountApiService } from "../services/account-api.service.js";
 import { CustomerApiService } from "../services/customer-api.service.js";
 import ToolbarAdmin from "./toolbar-admin.component.vue";
 
@@ -50,16 +51,20 @@ export default {
   data() {
     return {
       customers: [],
-      customerApiService: new CustomerApiService()
+      customerApiService: new CustomerApiService(),
+      accountApiService: new AccountApiService(),
+      cuentas: [],
 
     };
   },
   async created() {
 //modificado
-    const adminId = sessionStorage.getItem("userId");
+    const adminId = sessionStorage.getItem("adminId");
     try {
-      const response = await this.customerApiService.GetCustomerByAdmin(adminId);
-      this.customers = response.data;
+      //const response = await this.customerApiService.GetCustomerByAdmin(adminId);
+      const response = await this.accountApiService.GetAccountByAdmin(adminId);
+      //this.customers = response.data;
+      this.cuentas = response.data;
     } catch (error) {
       alert("Hubo un error al cargar los clientes: " + error.message);
     }

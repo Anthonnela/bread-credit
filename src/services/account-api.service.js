@@ -24,4 +24,8 @@ export class AccountApiService {
     async delete(id) {
         return await http.delete('account/' + id);
     }
+
+    async GetAccountByAdmin(adminId) {
+        return await http.get(`/account?admin_id=${adminId}`);
+    }
 }
