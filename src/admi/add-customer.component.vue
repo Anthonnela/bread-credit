@@ -171,7 +171,7 @@ export default {
 
       const account = { 
       customer: customer,
-      admin_id: this.admin_id,
+      admin_id: sessionStorage.getItem('adminId'),
       active: this.active,
       max_credit: this.max_credit,
       current_credit: this.current_credit,

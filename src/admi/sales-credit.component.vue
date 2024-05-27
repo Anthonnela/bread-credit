@@ -59,7 +59,8 @@ export default {
       searchDNI: "",
       customer: null,
       productService: new ProductService(),
-      customerService: new CustomerApiService()
+      customerService: new CustomerApiService(),
+      compras: [],
     };
   },
   async created() {
@@ -127,6 +128,7 @@ export default {
 
         this.customer = null;
         this.searchDNI = "";
+        sessionStorage.setItem('Productos', JSON.stringify(productsToPurchase))
         console.log("Compra confirmada con éxito.");
       } catch (error) {
         console.error("Error al confirmar la compra:", error);

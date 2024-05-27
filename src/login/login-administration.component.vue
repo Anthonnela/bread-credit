@@ -50,9 +50,9 @@ export default {
 
       if (response && response.data && response.data.length > 0) {
         alert("Inicio de sesión exitoso.");
-        const userId = response.data[0].id;
+        const adminId = response.data[0].id;
       //  const isAdministration = response.data[0].isAdministration;
-        sessionStorage.setItem("userId", userId);
+        sessionStorage.setItem("adminId", adminId);
 
         router.push('/main-admi');
         //this.$store.commit("SET_ADMIN", response.data[0]);
