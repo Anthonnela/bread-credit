@@ -17,10 +17,12 @@
         <table>
           <thead>
           <tr>
-            <th>Fecha</th>
+            <th>N° de cota</th>
+            <th>Fecha de factura</th>
+            <th>Fecha de vencimiento</th>
             <th>Descripción</th>
+            <th>Tipo de pago</th>
             <th>Monto</th>
-            <th>Intereses</th>
           </tr>
           </thead>
           <tbody>
@@ -131,7 +133,6 @@ export default {
   margin: 0 auto;
   padding: 20px;
   background-color: #f9f9f9;
-  border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
