@@ -34,9 +34,16 @@
           <div class="customer-card">
             <p><strong>{{ customer.nombre }} {{ customer.apellido }}</strong></p>
             <p>DNI: {{ customer.dni }}</p>
-            <p>Celular: {{ customer.celular }}</p>
-            <p>Correo: {{ customer.correo }}</p>
-            <button @click="confirmPurchase">Confirmar Compra</button>
+            <p>Celular: {{ customer.phone }}</p>
+            <p>Correo: {{ customer.email }}</p>
+            <button @click="confirmPurchase">Pago único</button>
+            <button @click="confirmPurchaseDues">Pago en cuotas</button>
+            <select v-model="selectedOption">
+              <option v-for="option in options" :key="option" :value="option">
+                {{ option}} 
+              </option>
+            </select>
+            <p>Opción seleccionada: {{ selectedOption }}</p>
           </div>
         </div>
       </div>
@@ -61,6 +68,8 @@ export default {
       productService: new ProductService(),
       customerService: new CustomerApiService(),
       compras: [],
+      options: [2, 3],  // Lista inicial de opciones numéricas
+      selectedOption: 2,   // Valor inicial seleccionado
     };
   },
   async created() {
@@ -134,6 +143,8 @@ export default {
       } catch (error) {
         console.error("Error al confirmar la compra:", error);
       }
+    },
+    async confirmPurchaseDues() {             // Incrementa el siguiente valor a agregar
     }
   }
 };
@@ -212,7 +223,10 @@ export default {
   border-radius: 4px;
 }
 
+
 button {
+  padding: 20px;
+  margin-bottom: 10px;
   padding: 8px 16px;
   background-color: #007bff;
   color: #fff;
