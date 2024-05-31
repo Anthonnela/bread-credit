@@ -13,7 +13,7 @@
         <p><strong>Próxima Fecha de Pago:</strong> {{ new Date(diaPago).toLocaleDateString() }}</p>
       </div>
       <div class="card">
-        <h2>Historial de Compras</h2>
+        <h2>Facturas</h2>
         <table>
           <thead>
           <tr>
