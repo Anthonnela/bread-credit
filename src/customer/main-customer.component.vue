@@ -104,13 +104,13 @@ export default {
         this.diaFactura = diaFactura;
 
         // Obtener historial de compras
-        const historialResponse = await this.customerApiService.getHistorialCompras(customerId);
-        if (historialResponse && historialResponse.data) {
-          this.historialCompras = historialResponse.data;
+        //const historialResponse = await this.customerApiService.getHistorialCompras(customerId);
+        //if (historialResponse && historialResponse.data) {
+          //this.historialCompras = historialResponse.data;
 
           // Calcular intereses acumulados
-          this.interesesAcumulados = this.calcularInteresesAcumulados(this.historialCompras);
-        }
+          //this.interesesAcumulados = this.calcularInteresesAcumulados(this.historialCompras);
+       // }
       }
     } catch (error) {
       console.error("Error al recuperar los datos del cliente:", error);

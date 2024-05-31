@@ -47,7 +47,7 @@ export default {
         nombre: "",
         imagen: "",
         precio: "",
-        admin: 1
+        admin: sessionStorage.getItem("adminId"),
       }
     };
   },
@@ -56,9 +56,11 @@ export default {
   },
   methods: {
     async loadProducts() {
+      const userId = sessionStorage.getItem("adminId");
       try {
+        
         const productService = new ProductService();
-        const response = await productService.getAll();
+        const response = await productService.GetProductByAdmin(userId);
         this.products = response.data;
       } catch (error) {
         console.error("Error al obtener la lista de productos:", error);

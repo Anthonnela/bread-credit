@@ -26,4 +26,7 @@ export class ProductService {
     async delete(id) {
         return await http.delete(`productos/${id}`);
     }
+    async GetProductByAdmin(adminId) {
+        return await http.get(`/productos?admin=${adminId}`);
+    }
 }

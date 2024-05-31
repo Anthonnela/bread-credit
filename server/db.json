@@ -36,11 +36,60 @@
   ],
   "productos": [
     {
-      "nombre": "pan bollo",
+      "nombre": "pan frances",
       "imagen": "",
-      "precio": "10",
-      "admin": 1,
-      "id": 4
+      "precio": "1",
+      "admin": "3",
+      "id": 5
+    },
+    {
+      "nombre": "pan chabata",
+      "imagen": "",
+      "precio": "1",
+      "admin": "2",
+      "id": 6
+    },
+    {
+      "nombre": "pan frances",
+      "imagen": "1",
+      "precio": "1",
+      "admin": "2",
+      "id": 7
+    },
+    {
+      "nombre": "pan frances",
+      "imagen": "",
+      "precio": "1",
+      "admin": "2",
+      "id": 8
+    },
+    {
+      "nombre": "pan frances",
+      "imagen": "",
+      "precio": "1",
+      "admin": "2",
+      "id": 9
+    },
+    {
+      "nombre": "pan frances",
+      "imagen": "",
+      "precio": "1",
+      "admin": "2",
+      "id": 10
+    },
+    {
+      "nombre": "pan frances",
+      "imagen": "",
+      "precio": "1",
+      "admin": "2",
+      "id": 11
+    },
+    {
+      "nombre": "asasd",
+      "imagen": "",
+      "precio": "4",
+      "admin": "2",
+      "id": 12
     }
   ],
   "customer": [

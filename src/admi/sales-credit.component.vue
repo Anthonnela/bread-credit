@@ -69,7 +69,8 @@ export default {
   methods: {
     async loadProducts() {
       try {
-        const response = await this.productService.getAll();
+        const userId = sessionStorage.getItem("adminId");
+        const response = await this.productService.GetProductByAdmin(userId);
         this.products = response.data.map(product => ({
           ...product,
           quantity: 0,

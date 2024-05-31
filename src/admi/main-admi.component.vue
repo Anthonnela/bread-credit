@@ -58,7 +58,7 @@ export default {
     try {
       // Recupera los datos del administrador desde el servidor utilizando el API Service
       const administrationService = new AdministrationApiService();
-      const userId = sessionStorage.getItem("userId");
+      const userId = sessionStorage.getItem("adminId");
       const response = await administrationService.getById(userId);
 
       // Asigna los datos del administrador a las propiedades de datos
