@@ -145,6 +145,8 @@ export default {
       }
     },
     async confirmPurchaseDues() {             // Incrementa el siguiente valor a agregar
+    
+    
     }
   }
 };
