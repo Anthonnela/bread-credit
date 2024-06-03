@@ -32,6 +32,17 @@
       "negocio": "11",
       "nombrenegocio": "11",
       "id": 3
+    },
+    {
+      "nombreadmin": "Chris",
+      "apellido": "Gonzales",
+      "dni": "1234",
+      "contrasena": "1234",
+      "celular": "",
+      "correo": "",
+      "negocio": "",
+      "nombrenegocio": "",
+      "id": 4
     }
   ],
   "productos": [
@@ -90,6 +101,20 @@
       "precio": "4",
       "admin": "2",
       "id": 12
+    },
+    {
+      "nombre": "pan bollo",
+      "imagen": "",
+      "precio": "10",
+      "admin": "1",
+      "id": 13
+    },
+    {
+      "nombre": "integralkiki",
+      "imagen": "",
+      "precio": "10",
+      "admin": "1",
+      "id": 14
     }
   ],
   "customer": [
@@ -250,6 +275,40 @@
       "id": 12
     }
   ],
+  "purchases": [
+    {
+      "customerId": 1,
+      "NumeroCota": 1,
+      "fechaFactura": "2024-05-01T00:00:00.000Z",
+      "fechaVencimiento": "2024-06-01T00:00:00.000Z",
+      "descripcion": "Compra de electrodomésticos",
+      "tipoPago": "Pago en cuotas",
+      "monto": 500.00,
+      "intereses": 20.00
+    },
+    {
+      "customerId": 2,
+      "NumeroCota": 1,
+      "fechaFactura": "2024-05-01T00:00:00.000Z",
+      "fechaVencimiento": "2024-06-01T00:00:00.000Z",
+      "descripcion": "Compra de: pan bollo,pan fances,pan naranja",
+      "tipoPago": "Pago en cuotas",
+      "monto": 500.00,
+      "intereses": 20.00
+    },
+    {
+      "customerId": 2,
+      "NumeroCota": 1,
+      "fechaFactura": "2024-05-01T00:00:00.000Z",
+      "fechaVencimiento": "2024-06-01T00:00:00.000Z",
+      "descripcion": "Compra de: pan bollo,pan fances,pan naranja",
+      "tipoPago": "Pago en cuotas",
+      "monto": 500.00,
+      "intereses": 20.00
+    }
+    ],
+
+
   "account": [
     {
       "customer": {

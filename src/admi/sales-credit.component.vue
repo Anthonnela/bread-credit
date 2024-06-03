@@ -40,7 +40,7 @@
             <button @click="confirmPurchaseDues">Pago en cuotas</button>
             <select v-model="selectedOption">
               <option v-for="option in options" :key="option" :value="option">
-                {{ option}} 
+                {{ option}}
               </option>
             </select>
             <p>Opción seleccionada: {{ selectedOption }}</p>
@@ -144,10 +144,7 @@ export default {
         console.error("Error al confirmar la compra:", error);
       }
     },
-    async confirmPurchaseDues() {             // Incrementa el siguiente valor a agregar
-    
-    
-    }
+  
   }
 };
 </script>
