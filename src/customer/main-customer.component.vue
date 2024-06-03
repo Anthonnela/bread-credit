@@ -17,7 +17,7 @@
         <table>
           <thead>
           <tr>
-            <th>N° de cota</th>
+            <th>N° de cuota</th>
             <th>Fecha de factura</th>
             <th>Fecha de vencimiento</th>
             <th>Descripción</th>
@@ -27,15 +27,16 @@
           </thead>
           <tbody>
           <tr v-for="(compra, index) in historialCompras" :key="index">
-            <td>{{ new Date(compra.fecha).toLocaleDateString() }}</td>
+            <td>{{ index + 1 }}</td>
+            <td>{{ new Date(compra.fechaFactura).toLocaleDateString() }}</td>
+            <td>{{ new Date(compra.fechaVencimiento).toLocaleDateString() }}</td>
             <td>{{ compra.descripcion }}</td>
+            <td>{{ compra.tipoPago }}</td>
             <td>${{ compra.monto.toFixed(2) }}</td>
-            <td>${{ compra.intereses.toFixed(2) }}</td>
           </tr>
           </tbody>
         </table>
       </div>
-
       <div class="card">
         <h2>Detalles de Intereses</h2>
         <p>Intereses acumulados hasta la fecha de pago: ${{ interesesAcumulados.toFixed(2) }}</p>
@@ -44,15 +45,14 @@
   </div>
 </template>
 
-
 <script>
 import { CustomerApiService } from "../services/customer-api.service.js";
+import { PurchaseApiService } from "../services/purchase-api.service.js";
 import ToolbarCustomer from "../customer/toolbar-customer.compoenent.vue";
 
 export default {
   name: "main-customer",
   components: {ToolbarCustomer},
-
   data() {
     return {
       nombre: "",
@@ -68,7 +68,8 @@ export default {
       diaFactura: "",
       historialCompras: [],
       interesesAcumulados: 0,
-      customerApiService: new CustomerApiService()
+      customerApiService: new CustomerApiService(),
+      purchaseApiService: new PurchaseApiService()
     };
   },
   async created() {
@@ -84,12 +85,7 @@ export default {
           celular,
           correo,
           direccion,
-          cuenta: {
-            numerocuenta,
-            saldoDeCredito,
-            diaPago,
-            diaFactura
-          }
+          cuenta: {numerocuenta, saldoDeCredito, diaPago, diaFactura}
         } = response.data;
 
         this.nombre = nombre;
@@ -104,13 +100,13 @@ export default {
         this.diaFactura = diaFactura;
 
         // Obtener historial de compras
-        //const historialResponse = await this.customerApiService.getHistorialCompras(customerId);
-        //if (historialResponse && historialResponse.data) {
-          //this.historialCompras = historialResponse.data;
+        const historialResponse = await this.purchaseApiService.getPurchasesByCustomerId(customerId);
+        if (historialResponse && historialResponse.data) {
+          this.historialCompras = historialResponse.data;
 
           // Calcular intereses acumulados
-          //this.interesesAcumulados = this.calcularInteresesAcumulados(this.historialCompras);
-       // }
+          this.interesesAcumulados = this.calcularInteresesAcumulados(this.historialCompras);
+        }
       }
     } catch (error) {
       console.error("Error al recuperar los datos del cliente:", error);
@@ -127,6 +123,7 @@ export default {
   }
 };
 </script>
+
 <style scoped>
 .container {
   max-width: 800px;
