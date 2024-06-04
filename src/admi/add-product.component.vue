@@ -7,9 +7,10 @@
     </div>
     <div v-else>
       <div v-for="product in products" :key="product.id" class="product-card">
-        <img :src="product.image" alt="Imagen del producto">
+        <img :src="product.imagen" alt="Imagen del producto">
         <p>{{ product.nombre }}</p>
         <p>{{ product.precio }}</p>
+        <p>{{ product.uri }}</p>
       </div>
     </div>
     <div class="add-product-form">

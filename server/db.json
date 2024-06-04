@@ -43,6 +43,17 @@
       "negocio": "",
       "nombrenegocio": "",
       "id": 4
+    },
+    {
+      "nombreadmin": "Julio",
+      "apellido": "Marez",
+      "dni": "0000",
+      "contrasena": "123",
+      "celular": "#7777",
+      "correo": "aas@as",
+      "negocio": "Panaderia",
+      "nombrenegocio": "Pedrito",
+      "id": 5
     }
   ],
   "productos": [
@@ -115,6 +126,48 @@
       "precio": "10",
       "admin": "1",
       "id": 14
+    },
+    {
+      "nombre": "chabata",
+      "imagen": "",
+      "precio": "5",
+      "admin": "3",
+      "id": 15
+    },
+    {
+      "nombre": "Bollo",
+      "imagen": "",
+      "precio": "2.5",
+      "admin": 1,
+      "id": 16
+    },
+    {
+      "nombre": "Bollo",
+      "imagen": "https://ibb.co/LkM6k5j",
+      "precio": "1.5",
+      "admin": "3",
+      "id": 17
+    },
+    {
+      "nombre": "Huevo",
+      "imagen": "https://discord.com/channels/@me/1220195960135745602/1247369502719606794",
+      "precio": "1.30",
+      "admin": 1,
+      "id": 18
+    },
+    {
+      "nombre": "Pan Pencito",
+      "imagen": "https://cdn.discordapp.com/attachments/1227800643784151040/1239617124893327473/9k.png?ex=665f4269&is=665df0e9&hm=689c5a8873d49b3126dce0ea9c64682aa98d192e7500381fa1f46307bf557418&",
+      "precio": "1.20",
+      "admin": 1,
+      "id": 19
+    },
+    {
+      "nombre": "Pan Pencito",
+      "imagen": "https://cdn.discordapp.com/attachments/1227800643784151040/1239617124893327473/9k.png?ex=665f4269&is=665df0e9&hm=689c5a8873d49b3126dce0ea9c64682aa98d192e7500381fa1f46307bf557418&",
+      "precio": "1.20",
+      "admin": "3",
+      "id": 20
     }
   ],
   "customer": [
@@ -273,6 +326,26 @@
       "email": "ffridd20@gmail.com",
       "address": "Av. los libertadores con Saenz Pena",
       "id": 12
+    },
+    {
+      "dni": "1234",
+      "first_name": "maycol",
+      "last_name": "Cordova",
+      "password": "12",
+      "phone": "916169663",
+      "email": "yoteamomuchote22@gmail.com",
+      "address": "Jr. Manco Capac  #720",
+      "id": 13
+    },
+    {
+      "dni": "7777",
+      "first_name": "xxxx",
+      "last_name": "yyyy",
+      "password": "123",
+      "phone": "916169663",
+      "email": "xxx@gmail",
+      "address": "Lima",
+      "id": 14
     }
   ],
   "purchases": [
@@ -283,8 +356,8 @@
       "fechaVencimiento": "2024-06-01T00:00:00.000Z",
       "descripcion": "Compra de electrodomésticos",
       "tipoPago": "Pago en cuotas",
-      "monto": 500.00,
-      "intereses": 20.00
+      "monto": 500,
+      "intereses": 20
     },
     {
       "customerId": 2,
@@ -293,8 +366,8 @@
       "fechaVencimiento": "2024-06-01T00:00:00.000Z",
       "descripcion": "Compra de: pan bollo,pan fances,pan naranja",
       "tipoPago": "Pago en cuotas",
-      "monto": 500.00,
-      "intereses": 20.00
+      "monto": 500,
+      "intereses": 20
     },
     {
       "customerId": 2,
@@ -303,12 +376,10 @@
       "fechaVencimiento": "2024-06-01T00:00:00.000Z",
       "descripcion": "Compra de: pan bollo,pan fances,pan naranja",
       "tipoPago": "Pago en cuotas",
-      "monto": 500.00,
-      "intereses": 20.00
+      "monto": 500,
+      "intereses": 20
     }
-    ],
-
-
+  ],
   "account": [
     {
       "customer": {
@@ -663,6 +734,78 @@
       "installment_compensatory_compounding": "D",
       "diaFactura": "",
       "id": 45
+    },
+    {
+      "customer": {
+        "dni": "1234",
+        "first_name": "maycol",
+        "last_name": "Cordova",
+        "password": "12",
+        "phone": "916169663",
+        "email": "yoteamomuchote22@gmail.com",
+        "address": "Jr. Manco Capac  #720"
+      },
+      "admin_id": "3",
+      "active": "T",
+      "max_credit": "200",
+      "current_credit": "200",
+      "credit_type_of_rate": "TEM",
+      "credit_rate": "5%",
+      "credit_compounding": "D",
+      "penalty_rate": "2%",
+      "penalty_rate_type": "TEM",
+      "compensatory_rate_type": "2%",
+      "compensatory_rate": "TEM",
+      "invoice_penalty_rate_type": "TEM",
+      "invoice_penalty_rate": "2%",
+      "invoice_penalty_compounding": "D",
+      "installment_penalty_rate_type": "TEM",
+      "installment_penalty_rate": "2%",
+      "installment_penalty_compounding": "D",
+      "invoice_compensatory_rate_type": "TEM",
+      "invoice_compensatory_rate": "2%",
+      "invoice_compensatory_compounding": "D",
+      "installment_compensatory_rate_type": "TEM",
+      "installment_compensatory_rate": "2%",
+      "installment_compensatory_compounding": "D",
+      "diaFactura": "2024-06-27",
+      "id": 46
+    },
+    {
+      "customer": {
+        "dni": "7777",
+        "first_name": "xxxx",
+        "last_name": "yyyy",
+        "password": "123",
+        "phone": "916169663",
+        "email": "xxx@gmail",
+        "address": "Lima"
+      },
+      "admin_id": "5",
+      "active": "T",
+      "max_credit": "200",
+      "current_credit": "200",
+      "credit_type_of_rate": "TEM",
+      "credit_rate": "5%",
+      "credit_compounding": "D",
+      "penalty_rate": "2%",
+      "penalty_rate_type": "TEM",
+      "compensatory_rate_type": "2%",
+      "compensatory_rate": "TEM",
+      "invoice_penalty_rate_type": "TEM",
+      "invoice_penalty_rate": "2%",
+      "invoice_penalty_compounding": "D",
+      "installment_penalty_rate_type": "TEM",
+      "installment_penalty_rate": "2%",
+      "installment_penalty_compounding": "D",
+      "invoice_compensatory_rate_type": "TEM",
+      "invoice_compensatory_rate": "2%",
+      "invoice_compensatory_compounding": "D",
+      "installment_compensatory_rate_type": "TEM",
+      "installment_compensatory_rate": "2%",
+      "installment_compensatory_compounding": "D",
+      "diaFactura": "2024-06-29",
+      "id": 47
     }
   ]
 }
