@@ -11,8 +11,8 @@
             <input id="dni" v-model="dni" type="text" class="p-inputtext">
           </div>
           <div class="p-field p-col">
-            <label for="contrasena">Contraseña</label>
-            <input id="contrasena" v-model="contrasena" type="password" class="p-inputtext">
+            <label for="password">Contraseña</label>
+            <input id="password" v-model="password" type="password" class="p-inputtext">
           </div>
         </div>
       </div>
@@ -35,7 +35,7 @@ export default {
   data() {
     return {
       dni: "",
-      contrasena: "",
+      password: "",
       administrationApiService: new AdministrationApiService(),
     };
   },
@@ -43,20 +43,20 @@ export default {
     async login() {
       const body = {
         dni: this.dni,
-        contrasena: this.contrasena,
+        password: this.password,
       };
+      const response = await this.administrationApiService.Loginadministration(body);
 
-      const response = await this.administrationApiService.Loginadministration(body.dni, body.contrasena);
-
-      if (response && response.data && response.data.length > 0) {
+      if (response.status === 200) {
         alert("Inicio de sesión exitoso.");
-        const adminId = response.data[0].id;
+        console.log(response)
+        const adminId = response.data.id;
       //  const isAdministration = response.data[0].isAdministration;
         sessionStorage.setItem("adminId", adminId);
 
         router.push('/main-admi');
         //this.$store.commit("SET_ADMIN", response.data[0]);
-      } else {
+      } else {        
         alert("DNI o contraseña inválidos.");
       }
 

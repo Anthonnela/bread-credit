@@ -7,35 +7,35 @@
       <div class="p-card-body">
         <div class="row">
           <label for="nombre">Nombre</label>
-          <pv-input-text id="nombre" v-model="nombreadmin"></pv-input-text>
+          <pv-input-text id="nombre" v-model="firstName"></pv-input-text>
         </div>
         <div class="row">
-          <label for="apellido">Apellidos</label>
-          <pv-input-text id="apellido" v-model="apellido"></pv-input-text>
+          <label for="lastName">Apellido</label>
+          <pv-input-text id="lastName" v-model="lastName"></pv-input-text>
         </div>
         <div class="row">
           <label for="dni">DNI</label>
           <pv-input-text id="dni" v-model="dni"></pv-input-text>
         </div>
         <div class="row">
-          <label for="contrasena">Contraseña</label>
-          <pv-input-text id="contrasena" v-model="contrasena" type="password"></pv-input-text>
+          <label for="password">Contraseña</label>
+          <pv-input-text id="password" v-model="password" type="password"></pv-input-text>
         </div>
         <div class="row">
-          <label for="celular">Celular</label>
-          <pv-input-text id="celular" v-model="celular"></pv-input-text>
+          <label for="phone">Celular</label>
+          <pv-input-text id="phone" v-model="phone"></pv-input-text>
         </div>
         <div class="row">
-          <label for="correo">Correo</label>
-          <pv-input-text id="correo" v-model="correo"></pv-input-text>
+          <label for="email">Correo</label>
+          <pv-input-text id="email" v-model="email"></pv-input-text>
         </div>
         <div class="row">
-          <label for="negocio">Seleccionar Negocio</label>
-          <pv-input-text id="negocio" v-model="negocio"></pv-input-text>
+          <label for="businessType">Seleccionar negocio</label>
+          <pv-input-text id="businessType" v-model="businessType"></pv-input-text>
         </div>
         <div class="row">
-          <label for="nombrenegocio">Nombre del Negocio</label>
-          <pv-input-text id="nombrenegocio" v-model="nombrenegocio"></pv-input-text>
+          <label for="businessName">Nombre del negocio</label>
+          <pv-input-text id="businessName" v-model="businessName"></pv-input-text>
         </div>
       </div>
       <div class="p-card-footer">
@@ -55,14 +55,14 @@ export default {
   name: "register-administration",
   data() {
     return {
-      nombreadmin: "",
-      apellido: "",
+      firstName: "",
+      lastName: "",
       dni: "",
-      contrasena: "",
-      celular: "",
-      correo: "",
-      negocio: "",
-      nombrenegocio: "",
+      password: "",
+      phone: "",
+      email: "",
+      businessType: "",
+      businessName: "",
       administrationApiService: new AdministrationApiService()
     };
   },
@@ -70,26 +70,28 @@ export default {
   methods: {
     async create() {
       const body = {
-        nombreadmin: this.nombreadmin,
-        apellido: this.apellido,
-        dni: this.dni,
-        contrasena: this.contrasena,
-        celular: this.celular,
-        correo: this.correo,
-        negocio: this.negocio,
-        nombrenegocio: this.nombrenegocio
+        user : {
+          firstName: this.firstName,
+          lastName: this.lastName,
+          dni: this.dni,
+          password: this.password,
+          phone: this.phone,
+          email: this.email,
+        },
+        businessType: this.businessType,
+        businessName: this.businessName
       };
       const response = await this.administrationApiService.create(body);
       if (response.status === 201) {
         alert("Administrador registrado correctamente.");
-        this.nombreadmin = "";
-        this.apellido = "";
+        this.firstName = "";
+        this.lastName = "";
         this.dni = "";
-        this.contrasena = "";
-        this.celular = "";
-        this.correo = "";
-        this.negocio = "";
-        this.nombrenegocio = "";
+        this.password = "";
+        this.phone = "";
+        this.email = "";
+        this.businessType = "";
+        this.businessName = "";
       } else {
         alert("Error al crear el administrador.");
       }

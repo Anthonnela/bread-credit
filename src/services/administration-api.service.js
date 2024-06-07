@@ -2,7 +2,7 @@
 import axios from "axios";
 
 const http = axios.create({
-    baseURL: 'http://localhost:3000',
+    baseURL: 'http://localhost:8080',
 });
 
 export class AdministrationApiService {
@@ -26,10 +26,8 @@ export class AdministrationApiService {
         return await http.delete('admin/' + id);
     }
 
-  async Loginadministration (dni,contrasena){
-        return http.get(`admin?dni=${dni}&contrasena=${contrasena}`);
+    async Loginadministration (body){
+        return await http.post(`admin/login`, body);
     }
-
-
 
 };
