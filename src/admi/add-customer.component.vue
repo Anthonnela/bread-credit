@@ -15,11 +15,11 @@
             </div>
             <div class="row">
               <label>Nombre</label>
-              <pv-input-text id="first_name" v-model="first_name"></pv-input-text>
+              <pv-input-text id="first_name" v-model="firstName"></pv-input-text>
             </div>
             <div class="row">
               <label>Apellido</label>
-              <pv-input-text id="last_name" v-model="last_name"></pv-input-text>
+              <pv-input-text id="last_name" v-model="lastName"></pv-input-text>
             </div>
             <div class="row">
               <label>Contraseña</label>
@@ -116,38 +116,38 @@ export default {
   data() {
     return {
       dni: "",
-      first_name: "",
-      last_name: "",
+      firstName: "",
+      lastName: "",
       password: "",
       phone: "",
       email: "",
       address: "",
 
       admin_id: "1",
-      active: "T",
-      max_credit: "200",
-      current_credit: "200",
+      active: true,
+      max_credit: 200,
+      current_credit: 200,
       credit_type_of_rate: "TEM",
-      credit_rate: "5%",
-      credit_compounding: "D",
+      credit_rate: 5,
+      credit_compounding: 1,
       //agregado
-      penalty_rate: "2%",
+      penalty_rate: 2,
       penalty_rate_type: "TEM",
       compensatory_rate_type:"TEM",
-      compensatory_rate: "2%",
+      compensatory_rate: 2,
       //
       invoice_penalty_rate_type: "TEM",
-      invoice_penalty_rate: "2%",
-      invoice_penalty_compounding: "D",
+      invoice_penalty_rate: 2,
+      invoice_penalty_compounding: 1,
       installment_penalty_rate_type: "TEM",
-      installment_penalty_rate: "2%",
-      installment_penalty_compounding: "D",
+      installment_penalty_rate: 2,
+      installment_penalty_compounding: 1,
       invoice_compensatory_rate_type: "TEM",
-      invoice_compensatory_rate: "2%",
-      invoice_compensatory_compounding:"D",
+      invoice_compensatory_rate: 2,
+      invoice_compensatory_compounding:1,
       installment_compensatory_rate_type: "TEM",
-      installment_compensatory_rate: "2%",
-      installment_compensatory_compounding: "D",
+      installment_compensatory_rate: 2,
+      installment_compensatory_compounding: 1,
       //agregado
       diaFactura: "",
 
@@ -158,52 +158,52 @@ export default {
 
   methods: {
     async create() {
-      const adminId = sessionStorage.getItem("userId"); //modificado
+      //const adminId = sessionStorage.getItem("adminId"); //modificado
       const customer = {
-        dni: this.dni,
-        first_name: this.first_name,
-        last_name: this.last_name,
-        password: this.password,
-        phone: this.phone,
-        email: this.email,
+        user:{
+          firstName: this.firstName,
+          lastName: this.lastName,
+          dni: this.dni,
+          password: this.password,
+          phone: this.phone,
+          email: this.email,
+        },
         address: this.address,
       };
 
       const account = { 
-      customer: customer,
-      admin_id: sessionStorage.getItem('adminId'),
+      customer: {
+        id: 0,
+      },
+      //admin_id: sessionStorage.getItem('adminId'),
+      admin:{
+        id: parseInt(sessionStorage.getItem('adminId'),10),
+      },
       active: this.active,
-      max_credit: this.max_credit,
-      current_credit: this.current_credit,
-      credit_type_of_rate: this.credit_type_of_rate,
-      credit_rate: this.credit_rate,
-      credit_compounding: this.credit_compounding,
-      //agregado
-      penalty_rate: this.penalty_rate,
-      penalty_rate_type: this.penalty_rate_type,
-      compensatory_rate_type: this.compensatory_rate,
-      compensatory_rate: this.compensatory_rate_type,
-      //
-      invoice_penalty_rate_type: this.invoice_penalty_rate_type,
-      invoice_penalty_rate: this.invoice_penalty_rate,
-      invoice_penalty_compounding: this.invoice_penalty_compounding,
-      installment_penalty_rate_type: this.installment_penalty_rate_type,
-      installment_penalty_rate: this.installment_penalty_rate,
-      installment_penalty_compounding: this.installment_penalty_compounding,
-      invoice_compensatory_rate_type: this.invoice_compensatory_rate_type,
-      invoice_compensatory_rate: this.invoice_compensatory_rate,
-      invoice_compensatory_compounding:this.invoice_compensatory_compounding,
-      installment_compensatory_rate_type: this.installment_compensatory_rate_type,
-      installment_compensatory_rate: this.installment_compensatory_rate,
-      installment_compensatory_compounding: this.installment_compensatory_compounding,
-
-      //
-      diaFactura: this.diaFactura,
+      maxCredit: this.max_credit,
+      currentCredit: this.current_credit,
+      creditTypeOfRate: this.credit_type_of_rate,
+      creditRate: this.credit_rate,
+      creditCompounding: this.credit_compounding,    
+      invoicePenaltyRateType: this.penalty_rate_type,
+      invoicePenaltyRate: this.penalty_rate,
+      invoicePenaltyCompouding: this.invoice_penalty_compounding,
+      installmentPenaltyRateType: this.penalty_rate_type,
+      installmentPenaltyRate: this.penalty_rate,
+      installmentPenaltyCompouding: this.installment_penalty_compounding,
+      invoiceCompensatoryRateType: this.compensatory_rate_type,
+      invoiceCompensatoryRate: this.compensatory_rate,
+      invoiceCompensatoryCompouding:this.invoice_compensatory_compounding,
+      installmentCompensatoryRateType: this.compensatory_rate_type,
+      installmentCompensatoryRate: this.compensatory_rate,
+      installmentCompensatoryCompouding: this.installment_compensatory_compounding,
       };
 //modificado
       try {
-        await this.customerApiService.CreateCustomer(customer);
-        await this.accountApiService.create(account);
+        const example = await this.customerApiService.create(customer);
+        //revisar FERNANDO
+        account.customer.id = example.data.id;
+        await this.accountApiService.create(account); 
         alert("Cliente registrado con éxito");
         router.push('/main-admi');
       } catch (error) {

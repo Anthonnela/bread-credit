@@ -11,7 +11,6 @@
             <p>Celular: {{ celular }}</p>
             <p>Correo: {{ correo }}</p>
             <p>Negocio: {{ negocio }}</p>
-            <p>N° de Cliente</p>
             <p>Nombre del negocio <strong>{{ nombrenegocio }}</strong></p>
           </div>
         </div>
@@ -62,13 +61,13 @@ export default {
       const response = await administrationService.getById(userId);
 
       // Asigna los datos del administrador a las propiedades de datos
-      this.nombreadmin = response.data.nombreadmin;
-      this.apellido = response.data.apellido;
-      this.dni = response.data.dni;
-      this.celular = response.data.celular;
-      this.correo = response.data.correo;
-      this.negocio = response.data.negocio;
-      this.nombrenegocio = response.data.nombrenegocio;
+      this.nombreadmin = response.data.user.firstName;
+      this.apellido = response.data.user.lastName;
+      this.dni = response.data.user.dni;
+      this.celular = response.data.user.phone;
+      this.correo = response.data.user.email;
+      this.negocio = response.data.businessType;
+      this.nombrenegocio = response.data.businessName;
     } catch (error) {
       console.error("Error al recuperar los datos del administrador:", error);
     }
