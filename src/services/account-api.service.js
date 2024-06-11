@@ -28,5 +28,11 @@ export class AccountApiService {
     async GetAccountByAdmin(id) {
         return await http.get(`/creditaccount/admin/` + id);
     }
+    async GetAccountByAdminByCustomer(adminId,customerId) {
+        return await http.get(`/creditaccount/admin/` + adminId + `/customer/` + customerId );
+    }
 
+    async GetAccountByCustomer(id) {
+        return await http.get(`/creditaccount/customer/` + id);
+    }
 }
