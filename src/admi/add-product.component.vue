@@ -8,9 +8,10 @@
     <div v-else>
       <div v-for="product in products" :key="product.id" class="product-card">
         <img :src="product.imagen" alt="Imagen del producto">
-        <p>{{ product.nombre }}</p>
-        <p>{{ product.precio }}</p>
-        <p>{{ product.uri }}</p>
+        <p>{{ product.name }}</p>
+        <p>{{ product.price }}</p>
+        <!--
+        <p>{{ product.url }}</p>  -->
       </div>
     </div>
     <div class="add-product-form">
@@ -18,11 +19,11 @@
       <div class="card">
         <div class="form-group">
           <label for="productName">Nombre del Producto:</label>
-          <input type="text" id="productName" v-model="newProduct.nombre">
+          <input type="text" id="productName" v-model="newProduct.name">
         </div>
         <div class="form-group">
           <label for="productPrice">Precio del Producto:</label>
-          <input type="text" id="productPrice" v-model="newProduct.precio">
+          <input type="text" id="productPrice" v-model="newProduct.price">
         </div>
         <div class="form-group">
           <label for="productImage">URL de la Imagen:</label>
@@ -45,10 +46,13 @@ export default {
     return {
       products: [],
       newProduct: {
-        nombre: "",
-        imagen: "",
-        precio: "",
-        admin: sessionStorage.getItem("adminId"),
+        admin:{
+          id: parseInt(sessionStorage.getItem('adminId'),10),
+        },
+        name: "",
+        //imagen: "",
+        price: 0,
+        
       }
     };
   },

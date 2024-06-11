@@ -123,8 +123,9 @@ export default {
   methods: {
     async loadProducts() {
       try {
-        const userId = sessionStorage.getItem("adminId");
+        const userId = sessionStorage.getItem('adminId');
         const response = await this.productService.GetProductByAdmin(userId);
+        console.log(response);
         this.products = response.data.map(product => ({
           ...product,
           quantity: 0,
@@ -157,13 +158,21 @@ export default {
     },
     async searchCustomer() {
       try {
+        console.log(this.searchDNI);
         const response = await this.customerService.getByDNI(this.searchDNI);
-        if (response.data.length > 0) {
+        if(response.status === 200){
+          this.customer = response.data;
+        }else {
+          this.customer = null;
+          console.log("No se encontró ningún cliente con el DNI proporcionado.");
+        }
+
+        /* if (response.data.length > 0) {
           this.customer = response.data[0];
         } else {
           this.customer = null;
           console.log("No se encontró ningún cliente con el DNI proporcionado.");
-        }
+        } */
       } catch (error) {
         console.error("Error al buscar el cliente:", error);
       }

@@ -25,7 +25,8 @@ export class AccountApiService {
         return await http.delete('creditaccount/' + id);
     }
 
-    async GetAccountByAdmin(adminId) {
-        return await http.get(`/creditaccount?admin_id=${adminId}`);
+    async GetAccountByAdmin(id) {
+        return await http.get(`/creditaccount/admin/` + id);
     }
+
 }

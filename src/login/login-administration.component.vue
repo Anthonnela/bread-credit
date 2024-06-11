@@ -49,7 +49,6 @@ export default {
 
       if (response.status === 200) {
         alert("Inicio de sesión exitoso.");
-        console.log(response)
         const adminId = response.data.id;
       //  const isAdministration = response.data[0].isAdministration;
         sessionStorage.setItem("adminId", adminId);

@@ -26,15 +26,15 @@ export class CustomerApiService {
     }
 
     async getByDNI(dni) {
-        return await http.get(`/customer?dni=${dni}`);
+        return await http.get(`/customer/dni/` + dni);
     }
 
     async Logincustomer(correo, contraseña){
         return await http.get(`/customer?correo=${correo}&contraseña=${contraseña}`);
     }
-//añadido
-    async GetCustomerByAdmin(adminId) {
-        return await http.get(`/customer?adminId=${adminId}`);
-    }
+    //Esta funcion no se esta utilizando
+    //async GetCustomerByAdmin(adminId) {
+    //    return await http.get(`/customer?adminId=${adminId}`);
+    //}
 
 }

@@ -1,32 +1,32 @@
 import axios from "axios";
 
 const http = axios.create({
-    baseURL: 'http://localhost:3000',
+    baseURL: 'http://localhost:8080',
 });
 
 export class ProductService {
 
 
     async getAll() {
-        return await http.get('productos');
+        return await http.get('product');
     }
 
     async getById(id) {
-        return await http.get(`/productos/${id}`);
+        return await http.get(`/product/${id}`);
     }
 
     async create(body) {
-        return await http.post('productos', body);
+        return await http.post('product', body);
     }
 
     async update(body, id) {
-        return await http.put(`/productos/${id}`, body);
+        return await http.put(`/product/${id}`, body);
     }
 
     async delete(id) {
-        return await http.delete(`productos/${id}`);
+        return await http.delete(`product/${id}`);
     }
-    async GetProductByAdmin(adminId) {
-        return await http.get(`/productos?admin=${adminId}`);
+    async GetProductByAdmin(id) {
+        return await http.get(`/product/admin/` + id);
     }
 }
