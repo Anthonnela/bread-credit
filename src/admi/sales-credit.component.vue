@@ -4,7 +4,7 @@
     <div class="sales-credit">
       <div class="header">
         <div class="user-info">
-          <p><strong>{{ customer ? customer.nombre + ' SU SALDO ES DE S/ ' + customer.cuenta.saldoDeCredito : '' }}</strong></p>
+          <p><strong>{{ customer ? customer.firstName + ' SU SALDO ES DE S/ '  : '' }}</strong></p>
         </div>
         <div class="nav-links">
           <button @click="goToHelp">AYUDA</button>
@@ -45,10 +45,9 @@
           </div>
           <div v-if="customer">
             <div class="customer-card">
-              <p><strong>{{ customer.nombre }} {{ customer.apellido }}</strong></p>
-              <p>DNI: {{ customer.dni }}</p>
-              <p>Celular: {{ customer.celular }}</p>
-              <p>Saldo: S/ {{ customer.cuenta.saldoDeCredito }}</p>
+              <p><strong>{{cuenta.customer.user.firstName }} {{ cuenta.customer.user.lastName }}</strong></p>
+              <p>DNI: {{ cuenta.customer.user.dni }}</p>
+              <p>Celular: {{ cuenta.customer.user.phone }}</p>
               <button @click="confirmPurchase">Pago Único</button>
               <button @click="confirmPurchaseDues">Pago Cuotas</button>
               <select v-model="selectedOption">
@@ -68,19 +67,19 @@
           </div>
           <div class="info-group">
             <label>Tasa de Intereses:</label>
-            <p>{{ customer.cuenta.tasaInteres }}</p>
+            <p>{{ cuenta.creditRate }}</p>
           </div>
           <div class="info-group">
             <label>Tipo de Tasa:</label>
-            <p>{{ customer.cuenta.tipoPasa }}</p>
+            <p>{{ cuenta.creditTypeOfRate }}</p>
           </div>
           <div class="info-group">
             <label>Tu Fecha de Factura:</label>
-            <p>{{ customer.cuenta.diaFactura }}</p>
+            <p>{{ cuenta.billingDay }}</p>
           </div>
           <div class="info-group">
             <label>Tu Fecha de Pago:</label>
-            <p>{{ customer.cuenta.diaPago }}</p>
+            <p>{{ cuenta.billingDay }}</p>
           </div>
           <div class="info-group">
             <label>Total:</label>
@@ -97,7 +96,7 @@
 </template>
 
 <script>
-import { CustomerApiService } from "../services/customer-api.service.js";
+import { AccountApiService } from "../services/account-api.service.js";
 import ToolbarAdmin from "./toolbar-admin.component.vue";
 import { ProductService } from "../services/product.service.js";
 
@@ -107,6 +106,7 @@ export default {
   data() {
     return {
       products: [],
+      cuenta:[],
       precioTotal: 0,
       searchDNI: "",
       customer: null,
@@ -115,6 +115,7 @@ export default {
       compras: [],
       options: [1, 2, 3],  // Lista de opciones numéricas
       selectedOption: 1,   // Valor inicial seleccionado
+      accountApiService: new AccountApiService(),
     };
   },
   async created() {
@@ -159,7 +160,7 @@ export default {
     async searchCustomer() {
       try {
         console.log(this.searchDNI);
-        const response = await this.customerService.getByDNI(this.searchDNI);
+        const response = await this.accountApiService.getByDNI(this.searchDNI);
         if(response.status === 200){
           this.customer = response.data;
         }else {
