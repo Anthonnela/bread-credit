@@ -21,18 +21,18 @@
       </thead>
       <tbody>
       <tr v-for="cuenta in cuentas" :key="cuenta.id">
-        <td>{{ cuenta.customer.dni }}</td>
-        <td>{{ cuenta.customer.first_name }}</td>
-        <td>{{ cuenta.customer.last_name }}</td>
-        <td>{{ cuenta.customer.email }}</td>
-        <td>{{ cuenta.customer.phone }}</td>
+        <td>{{ cuenta.customer.user.dni }}</td>
+        <td>{{ cuenta.customer.user.firstName }}</td>
+        <td>{{ cuenta.customer.user.lastName }}</td>
+        <td>{{ cuenta.customer.user.email }}</td>
+        <td>{{ cuenta.customer.user.phone }}</td>
         <td>{{ cuenta.customer.address }}</td>
         <td>{{ cuenta.id }}</td>
-        <td>{{ cuenta.current_credit }}</td>
-        <td>{{ cuenta.credit_type_of_rate }}</td>
-        <td>{{ cuenta.diaFactura }}</td>
-        <td>{{ cuenta.diaFactura }}</td>
-        <td>{{ cuenta.credit_rate }}</td>
+        <td>{{ cuenta.currentCredit }}</td>
+        <td>{{ cuenta.creditTypeOfRate }}</td>
+        <td>{{ cuenta.billingDay }}</td>
+        <td>{{ cuenta.billingDay }}</td>
+        <td>{{ cuenta.creditRate }}</td>
 
       </tr>
       </tbody>
