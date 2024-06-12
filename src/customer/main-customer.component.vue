@@ -2,8 +2,8 @@
   <toolbar-customer></toolbar-customer>
   <div class="container">
     <div class="saludo">
-      <p>Hola, {{ nombre }}</p>
-      <p>Número de cuenta: {{ numeroCuenta }}</p>
+      <p>Hola: {{ nombre}}</p>
+      <p>Número de cuenta: {{ apellido }}</p>
     </div>
     <div class="cliente-info">
       <div class="card">
@@ -48,6 +48,7 @@
 <script>
 import { CustomerApiService } from "../services/customer-api.service.js";
 import { PurchaseApiService } from "../services/purchase-api.service.js";
+import {AccountApiService} from "../services/account-api.service.js";
 import ToolbarCustomer from "../customer/toolbar-customer.compoenent.vue";
 
 export default {
@@ -55,6 +56,7 @@ export default {
   components: {ToolbarCustomer},
   data() {
     return {
+      cliente:{},
       nombre: "",
       apellido: "",
       dni: "",
@@ -69,45 +71,21 @@ export default {
       historialCompras: [],
       interesesAcumulados: 0,
       customerApiService: new CustomerApiService(),
-      purchaseApiService: new PurchaseApiService()
+      purchaseApiService: new PurchaseApiService(),
+      accountApiService: new AccountApiService(),
     };
   },
   async created() {
     try {
       const customerId = sessionStorage.getItem("customerId");
-      const response = await this.customerApiService.getById(customerId);
-
-      if (response && response.data) {
-        const {
-          nombre,
-          apellido,
-          dni,
-          celular,
-          correo,
-          direccion,
-          cuenta: {numerocuenta, saldoDeCredito, diaPago, diaFactura}
-        } = response.data;
-
-        this.nombre = nombre;
-        this.apellido = apellido;
-        this.dni = dni;
-        this.celular = celular;
-        this.correo = correo;
-        this.direccion = direccion;
-        this.numeroCuenta = numerocuenta;
-        this.saldoActual = saldoDeCredito;
-        this.diaPago = diaPago;
-        this.diaFactura = diaFactura;
-
-        // Obtener historial de compras
-        const historialResponse = await this.purchaseApiService.getPurchasesByCustomerId(customerId);
-        if (historialResponse && historialResponse.data) {
-          this.historialCompras = historialResponse.data;
-
-          // Calcular intereses acumulados
-          this.interesesAcumulados = this.calcularInteresesAcumulados(this.historialCompras);
-        }
-      }
+      const response = await this.accountApiService.GetAccountByCustomer(customerId);
+      this.cliente =response.data;
+      this.apellido = this.cliente.customer.user.lastName;
+      this.nombre = this.cliente.customer.user.firstName;
+      this.saldoActual = this.cliente.currentCredit;
+      this.limiteCredito = this.cliente.maxCredit;
+      this.diaPago = this.cliente.billingDay;
+      
     } catch (error) {
       console.error("Error al recuperar los datos del cliente:", error);
     }
