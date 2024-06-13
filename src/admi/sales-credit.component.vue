@@ -4,7 +4,7 @@
     <div class="sales-credit">
       <div class="header">
         <div class="user-info">
-          <p><strong>{{ customer ? customer.firstName + ' SU SALDO ES DE S/ '  : '' }}</strong></p>
+          <p><strong>{{ customer ? cuenta.customer.user.firstName + ' SU SALDO ES DE S/ ' + cuenta.currentCredit : '' }}</strong></p>
         </div>
         <div class="nav-links">
           <button @click="goToHelp">AYUDA</button>
@@ -21,8 +21,8 @@
             <div v-for="product in products" :key="product.id" class="product-item">
               <img :src="product.image" alt="Producto" class="product-image" />
               <div class="product-details">
-                <p>{{ product.nombre }}</p>
-                <p>S/ {{ product.precio }}</p>
+                <p>{{ product.name }}</p>
+                <p>S/ {{ product.price }}</p>
                 <div class="quantity-control">
                   <button @click="decreaseQuantity(product)">-</button>
                   <span>{{ product.quantity }}</span>
@@ -32,7 +32,7 @@
               </div>
             </div>
             <div class="total">
-              <p>Precio Total de Productos: S/ {{ precioTotal }}</p>
+              <!--<p>Precio Total de Productos: S/ {{ precioTotal }}</p> -->
             </div>
           </div>
         </div>
@@ -45,7 +45,7 @@
           </div>
           <div v-if="customer">
             <div class="customer-card">
-              <p><strong>{{cuenta.customer.user.firstName }} {{ cuenta.customer.user.lastName }}</strong></p>
+              <p><strong>{{ cuenta.customer.user.firstName }} {{cuenta.customer.user.lastName }}</strong></p>
               <p>DNI: {{ cuenta.customer.user.dni }}</p>
               <p>Celular: {{ cuenta.customer.user.phone }}</p>
               <button @click="confirmPurchase">Pago Único</button>
@@ -67,7 +67,7 @@
           </div>
           <div class="info-group">
             <label>Tasa de Intereses:</label>
-            <p>{{ cuenta.creditRate }}</p>
+            <p>{{ cuenta.creditRate }}%</p>
           </div>
           <div class="info-group">
             <label>Tipo de Tasa:</label>
@@ -99,6 +99,7 @@
 import { AccountApiService } from "../services/account-api.service.js";
 import ToolbarAdmin from "./toolbar-admin.component.vue";
 import { ProductService } from "../services/product.service.js";
+import { CustomerApiService } from "../services/customer-api.service.js"; // Asegurarse de tener este servicio
 
 export default {
   name: "sales-credit",
@@ -106,15 +107,14 @@ export default {
   data() {
     return {
       products: [],
-      cuenta:[],
+      cuenta: [],
       precioTotal: 0,
       searchDNI: "",
       customer: null,
       productService: new ProductService(),
       customerService: new CustomerApiService(),
-      compras: [],
-      options: [1, 2, 3],  // Lista de opciones numéricas
-      selectedOption: 1,   // Valor inicial seleccionado
+      options: [1, 2, 3],
+      selectedOption: 1,
       accountApiService: new AccountApiService(),
     };
   },
@@ -126,12 +126,13 @@ export default {
       try {
         const userId = sessionStorage.getItem('adminId');
         const response = await this.productService.GetProductByAdmin(userId);
-        console.log(response);
+
         this.products = response.data.map(product => ({
           ...product,
           quantity: 0,
           precioTotal: 0
         }));
+
         this.calculateTotalProducts();
       } catch (error) {
         console.error("Error al obtener la lista de productos:", error);
@@ -141,7 +142,7 @@ export default {
       product.quantity++;
       this.updatePrecioTotal(product);
       this.calculateTotalProducts();
-    },
+  },
     decreaseQuantity(product) {
       if (product.quantity > 0) {
         product.quantity--;
@@ -150,30 +151,22 @@ export default {
       }
     },
     updatePrecioTotal(product) {
-      product.precioTotal = product.quantity * product.precio;
+      product.precioTotal = product.quantity * product.price;
     },
     calculateTotalProducts() {
-      this.precioTotal = this.products.reduce((total, product) => {
-        return total + product.precioTotal;
-      }, 0);
+      this.precioTotal = this.products.reduce((total, product) => total + product.precioTotal, 0);
     },
     async searchCustomer() {
       try {
-        console.log(this.searchDNI);
         const response = await this.accountApiService.getByDNI(this.searchDNI);
-        if(response.status === 200){
-          this.customer = response.data;
-        }else {
-          this.customer = null;
-          console.log("No se encontró ningún cliente con el DNI proporcionado.");
-        }
-
-        /* if (response.data.length > 0) {
-          this.customer = response.data[0];
+        console.log(response);
+        if (response.status === 200) {
+          this.customer = response.data.customer.user;
+          this.cuenta = response.data;
         } else {
           this.customer = null;
           console.log("No se encontró ningún cliente con el DNI proporcionado.");
-        } */
+        }
       } catch (error) {
         console.error("Error al buscar el cliente:", error);
       }
@@ -182,15 +175,18 @@ export default {
       try {
         const productsToPurchase = this.products.filter(product => product.quantity > 0);
         console.log("Productos a comprar:", productsToPurchase);
+
+        // Reset purchase data
         this.products.forEach(product => {
           product.quantity = 0;
           product.precioTotal = 0;
         });
         this.precioTotal = 0;
-
         this.customer = null;
         this.searchDNI = "";
-        sessionStorage.setItem('Productos', JSON.stringify(productsToPurchase))
+
+        // Store products in sessionStorage
+        sessionStorage.setItem('Productos', JSON.stringify(productsToPurchase));
         console.log("Compra confirmada con éxito.");
       } catch (error) {
         console.error("Error al confirmar la compra:", error);
@@ -206,11 +202,9 @@ export default {
       this.searchDNI = "";
     },
     goToHelp() {
-      // Implement help page navigation
       console.log("Navigating to help page...");
     },
     goBack() {
-      // Implement back navigation
       console.log("Going back...");
     }
   }

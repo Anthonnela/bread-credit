@@ -36,5 +36,7 @@ export class AccountApiService {
     async GetAccountByCustomer(id) {
         return await http.get(`/creditaccount/customer/` + id);
     }
-
+    async getByDNI(dni) {
+        return await http.get(`/creditaccount/customer/dni/` + dni);
+    }
 }

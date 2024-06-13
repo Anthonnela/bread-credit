@@ -29,12 +29,7 @@ export class CustomerApiService {
         return await http.get(`/customer/dni/` + dni);
     }
 
-    async Logincustomer(correo, contraseña){
-        return await http.get(`/customer?correo=${correo}&contraseña=${contraseña}`);
+    async Logincustomer (body){
+        return await http.post(`customer/login`, body);
     }
-    //Esta funcion no se esta utilizando
-    //async GetCustomerByAdmin(adminId) {
-    //    return await http.get(`/customer?adminId=${adminId}`);
-    //}
-
 }

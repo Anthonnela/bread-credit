@@ -38,16 +38,17 @@ export default {
   },
   methods: {
     async login() {
-      console.log("Intentando iniciar sesión con:", this.email, this.password);
+      const body = {
+        dni: this.email,
+        password: this.password,
+      };
       try {
-        const response = await this.customerApiService.Logincustomer(
-            this.email,
-            this.password
-        );
+        const response = await this.customerApiService.Logincustomer(body);
 
-        if (response && response.data && response.data.length > 0) {
+        if (response.status === 200) {
           alert("Inicio de sesión exitoso.");
-          const customerId = response.data[0].id;
+          const customerId = response.data.id;
+          // const customerId = response.data[0].id;
           sessionStorage.setItem("customerId", customerId);
           router.push("/main-customer");
         } else {
