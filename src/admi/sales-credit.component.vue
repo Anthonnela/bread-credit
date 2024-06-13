@@ -32,7 +32,7 @@
               </div>
             </div>
             <div class="total">
-              <!--<p>Precio Total de Productos: S/ {{ precioTotal }}</p> -->
+              <!--<p>Precio Total de Productos: S/ {{ precioTotal }}</p> -->  
             </div>
           </div>
         </div>
