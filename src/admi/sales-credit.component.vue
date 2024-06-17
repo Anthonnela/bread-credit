@@ -159,7 +159,6 @@ export default {
     async searchCustomer() {
       try {
         const response = await this.accountApiService.getByDNI(this.searchDNI);
-        console.log(response);
         if (response.status === 200) {
           this.customer = response.data.customer.user;
           this.cuenta = response.data;
@@ -175,6 +174,42 @@ export default {
       try {
         const productsToPurchase = this.products.filter(product => product.quantity > 0);
         console.log("Productos a comprar:", productsToPurchase);
+
+        //calculando datos
+        //se valida si tiene credito la cuenta
+        if( this.cuenta.currentCredit - this.precioTotal >= 0){
+            this.cuenta.currentCredit -= this.precioTotal;
+            console.log(this.cuenta.currentCredit);
+        //si el tipo de tasa es nominal se cambia a efectiva
+            if(this.cuenta.creditTypeOfRate=="TNM"){
+              this.cuenta.creditRate = (1 + (this.cuenta.creditRate/100)/30)**30 -1;
+              console.log(this.cuenta.creditRate);
+            }
+        //calculamos fecha de pago si la cuota = 1
+            if(this.selectedOption == 1){
+              const fechaHoy = new Date();
+              fechaHoy.setDate(fechaHoy.getDate()+30);
+              this.cuenta.billingDay=fechaHoy;
+              console.log(this.cuenta.billingDay);
+            }else{
+              //falta para las demas opciones
+            }
+
+        //hallando la anualidad o monto de las cuotas a pagar
+            const anualidad = (this.precioTotal*this.cuenta.creditRate/100)/(1-(1+this.cuenta.creditRate/100)**(-this.selectedOption));
+            console.log(anualidad);
+        
+        //asignamos la anualidad a cada cuota
+            if(this.selectedOption == 1){
+
+            }else{
+              //falta para las demas opciones
+            }
+          
+            
+        }
+
+
 
         // Reset purchase data
         this.products.forEach(product => {
