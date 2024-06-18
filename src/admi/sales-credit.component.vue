@@ -100,7 +100,7 @@ import { AccountApiService } from "../services/account-api.service.js";
 import ToolbarAdmin from "./toolbar-admin.component.vue";
 import { ProductService } from "../services/product.service.js";
 import { CustomerApiService } from "../services/customer-api.service.js"; // Asegurarse de tener este servicio
-
+import { PurchaseApiService } from "../services/purchase-api.service.js";
 export default {
   name: "sales-credit",
   components: { ToolbarAdmin },
@@ -116,6 +116,8 @@ export default {
       options: [1, 2, 3],
       selectedOption: 1,
       accountApiService: new AccountApiService(),
+      purchaseApiService: new PurchaseApiService(),
+      fecha: new Date(),
     };
   },
   async created() {
@@ -185,15 +187,14 @@ export default {
               this.cuenta.creditRate = (1 + (this.cuenta.creditRate/100)/30)**30 -1;
               console.log(this.cuenta.creditRate);
             }
-        //calculamos fecha de pago si la cuota = 1
+        /* //calculamos fecha de pago si la cuota = 1
             if(this.selectedOption == 1){
               const fechaHoy = new Date();
-              fechaHoy.setDate(fechaHoy.getDate()+30);
-              this.cuenta.billingDay=fechaHoy;
+              this.cuenta.billingDay=fechaHoy.getDay();
               console.log(this.cuenta.billingDay);
             }else{
               //falta para las demas opciones
-            }
+            } */
 
         //hallando la anualidad o monto de las cuotas a pagar
             const anualidad = (this.precioTotal*this.cuenta.creditRate/100)/(1-(1+this.cuenta.creditRate/100)**(-this.selectedOption));
@@ -205,12 +206,46 @@ export default {
             }else{
               //falta para las demas opciones
             }
+
+            console.log(this.cuenta.id);
           
+        //mandamos datos a purchase
+            const purchase = {
+              creditaccount:{
+                id:this.cuenta.id,
+              },
+              initialCost: this.precioTotal,
+              time: this.fecha,
+              installmentNumber: this.selectedOption,
+              creditRateType: this.cuenta.creditTypeOfRate,
+              creditRate: this.cuenta.creditRate,
+              creditCompouding: this.cuenta.creditCompounding,
+              penaltyRateType: this.cuenta.installmentPenaltyRateType,
+              penaltyRate: this.cuenta.installmentPenaltyRate,
+              penaltyCompouding: this.cuenta.installmentPenaltyCompouding,
+              compensatoryRateType: this.cuenta.installmentCompensatoryRateType,
+              compensatoryRate: this.cuenta.installmentCompensatoryRate,
+              compensatoryCompouding: this.cuenta.installmentCompensatoryCompouding,
+            }
+            console.log(this.cuenta);
+            console.log(purchase);
+            //try {
+              const example = await this.purchaseApiService.createPurchase(purchase);
+              console.log(example);
+             // alert("Compra registrada con éxito");
+              //router.push('/sales-credit');
+            //} catch (error) {
+            //  alert("Hubo un error al registrar la compra: " + error.message);
+            //  }
+            
+
+          //  if(example.response.status==201){
+          //}
             
         }
 
 
-
+       
         // Reset purchase data
         this.products.forEach(product => {
           product.quantity = 0;
