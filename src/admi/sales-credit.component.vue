@@ -182,8 +182,39 @@ export default {
         //calculando datos
         //se valida si tiene credito la cuenta
         if( this.cuenta.currentCredit - this.precioTotal >= 0){
-            this.cuenta.currentCredit -= this.precioTotal;
+            this.cuenta.currentCredit -= this.precioTotal; //actualizar al servicio
             console.log(this.cuenta.currentCredit);
+        //se actualiza la cuenta
+        const account = { 
+          customer: {
+            id: this.cuenta.customer.id,
+          },
+          admin:{
+            id: this.cuenta.admin.id,
+          },
+          active: this.cuenta.active,
+          maxCredit: this.cuenta.maxCredit,
+          currentCredit: this.cuenta.currentCredit,
+          billingDay: this.cuenta.billingDay,
+          creditTypeOfRate: this.cuenta.creditTypeOfRate,
+          creditRate: this.cuenta.creditRate,
+          creditCompounding: this.cuenta.creditCompounding,    
+          invoicePenaltyRateType: this.cuenta.invoicePenaltyRateType,
+          invoicePenaltyRate: this.cuenta.invoicePenaltyRate,
+          invoicePenaltyCompouding: this.cuenta.invoicePenaltyCompouding,
+          installmentPenaltyRateType: this.cuenta.installmentPenaltyRateType,
+          installmentPenaltyRate: this.cuenta.installmentPenaltyRate,
+          installmentPenaltyCompouding: this.cuenta.installmentPenaltyCompouding,
+          invoiceCompensatoryRateType: this.cuenta.invoiceCompensatoryRateType,
+          invoiceCompensatoryRate: this.cuenta.invoiceCompensatoryRate,
+          invoiceCompensatoryCompouding:this.cuenta.invoiceCompensatoryCompouding,
+          installmentCompensatoryRateType: this.cuenta.installmentCompensatoryRateType,
+          installmentCompensatoryRate: this.cuenta.installmentCompensatoryRate,
+          installmentCompensatoryCompouding: this.cuenta.installmentCompensatoryCompouding,
+        };
+        const example3 = await this.accountApiService.update(account,this.cuenta.id);
+
+
         //si el tipo de tasa es nominal se cambia a efectiva
             if(this.cuenta.creditTypeOfRate=="TNM"){
               this.cuenta.creditRate = (1 + (this.cuenta.creditRate/100)/30)**30 -1;
