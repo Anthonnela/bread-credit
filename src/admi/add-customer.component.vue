@@ -87,11 +87,12 @@
               <label>Tasa de Interés compensatoria</label>
               <pv-input-text id="compensatory_rate" v-model="compensatory_rate" :placeholder="'2%'"></pv-input-text>
             </div>
+            <!--ya no va
             <div class="row">
               <label>Día de Factura</label>
-              <input type="date" v-model="diaFactura">
+              <input v-model="diaFactura">
             </div>
-            
+            -->
             </div>
           </div>
         </div>

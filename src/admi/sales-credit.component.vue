@@ -101,6 +101,7 @@ import ToolbarAdmin from "./toolbar-admin.component.vue";
 import { ProductService } from "../services/product.service.js";
 import { CustomerApiService } from "../services/customer-api.service.js"; // Asegurarse de tener este servicio
 import { PurchaseApiService } from "../services/purchase-api.service.js";
+import {InstallmentApiService} from "../services/installment-api.service.js";
 export default {
   name: "sales-credit",
   components: { ToolbarAdmin },
@@ -117,7 +118,8 @@ export default {
       selectedOption: 1,
       accountApiService: new AccountApiService(),
       purchaseApiService: new PurchaseApiService(),
-      fecha: new Date(),
+      installmentApiService: new InstallmentApiService(),
+    
     };
   },
   async created() {
@@ -200,15 +202,7 @@ export default {
             const anualidad = (this.precioTotal*this.cuenta.creditRate/100)/(1-(1+this.cuenta.creditRate/100)**(-this.selectedOption));
             console.log(anualidad);
         
-        //asignamos la anualidad a cada cuota
-            if(this.selectedOption == 1){
-
-            }else{
-              //falta para las demas opciones
-            }
-
-            console.log(this.cuenta.id);
-          
+       
         //mandamos datos a purchase
             const purchase = {
               creditaccount:{
@@ -229,18 +223,39 @@ export default {
             }
             console.log(this.cuenta);
             console.log(purchase);
-            //try {
-              const example = await this.purchaseApiService.createPurchase(purchase);
-              console.log(example);
-             // alert("Compra registrada con éxito");
-              //router.push('/sales-credit');
-            //} catch (error) {
-            //  alert("Hubo un error al registrar la compra: " + error.message);
-            //  }
             
+            const example = await this.purchaseApiService.createPurchase(purchase);
+            console.log("purchase:",example);
+            alert("Compra registrada con éxito");
+            
+            //creamos installments segun las cuotas elegidas
+            if(example.status===201){
+              let fecha =new Date();
+              for(let i=0; i<this.selectedOption; i++){
+                
+                fecha.setDate(fecha.getDate()+30);
+                const diaPago = fecha;
+                console.log("fecha:" ,diaPago);
 
-          //  if(example.response.status==201){
-          //}
+                const installment={
+                  purchase:{
+                    id: example.data.id,
+                  },
+                  dueDate: diaPago,
+                  amount: anualidad,
+                }
+              const example2 = await this.installmentApiService.create(installment);
+              }
+
+
+            }
+
+             
+
+
+
+
+          
             
         }
 
