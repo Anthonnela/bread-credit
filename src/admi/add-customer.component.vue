@@ -177,7 +177,6 @@ export default {
       customer: {
         id: 0,
       },
-      //admin_id: sessionStorage.getItem('adminId'),
       admin:{
         id: parseInt(sessionStorage.getItem('adminId'),10),
       },

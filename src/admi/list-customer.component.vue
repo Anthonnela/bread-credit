@@ -17,6 +17,7 @@
         <th>Día de Pago</th>
         <th>Día de Factura</th>
         <th>Tasa de Interés</th>
+        <th>Eliminar cliente</th>
       </tr>
       </thead>
       <tbody>
@@ -33,7 +34,7 @@
         <td>{{ cuenta.billingDay }}</td>
         <td>{{ cuenta.billingDay }}</td>
         <td>{{ cuenta.creditRate }}</td>
-
+        <td>{{ELIMINAR }}</td>
       </tr>
       </tbody>
     </table>
