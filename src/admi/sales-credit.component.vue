@@ -272,6 +272,7 @@ export default {
                   purchase:{
                     id: example.data.id,
                   },
+                  installmentNumber: (i+1),
                   dueDate: diaPago,
                   amount: anualidad,
                 }
