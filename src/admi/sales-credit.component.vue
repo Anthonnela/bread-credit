@@ -6,6 +6,10 @@
         <div class="user-info">
           <p><strong>{{ customer ? cuenta.customer.user.firstName + ' SU SALDO ES DE S/ ' + cuenta.currentCredit : '' }}</strong></p>
         </div>
+        <div class="nav-links">
+          <button @click="goToHelp">AYUDA</button>
+          <button @click="goBack">VOLVER</button>
+        </div>
       </div>
       <div class="content">
         <div class="product-list">
@@ -28,6 +32,7 @@
               </div>
             </div>
             <div class="total">
+              <!--<p>Precio Total de Productos: S/ {{ precioTotal }}</p> -->  
             </div>
           </div>
         </div>
@@ -42,15 +47,15 @@
             <div class="customer-card">
               <p><strong>{{ cuenta.customer.user.firstName }} {{cuenta.customer.user.lastName }}</strong></p>
               <p>DNI: {{ cuenta.customer.user.dni }}</p>
-              <button @click="selectSinglePayment">Pago Único</button>
-              <button @click="selectInstallments">Pago Cuotas</button>
-              <br v-if="showInstallmentOptions">
-              <select v-if="showInstallmentOptions" v-model="selectedOption">
+              <p>Celular: {{ cuenta.customer.user.phone }}</p>
+              <button @click="confirmPurchase">Pago Único</button>
+              <button @click="confirmPurchaseDues">Pago Cuotas</button>
+              <select v-model="selectedOption">
                 <option v-for="option in options" :key="option" :value="option">
                   {{ option }} cuotas
                 </option>
               </select>
-              <p v-if="showInstallmentOptions">Opción seleccionada: {{ selectedOption }}</p>
+              <p>Opción seleccionada: {{ selectedOption }}</p>
             </div>
           </div>
         </div>
@@ -68,15 +73,13 @@
             <label>Tipo de Tasa:</label>
             <p>{{ cuenta.creditTypeOfRate }}</p>
           </div>
-          <div v-if="showInstallmentOptions">
-            <div class="info-group">
-              <label>Tu Fecha de Factura:</label>
-              <p>{{ cuenta.billingDay }}</p>
-            </div>
-            <div class="info-group">
-              <label>Tu Fecha de Pago:</label>
-              <p>{{ cuenta.billingDay }}</p>
-            </div>
+          <div class="info-group">
+            <label>Tu Fecha de Factura:</label>
+            <p>{{ cuenta.billingDay }}</p>
+          </div>
+          <div class="info-group">
+            <label>Tu Fecha de Pago:</label>
+            <p>{{ cuenta.billingDay }}</p>
           </div>
           <div class="info-group">
             <label>Total:</label>
@@ -84,7 +87,6 @@
           </div>
         </div>
       </div>
-
       <div class="actions">
         <button @click="confirmPurchase" class="confirm-button">Confirmar</button>
         <button @click="cancelPurchase" class="cancel-button">Cancelar</button>
@@ -117,7 +119,7 @@ export default {
       accountApiService: new AccountApiService(),
       purchaseApiService: new PurchaseApiService(),
       installmentApiService: new InstallmentApiService(),
-      showInstallmentOptions: false
+    
     };
   },
   async created() {
@@ -172,13 +174,6 @@ export default {
         console.error("Error al buscar el cliente:", error);
       }
     },
-    selectSinglePayment() {
-      this.showInstallmentOptions = false;
-    },
-    selectInstallments() {
-      this.showInstallmentOptions = true;
-    },
-
     async confirmPurchase() {
       try {
         const productsToPurchase = this.products.filter(product => product.quantity > 0);
@@ -190,7 +185,7 @@ export default {
             this.cuenta.currentCredit -= this.precioTotal; //actualizar al servicio
             console.log(this.cuenta.currentCredit);
         //se actualiza la cuenta
-        const account = {
+        const account = { 
           customer: {
             id: this.cuenta.customer.id,
           },
@@ -203,7 +198,7 @@ export default {
           billingDay: this.cuenta.billingDay,
           creditTypeOfRate: this.cuenta.creditTypeOfRate,
           creditRate: this.cuenta.creditRate,
-          creditCompounding: this.cuenta.creditCompounding,
+          creditCompounding: this.cuenta.creditCompounding,    
           invoicePenaltyRateType: this.cuenta.invoicePenaltyRateType,
           invoicePenaltyRate: this.cuenta.invoicePenaltyRate,
           invoicePenaltyCompouding: this.cuenta.invoicePenaltyCompouding,
@@ -237,8 +232,8 @@ export default {
         //hallando la anualidad o monto de las cuotas a pagar
             const anualidad = (this.precioTotal*this.cuenta.creditRate/100)/(1-(1+this.cuenta.creditRate/100)**(-this.selectedOption));
             console.log(anualidad);
-
-
+        
+       
         //mandamos datos a purchase
             const purchase = {
               creditaccount:{
@@ -259,16 +254,16 @@ export default {
             }
             console.log(this.cuenta);
             console.log(purchase);
-
+            
             const example = await this.purchaseApiService.createPurchase(purchase);
             console.log("purchase:",example);
             alert("Compra registrada con éxito");
-
+            
             //creamos installments segun las cuotas elegidas
             if(example.status===201){
               let fecha =new Date();
               for(let i=0; i<this.selectedOption; i++){
-
+                
                 fecha.setDate(fecha.getDate()+30);
                 const diaPago = fecha;
                 console.log("fecha:" ,diaPago);
@@ -277,6 +272,7 @@ export default {
                   purchase:{
                     id: example.data.id,
                   },
+                  installmentNumber: (i+1),
                   dueDate: diaPago,
                   amount: anualidad,
                 }
@@ -286,12 +282,17 @@ export default {
 
             }
 
+             
 
 
+
+
+          
+            
         }
 
 
-
+       
         // Reset purchase data
         this.products.forEach(product => {
           product.quantity = 0;
@@ -317,6 +318,12 @@ export default {
       this.customer = null;
       this.searchDNI = "";
     },
+    goToHelp() {
+      console.log("Navigating to help page...");
+    },
+    goBack() {
+      console.log("Going back...");
+    }
   }
 };
 </script>
@@ -459,10 +466,6 @@ button:hover {
 
 .confirm-button:hover {
   background-color: #218838;
-  color: #fff;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
 }
 
 .cancel-button {
@@ -471,6 +474,5 @@ button:hover {
 
 .cancel-button:hover {
   background-color: #c82333;
-
 }
 </style>
