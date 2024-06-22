@@ -6,10 +6,6 @@
         <div class="user-info">
           <p><strong>{{ customer ? cuenta.customer.user.firstName + ' SU SALDO ES DE S/ ' + cuenta.currentCredit : '' }}</strong></p>
         </div>
-        <div class="nav-links">
-          <button @click="goToHelp">AYUDA</button>
-          <button @click="goBack">VOLVER</button>
-        </div>
       </div>
       <div class="content">
         <div class="product-list">
@@ -32,7 +28,7 @@
               </div>
             </div>
             <div class="total">
-              <!--<p>Precio Total de Productos: S/ {{ precioTotal }}</p> -->  
+              <!--<p>Precio Total de Productos: S/ {{ precioTotal }}</p> -->
             </div>
           </div>
         </div>
@@ -48,14 +44,16 @@
               <p><strong>{{ cuenta.customer.user.firstName }} {{cuenta.customer.user.lastName }}</strong></p>
               <p>DNI: {{ cuenta.customer.user.dni }}</p>
               <p>Celular: {{ cuenta.customer.user.phone }}</p>
-              <button @click="confirmPurchase(1)">Pago Único</button>
-              <button @click="confirmPurchase(2)">Pago Cuotas</button>
-              <select v-model="selectedOption">
-                <option v-for="option in options" :key="option" :value="option">
-                  {{ option }} cuotas
-                </option>
-              </select>
-              <p>Opción seleccionada: {{ selectedOption }}</p>
+              <button @click="selectPaymentOption('single')">Pago Único</button>
+              <button @click="selectPaymentOption('installments')">Pago Cuotas</button>
+              <div v-if="paymentOption === 'installments'">
+                <select v-model="selectedOption">
+                  <option v-for="option in options" :key="option" :value="option">
+                    {{ option }} cuotas
+                  </option>
+                </select>
+                <p>Opción seleccionada: {{ selectedOption }}</p>
+              </div>
             </div>
           </div>
         </div>
@@ -73,21 +71,23 @@
             <label>Tipo de Tasa:</label>
             <p>{{ cuenta.creditTypeOfRate }}</p>
           </div>
-          <div class="info-group">
-            <label>Tu Fecha de Factura:</label>
-            <p>{{ cuenta.billingDay }}</p>
-          </div>
-          <div class="info-group">
-            <label>Tu Fecha de Pago:</label>
-            <p>{{ cuenta.billingDay }}</p>
+          <div v-if="paymentOption === 'installments'">
+            <div class="info-group">
+              <label>Fecha de Factura:</label>
+              <p>{{ cuenta.billingDay }}</p>
+            </div>
+            <div class="info-group">
+              <label>Fecha de Pago:</label>
+              <p>{{ cuenta.billingDay }}</p>
+            </div>
           </div>
           <div class="info-group">
             <label>Total:</label>
-            <p>S/ {{ precioTotal }}</p>
+            <p>S/ {{ totalAmount }}</p>
           </div>
         </div>
       </div>
-      <div class="actions">
+      <div class="actions" v-if="customer">
         <button @click="confirmPurchase" class="confirm-button">Confirmar</button>
         <button @click="cancelPurchase" class="cancel-button">Cancelar</button>
       </div>
@@ -102,6 +102,7 @@ import { ProductService } from "../services/product.service.js";
 import { CustomerApiService } from "../services/customer-api.service.js"; // Asegurarse de tener este servicio
 import { PurchaseApiService } from "../services/purchase-api.service.js";
 import {InstallmentApiService} from "../services/installment-api.service.js";
+
 export default {
   name: "sales-credit",
   components: { ToolbarAdmin },
@@ -116,11 +117,11 @@ export default {
       customerService: new CustomerApiService(),
       options: [1, 2, 3],
       selectedOption: 1,
-      tipoPago: 0,
+      paymentOption: null, // to track selected payment option
+      totalAmount: 0,
       accountApiService: new AccountApiService(),
       purchaseApiService: new PurchaseApiService(),
       installmentApiService: new InstallmentApiService(),
-    
     };
   },
   async created() {
@@ -147,7 +148,7 @@ export default {
       product.quantity++;
       this.updatePrecioTotal(product);
       this.calculateTotalProducts();
-  },
+    },
     decreaseQuantity(product) {
       if (product.quantity > 0) {
         product.quantity--;
@@ -160,6 +161,7 @@ export default {
     },
     calculateTotalProducts() {
       this.precioTotal = this.products.reduce((total, product) => total + product.precioTotal, 0);
+      this.updateTotalAmount();
     },
     async searchCustomer() {
       try {
@@ -175,135 +177,114 @@ export default {
         console.error("Error al buscar el cliente:", error);
       }
     },
-    async confirmPurchase(tipoPago) {
-      console.log(tipoPago);
+    selectPaymentOption(option) {
+      this.paymentOption = option;
+      this.updateTotalAmount();
+    },
+    updateTotalAmount() {
+      if (this.paymentOption === 'single') {
+        this.totalAmount = this.precioTotal;
+      } else if (this.paymentOption === 'installments') {
+        this.totalAmount = this.precioTotal * (1 + this.cuenta.creditRate / 100); // Simple interest calculation for example
+      }
+    },
+    async confirmPurchase() {
       try {
         const productsToPurchase = this.products.filter(product => product.quantity > 0);
         console.log("Productos a comprar:", productsToPurchase);
 
         //calculando datos
-        //se valida si tiene credito la cuenta y si la cuenta esta activa
-        if( this.cuenta.currentCredit - this.precioTotal >= 0 && this.cuenta.active ==true){
-            this.cuenta.currentCredit -= this.precioTotal; //actualizar al servicio
-            console.log(this.cuenta.currentCredit);
-            //se actualiza la cuenta
-            const account = { 
-              customer: {
-                id: this.cuenta.customer.id,
-              },
-              admin:{
-                id: this.cuenta.admin.id,
-              },
-              active: this.cuenta.active,
-              maxCredit: this.cuenta.maxCredit,
-              currentCredit: this.cuenta.currentCredit,
-              billingDay: this.cuenta.billingDay,
-              creditTypeOfRate: this.cuenta.creditTypeOfRate,
-              creditRate: this.cuenta.creditRate,
-              creditCompounding: this.cuenta.creditCompounding,    
-              invoicePenaltyRateType: this.cuenta.invoicePenaltyRateType,
-              invoicePenaltyRate: this.cuenta.invoicePenaltyRate,
-              invoicePenaltyCompouding: this.cuenta.invoicePenaltyCompouding,
-              installmentPenaltyRateType: this.cuenta.installmentPenaltyRateType,
-              installmentPenaltyRate: this.cuenta.installmentPenaltyRate,
-              installmentPenaltyCompouding: this.cuenta.installmentPenaltyCompouding,
-              invoiceCompensatoryRateType: this.cuenta.invoiceCompensatoryRateType,
-              invoiceCompensatoryRate: this.cuenta.invoiceCompensatoryRate,
-              invoiceCompensatoryCompouding:this.cuenta.invoiceCompensatoryCompouding,
-              installmentCompensatoryRateType: this.cuenta.installmentCompensatoryRateType,
-              installmentCompensatoryRate: this.cuenta.installmentCompensatoryRate,
-              installmentCompensatoryCompouding: this.cuenta.installmentCompensatoryCompouding,
-            };
-            const example3 = await this.accountApiService.update(account,this.cuenta.id);
-
+        //se valida si tiene credito la cuenta
+        if( this.cuenta.currentCredit - this.precioTotal >= 0){
+          this.cuenta.currentCredit -= this.precioTotal; //actualizar al servicio
+          console.log(this.cuenta.currentCredit);
+          //se actualiza la cuenta
+          const account = {
+            customer: {
+              id: this.cuenta.customer.id,
+            },
+            admin:{
+              id: this.cuenta.admin.id,
+            },
+            active: this.cuenta.active,
+            maxCredit: this.cuenta.maxCredit,
+            currentCredit: this.cuenta.currentCredit,
+            billingDay: this.cuenta.billingDay,
+            creditTypeOfRate: this.cuenta.creditTypeOfRate,
+            creditRate: this.cuenta.creditRate,
+            creditCompounding: this.cuenta.creditCompounding,
+            invoicePenaltyRateType: this.cuenta.invoicePenaltyRateType,
+            invoicePenaltyRate: this.cuenta.invoicePenaltyRate,
+            invoicePenaltyCompouding: this.cuenta.invoicePenaltyCompouding,
+            installmentPenaltyRateType: this.cuenta.installmentPenaltyRateType,
+            installmentPenaltyRate: this.cuenta.installmentPenaltyRate,
+            installmentPenaltyCompouding: this.cuenta.installmentPenaltyCompouding,
+            invoiceCompensatoryRateType: this.cuenta.invoiceCompensatoryRateType,
+            invoiceCompensatoryRate: this.cuenta.invoiceCompensatoryRate,
+            invoiceCompensatoryCompouding:this.cuenta.invoiceCompensatoryCompouding,
+            installmentCompensatoryRateType: this.cuenta.installmentCompensatoryRateType,
+            installmentCompensatoryRate: this.cuenta.installmentCompensatoryRate,
+            installmentCompensatoryCompouding: this.cuenta.installmentCompensatoryCompouding,
+          };
+          const example3 = await this.accountApiService.update(account,this.cuenta.id);
 
           //si el tipo de tasa es nominal se cambia a efectiva
-            if(this.cuenta.creditTypeOfRate=="TNM"){
-              this.cuenta.creditRate = (1 + (this.cuenta.creditRate/100)/30)**30 -1;
-              console.log(this.cuenta.creditRate);
+          if(this.cuenta.creditTypeOfRate=="TNM"){
+            this.cuenta.creditRate = (1 + (this.cuenta.creditRate/100)/30)**30 -1;
+            console.log(this.cuenta.creditRate);
+          }
+
+          //hallando la anualidad o monto de las cuotas a pagar
+          const anualidad = (this.precioTotal*this.cuenta.creditRate/100)/(1-(1+this.cuenta.creditRate/100)**(-this.selectedOption));
+          console.log(anualidad);
+
+          //mandamos datos a purchase
+          const purchase = {
+            creditaccount:{
+              id:this.cuenta.id,
+            },
+            initialCost: this.precioTotal,
+            time: this.fecha,
+            installmentNumber: this.selectedOption,
+            creditRateType: this.cuenta.creditTypeOfRate,
+            creditRate: this.cuenta.creditRate,
+            creditCompouding: this.cuenta.creditCompounding,
+            penaltyRateType: this.cuenta.installmentPenaltyRateType,
+            penaltyRate: this.cuenta.installmentPenaltyRate,
+            penaltyCompouding: this.cuenta.installmentPenaltyCompouding,
+            compensatoryRateType: this.cuenta.installmentCompensatoryRateType,
+            compensatoryRate: this.cuenta.installmentCompensatoryRate,
+            compensatoryCompouding: this.cuenta.installmentCompensatoryCompouding,
+          }
+          console.log(this.cuenta);
+          console.log(purchase);
+
+          const example = await this.purchaseApiService.createPurchase(purchase);
+          console.log("purchase:",example);
+          alert("Compra registrada con éxito");
+
+          //creamos installments segun las cuotas elegidas
+          if(example.status===201){
+            let fecha =new Date();
+            for(let i=0; i<this.selectedOption; i++){
+
+              fecha.setDate(fecha.getDate()+30);
+              const diaPago = fecha;
+              console.log("fecha:" ,diaPago);
+
+              const installment={
+                purchase:{
+                  id: example.data.id,
+                },
+                installmentNumber: (i+1),
+                dueDate: diaPago,
+                amount: anualidad,
+              }
+              const example2 = await this.installmentApiService.create(installment);
             }
+          }
+        }
 
-          //hacemos los calculos segun el tipo de pago. pago unico o en cuotas    
-            if(tipoPago==1){ //si es en cuotas
-              //hallando la anualidad o monto de las cuotas a pagar
-              const anualidad = (this.precioTotal*this.cuenta.creditRate/100)/(1-(1+this.cuenta.creditRate/100)**(-this.selectedOption));
-                console.log(anualidad);
-
-                //mandamos datos a purchase
-                    const purchase = {
-                      creditaccount:{
-                        id:this.cuenta.id,
-                      },
-                      initialCost: this.precioTotal,
-                      time: this.fecha,
-                      installmentNumber: this.selectedOption,
-                      creditRateType: this.cuenta.creditTypeOfRate,
-                      creditRate: this.cuenta.creditRate,
-                      creditCompouding: this.cuenta.creditCompounding,
-                      penaltyRateType: this.cuenta.installmentPenaltyRateType,
-                      penaltyRate: this.cuenta.installmentPenaltyRate,
-                      penaltyCompouding: this.cuenta.installmentPenaltyCompouding,
-                      compensatoryRateType: this.cuenta.installmentCompensatoryRateType,
-                      compensatoryRate: this.cuenta.installmentCompensatoryRate,
-                      compensatoryCompouding: this.cuenta.installmentCompensatoryCompouding,
-                    }
-                    console.log(this.cuenta);
-                    console.log(purchase);
-                    
-                    const example = await this.purchaseApiService.createPurchase(purchase);
-                    console.log("purchase:",example);
-                    alert("Compra registrada con éxito");
-                    
-                    //creamos installments segun las cuotas elegidas
-                    if(example.status===201){//inicio validacion status
-                      let fecha =new Date();
-                      for(let i=0; i<this.selectedOption; i++){//inicio for
-                        
-                        fecha.setDate(fecha.getDate()+30);
-                        const diaPago = fecha;
-                        console.log("fecha:" ,diaPago);
-
-                        const installment={
-                          purchase:{
-                            id: example.data.id,
-                          },
-                          installmentNumber: (i+1),
-                          dueDate: diaPago,
-                          amount: anualidad,
-                        }
-                      const example2 = await this.installmentApiService.create(installment);
-                      }//fin for
-                    }//fin validacion status
-            }else{//si el tipo de pago ==2 , pago en cuotas
-              //mandamos datos a purchase
-              const purchase = {
-                      creditaccount:{
-                        id:this.cuenta.id,
-                      },
-                      initialCost: this.precioTotal,
-                      time: this.fecha,
-                      installmentNumber: 0,
-                      creditRateType: this.cuenta.creditTypeOfRate,
-                      creditRate: this.cuenta.creditRate,
-                      creditCompouding: this.cuenta.creditCompounding,
-                      penaltyRateType: this.cuenta.installmentPenaltyRateType,
-                      penaltyRate: this.cuenta.installmentPenaltyRate,
-                      penaltyCompouding: this.cuenta.installmentPenaltyCompouding,
-                      compensatoryRateType: this.cuenta.installmentCompensatoryRateType,
-                      compensatoryRate: this.cuenta.installmentCompensatoryRate,
-                      compensatoryCompouding: this.cuenta.installmentCompensatoryCompouding,
-                    }
-                    console.log(this.cuenta);
-                    console.log(purchase);
-                    
-                    const example = await this.purchaseApiService.createPurchase(purchase);
-                    console.log("purchase:",example);
-                    alert("Compra registrada con éxito");
-              
-            }
-   
-        }//fin de validacion
- 
         // Reset purchase data
         this.products.forEach(product => {
           product.quantity = 0;
@@ -312,8 +293,7 @@ export default {
         this.precioTotal = 0;
         this.customer = null;
         this.searchDNI = "";
-        //
-        tipoPago =0;
+
         // Store products in sessionStorage
         sessionStorage.setItem('Productos', JSON.stringify(productsToPurchase));
         console.log("Compra confirmada con éxito.");
@@ -335,7 +315,6 @@ export default {
     },
     goBack() {
       console.log("Going back...");
-      
     }
   }
 };
@@ -417,7 +396,7 @@ export default {
   cursor: pointer;
 }
 
-.quantity-control button:hover {
+quantity-control button:hover {
   background-color: #0056b3;
 }
 
