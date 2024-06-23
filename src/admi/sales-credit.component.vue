@@ -18,7 +18,9 @@
           </div>
           <div v-else>
             <div v-for="product in products" :key="product.id" class="product-item">
+              <!--
               <img :src="product.image" alt="Producto" class="product-image" />
+              -->
               <div class="product-details">
                 <p>{{ product.name }}</p>
                 <p>S/ {{ product.price }}</p>
@@ -26,6 +28,7 @@
                   <button @click="decreaseQuantity(product)">-</button>
                   <span>{{ product.quantity }}</span>
                   <button @click="increaseQuantity(product)">+</button>
+                  <br>
                   <span>Total: S/ {{ product.precioTotal }}</span>
                 </div>
               </div>
@@ -58,10 +61,19 @@
                   </option>
                 </select>
                 <p>Opción seleccionada: {{ selectedOption }}</p>
+                <button @click="requestGracePeriod(true)">Solicitar periodo de gracia</button>
+              </div>
+              <div v-if="solicitar === true">
+                <button @click="selectGracePeriodOption('parcial')">Parcial</button>
+                <button @click="selectGracePeriodOption('total')">Total</button> 
+                <br>
+                <label>Días de Periodo de Gracia:</label>
+                <input type="number" id="dias" v-model="dias" min="1" max="30">      
               </div>
             </div>
           </div>
         </div>
+        
         <div v-if="customer" class="financial-info">
           <h2>Datos Financieros</h2>
           <div class="info-group">
@@ -127,12 +139,22 @@ export default {
       accountApiService: new AccountApiService(),
       purchaseApiService: new PurchaseApiService(),
       installmentApiService: new InstallmentApiService(),
+      fechaHoy: new Date(),
+      dias: 0, //dias si pide periodo de gracias
+      solicitar: false,
+      pg: null,
     };
   },
   async created() {
     await this.loadProducts();
   },
   methods: {
+    requestGracePeriod(a){
+      this.solicitar=a;
+    },
+    selectGracePeriodOption(b){
+      this.pg=b;
+    },
     async loadProducts() {
       try {
         const userId = sessionStorage.getItem('adminId');
@@ -185,12 +207,17 @@ export default {
     selectPaymentOption(option) {
       this.paymentOption = option;
       this.updateTotalAmount();
+      
     },
     updateTotalAmount() {
       if (this.paymentOption === 'single') {
         this.totalAmount = this.precioTotal;
       } else if (this.paymentOption === 'installments') {
-        this.totalAmount = this.precioTotal * (1 + this.cuenta.creditRate / 100); // Simple interest calculation for example
+        if(this.cuenta.creditTypeOfRate=="TNM"){
+            this.cuenta.creditRate = (1 + (this.cuenta.creditRate/100)/30)**30 -1;
+          }
+
+        this.totalAmount = this.precioTotal * (1 + this.cuenta.creditRate / 100)**this.selectedOption; // Simple interest calculation for example
       }
     },
     async confirmPurchase() {
@@ -200,7 +227,7 @@ export default {
 
         //calculando datos
         //se valida si tiene credito la cuenta
-        if( this.cuenta.currentCredit - this.precioTotal >= 0){
+        if( this.cuenta.currentCredit - this.precioTotal >= 0 && this.cuenta.active ==true){
           this.cuenta.currentCredit -= this.precioTotal; //actualizar al servicio
           console.log(this.cuenta.currentCredit);
           //se actualiza la cuenta
@@ -236,58 +263,121 @@ export default {
           //si el tipo de tasa es nominal se cambia a efectiva
           if(this.cuenta.creditTypeOfRate=="TNM"){
             this.cuenta.creditRate = (1 + (this.cuenta.creditRate/100)/30)**30 -1;
-            console.log(this.cuenta.creditRate);
+            console.log("SALDO ACTUAL", this.cuenta.creditRate);
           }
 
-          //hallando la anualidad o monto de las cuotas a pagar
-          const anualidad = (this.precioTotal*this.cuenta.creditRate/100)/(1-(1+this.cuenta.creditRate/100)**(-this.selectedOption));
-          console.log(anualidad);
+          if(this.paymentOption=="installments"){
 
-          //mandamos datos a purchase
-          const purchase = {
-            creditaccount:{
-              id:this.cuenta.id,
-            },
-            initialCost: this.precioTotal,
-            time: this.fecha,
-            installmentNumber: this.selectedOption,
-            creditRateType: this.cuenta.creditTypeOfRate,
-            creditRate: this.cuenta.creditRate,
-            creditCompouding: this.cuenta.creditCompounding,
-            penaltyRateType: this.cuenta.installmentPenaltyRateType,
-            penaltyRate: this.cuenta.installmentPenaltyRate,
-            penaltyCompouding: this.cuenta.installmentPenaltyCompouding,
-            compensatoryRateType: this.cuenta.installmentCompensatoryRateType,
-            compensatoryRate: this.cuenta.installmentCompensatoryRate,
-            compensatoryCompouding: this.cuenta.installmentCompensatoryCompouding,
-          }
-          console.log(this.cuenta);
-          console.log(purchase);
-
-          const example = await this.purchaseApiService.createPurchase(purchase);
-          console.log("purchase:",example);
-          alert("Compra registrada con éxito");
-
-          //creamos installments segun las cuotas elegidas
-          if(example.status===201){
-            let fecha =new Date();
-            for(let i=0; i<this.selectedOption; i++){
-
-              fecha.setDate(fecha.getDate()+30);
-              const diaPago = fecha;
-              console.log("fecha:" ,diaPago);
-
-              const installment={
-                purchase:{
-                  id: example.data.id,
-                },
-                installmentNumber: (i+1),
-                dueDate: diaPago,
-                amount: anualidad,
-              }
-              const example2 = await this.installmentApiService.create(installment);
+            //si elige periodo de gracia
+            if(this.pg == "total"){
+              this.precioTotal = this.precioTotal*(1+ this.cuenta.creditRate)**this.dias;
             }
-          }
+
+            if(this.pg == "parcial"){
+              const montoNuevo = this.precioTotal*(1+ this.cuenta.creditRate)**this.dias;
+              var Intereses = montoNuevo - this.precioTotal;
+            }
+
+            //hallando la anualidad o monto de las cuotas a pagar
+            const anualidad = (this.precioTotal*this.cuenta.creditRate/100)/(1-(1+this.cuenta.creditRate/100)**(-this.selectedOption));
+            console.log("ANUALIDAD", anualidad);
+
+            //mandamos datos a purchase
+            const purchase = {
+              creditaccount:{
+                id:this.cuenta.id,
+              },
+              initialCost: this.precioTotal,
+              time: this.fechaHoy,
+              installmentNumber: this.selectedOption,
+              creditRateType: this.cuenta.creditTypeOfRate,
+              creditRate: this.cuenta.creditRate,
+              creditCompouding: this.cuenta.creditCompounding,
+              penaltyRateType: this.cuenta.installmentPenaltyRateType,
+              penaltyRate: this.cuenta.installmentPenaltyRate,
+              penaltyCompouding: this.cuenta.installmentPenaltyCompouding,
+              compensatoryRateType: this.cuenta.installmentCompensatoryRateType,
+              compensatoryRate: this.cuenta.installmentCompensatoryRate,
+              compensatoryCompouding: this.cuenta.installmentCompensatoryCompouding,
+            }
+            console.log(this.cuenta);
+            console.log("COMPRA" ,purchase);
+            console.log("fecha hoy", this.fechaHoy);
+            const example = await this.purchaseApiService.createPurchase(purchase);
+            console.log("purchase:",example);
+            alert("Compra registrada con éxito");
+
+            //creamos installments segun las cuotas elegidas
+            if(example.status===201){
+              let fecha =new Date();
+              if(this.pg=="total"){
+                fecha.setDate(fecha.getDate()+ this.dias);
+              }
+              if(this.pg=="parcial"){
+                fecha.setDate(fecha.getDate()+ this.dias);  
+                const diaPago = fecha;
+                console.log("fecha:" ,diaPago);
+
+                const installment={
+                  purchase:{
+                    id: example.data.id,
+                  },
+                  installmentNumber: 0,
+                  dueDate: diaPago,
+                  amount: Intereses,
+                }
+                const example2 = await this.installmentApiService.create(installment);
+              }
+
+              //
+              this.pg = null;
+
+              for(let i=0; i<this.selectedOption; i++){
+
+                fecha.setDate(fecha.getDate()+30);
+                const diaPago = fecha;
+                console.log("fecha:" ,diaPago);
+
+                const installment={
+                  purchase:{
+                    id: example.data.id,
+                  },
+                  installmentNumber: (i+1),
+                  dueDate: diaPago,
+                  amount: anualidad,
+                }
+                const example2 = await this.installmentApiService.create(installment);
+                this.dias=0;
+              }
+            }
+          }else{//si el tipo de pago es unico
+            const purchase = {
+                      creditaccount:{
+                        id:this.cuenta.id,
+                      },
+                      initialCost: this.precioTotal,
+                      time: this.fechaHoy,
+                      installmentNumber: 0,
+                      creditRateType: this.cuenta.creditTypeOfRate,
+                      creditRate: this.cuenta.creditRate,
+                      creditCompouding: this.cuenta.creditCompounding,
+                      penaltyRateType: this.cuenta.installmentPenaltyRateType,
+                      penaltyRate: this.cuenta.installmentPenaltyRate,
+                      penaltyCompouding: this.cuenta.installmentPenaltyCompouding,
+                      compensatoryRateType: this.cuenta.installmentCompensatoryRateType,
+                      compensatoryRate: this.cuenta.installmentCompensatoryRate,
+                      compensatoryCompouding: this.cuenta.installmentCompensatoryCompouding,
+                    }
+                    console.log(this.cuenta);
+                    console.log("COMPRA" ,purchase);
+                    
+                    const example = await this.purchaseApiService.createPurchase(purchase);
+                    console.log("purchase:",example);
+                    alert("Compra registrada con éxito");
+                    console.log("Compra confirmada con éxito.");
+          }  
+        }else{
+          alert("No cuenta con saldo de crédito");
         }
 
         // Reset purchase data
@@ -298,10 +388,11 @@ export default {
         this.precioTotal = 0;
         this.customer = null;
         this.searchDNI = "";
-
+        
+        this.solicitar = false;
         // Store products in sessionStorage
         sessionStorage.setItem('Productos', JSON.stringify(productsToPurchase));
-        console.log("Compra confirmada con éxito.");
+        
       } catch (error) {
         console.error("Error al confirmar la compra:", error);
       }
