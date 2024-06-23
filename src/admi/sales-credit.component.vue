@@ -119,6 +119,7 @@ import { ProductService } from "../services/product.service.js";
 import { CustomerApiService } from "../services/customer-api.service.js"; // Asegurarse de tener este servicio
 import { PurchaseApiService } from "../services/purchase-api.service.js";
 import {InstallmentApiService} from "../services/installment-api.service.js";
+import { ProductPurchaseApiService } from "../services/productPurchase-api.service.js";
 
 export default {
   name: "sales-credit",
@@ -139,6 +140,7 @@ export default {
       accountApiService: new AccountApiService(),
       purchaseApiService: new PurchaseApiService(),
       installmentApiService: new InstallmentApiService(),
+      productPurchaseApiService: new ProductPurchaseApiService(),
       fechaHoy: new Date(),
       dias: 0, //dias si pide periodo de gracias
       solicitar: false,
@@ -372,6 +374,23 @@ export default {
                     console.log("COMPRA" ,purchase);
                     
                     const example = await this.purchaseApiService.createPurchase(purchase);
+                    //
+                    
+                    for(let i=0; i < productsToPurchase.length; i++){
+                      const body ={
+                        purchase:{
+                          id: example.data.id,
+                        },
+                        product: {
+                          id: productsToPurchase[i].id,
+                        },
+                        count: productsToPurchase[i].quantity,
+                      }
+                      //se crea
+                      const respuesta = await this.productPurchaseApiService.create(body);
+                      console.log("respuesta",respuesta);
+                    }
+                    //
                     console.log("purchase:",example);
                     alert("Compra registrada con éxito");
                     console.log("Compra confirmada con éxito.");

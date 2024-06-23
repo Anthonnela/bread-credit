@@ -88,7 +88,7 @@ export default {
       this.diaPago = this.cliente.billingDay;
 
       //recuperamos las compras
-      const response2 = await this.purchaseApiService.getPurchasesByCustomerId(1);
+      const response2 = await this.purchaseApiService.getPurchasesByCustomerId(customerId);
       console.log("lista de comptas", response2);
       this.historialCompras = response2.data;
       
