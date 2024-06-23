@@ -13,7 +13,7 @@
         <th>Dirección</th>
         <th>Número de Cuenta</th>
         <th>Saldo de Crédito</th>
-        <th>Tipo de Pasa</th>
+        <th>Tipo de Tasa</th>
         <th>Día de Pago</th>
         <th>Día de Factura</th>
         <th>Tasa de Interés</th>
@@ -34,7 +34,9 @@
         <td>{{ cuenta.billingDay }}</td>
         <td>{{ cuenta.billingDay }}</td>
         <td>{{ cuenta.creditRate }}</td>
-        <td>{{ELIMINAR }}</td>
+        <td>
+          <button @click="eliminarCliente(cuenta.id)">Eliminar</button>
+        </td>
       </tr>
       </tbody>
     </table>
@@ -43,7 +45,6 @@
 
 <script>
 import { AccountApiService } from "../services/account-api.service.js";
-import { CustomerApiService } from "../services/customer-api.service.js";
 import ToolbarAdmin from "./toolbar-admin.component.vue";
 
 export default {
@@ -51,39 +52,38 @@ export default {
   components: { ToolbarAdmin },
   data() {
     return {
-      customers: [],
-      customerApiService: new CustomerApiService(),
-      accountApiService: new AccountApiService(),
       cuentas: [],
-
+      accountApiService: new AccountApiService(),
     };
   },
   async created() {
-//modificado
     const adminId = sessionStorage.getItem("adminId");
     try {
-      //const response = await this.customerApiService.GetCustomerByAdmin(adminId);
       const response = await this.accountApiService.GetAccountByAdmin(adminId);
-      //this.customers = response.data;
       this.cuentas = response.data;
     } catch (error) {
       alert("Hubo un error al cargar los clientes: " + error.message);
     }
-
   },
-  //methods: {
-   // async loadCustomers() {
-      //try {
-       // const customerApiService = new CustomerApiService();
-       // const response = await customerApiService.getAll();
-        //this.customers = response.data;
-      //} catch (error) {
-        //console.error("Error al obtener la lista de clientes:", error);
-     // }
-    //}
-  //}
-
-
+  methods: {
+    async eliminarCliente(accountId) {
+      if (confirm("¿Estás seguro que deseas eliminar este cliente?")) {
+        try {
+          const response = await this.accountApiService.delete(accountId);
+          if (  response.status === 200) {
+            // Eliminar el cliente de la lista localmente
+            this.cuentas = this.cuentas.filter(cuenta => cuenta.id !== accountId);
+            alert("Cliente eliminado correctamente.");
+          } else {
+            alert("Hubo un error al eliminar el cliente.");
+          }
+        } catch (error) {
+          console.error("Error al eliminar el cliente:", error);
+          alert("Hubo un error al eliminar el cliente: " + error.message);
+        }
+      }
+    },
+  },
 };
 </script>
 
@@ -119,7 +119,15 @@ export default {
   background-color: #ddd;
 }
 
-td{
-  color: black;
+button {
+  padding: 6px 12px;
+  background-color: #dc3545;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #c82333;
 }
 </style>
