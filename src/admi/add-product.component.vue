@@ -1,39 +1,47 @@
 <template>
-  <toolbar-admin></toolbar-admin>
-  <div class="add-product">
-    <h2>Lista de Productos</h2>
-    <div v-if="products.length === 0">
-      <p>No hay productos disponibles.</p>
-    </div>
-    <div v-else>
-      <div v-for="product in products" :key="product.id" class="product-card">
-        <!--
-        <img :src="product.imagen" alt="Imagen del producto">
-        -->
-        <p>{{ product.name }}</p>
-        <p>S/. {{ product.price }}</p>
-        <!--
-        <p>{{ product.url }}</p>  -->
+  <div>
+    <toolbar-admin></toolbar-admin>
+    <div class="add-product">
+      <h2>Lista de Productos</h2>
+      <div v-if="products.length === 0">
+        <p>No hay productos disponibles.</p>
       </div>
-    </div>
-    <div class="add-product-form">
-      <h2>Agregar Nuevo Producto</h2>
-      <div class="card">
-        <div class="form-group">
-          <label for="productName">Nombre del Producto:</label>
-          <input type="text" id="productName" v-model="newProduct.name">
+      <div v-else>
+        <div v-for="product in products" :key="product.id" class="product-card">
+          <p>{{ product.name }}</p>
+          <p>S/. {{ product.price }}</p>
+          <button @click="editProduct(product)">Editar</button>
+          <button @click="deleteProduct(product.id)">Eliminar</button>
         </div>
-        <div class="form-group">
-          <label for="productPrice">Precio del Producto:</label>
-          <input type="text" id="productPrice" v-model="newProduct.price">
+      </div>
+      <div v-if="editMode">
+        <h2>Editar Producto</h2>
+        <div class="card">
+          <div class="form-group">
+            <label for="editProductName">Nombre del Producto:</label>
+            <input type="text" id="editProductName" v-model="editedProduct.name">
+          </div>
+          <div class="form-group">
+            <label for="editProductPrice">Precio del Producto:</label>
+            <input type="text" id="editProductPrice" v-model="editedProduct.price">
+          </div>
+          <button @click="updateProduct">Guardar Cambios</button>
+          <button @click="cancelEdit">Cancelar</button>
         </div>
-        <!--
-        <div class="form-group">
-          <label for="productImage">URL de la Imagen:</label>
-          <input type="text" id="productImage" v-model="newProduct.imagen">
+      </div>
+      <div class="add-product-form">
+        <h2>Agregar Nuevo Producto</h2>
+        <div class="card">
+          <div class="form-group">
+            <label for="productName">Nombre del Producto:</label>
+            <input type="text" id="productName" v-model="newProduct.name">
+          </div>
+          <div class="form-group">
+            <label for="productPrice">Precio del Producto:</label>
+            <input type="text" id="productPrice" v-model="newProduct.price">
+          </div>
+          <button @click="addProduct">Agregar Producto</button>
         </div>
-        -->
-        <button @click="addProduct">Agregar Producto</button>
       </div>
     </div>
   </div>
@@ -50,14 +58,18 @@ export default {
     return {
       products: [],
       newProduct: {
-        admin:{
-          id: parseInt(sessionStorage.getItem('adminId'),10),
+        admin: {
+          id: parseInt(sessionStorage.getItem('adminId'), 10),
         },
         name: "",
-        //imagen: "",
         price: 0,
-        
-      }
+      },
+      editMode: false,
+      editedProduct: {
+        id: null,
+        name: "",
+        price: 0,
+      },
     };
   },
   async created() {
@@ -65,10 +77,9 @@ export default {
   },
   methods: {
     async loadProducts() {
-      const userId = sessionStorage.getItem("adminId");
       try {
-        
         const productService = new ProductService();
+        const userId = sessionStorage.getItem("adminId");
         const response = await productService.GetProductByAdmin(userId);
         this.products = response.data;
       } catch (error) {
@@ -89,15 +100,58 @@ export default {
         console.error("Error al agregar el producto:", error);
       }
     },
+    async editProduct(product) {
+      this.editMode = true;
+      this.editedProduct.id = product.id;
+      this.editedProduct.name = product.name;
+      this.editedProduct.price = product.price;
+    },
+    async updateProduct() {
+      try {
+        const productService = new ProductService();
+        const response = await productService.update(this.editedProduct, this.editedProduct.id);
+        if (response.status === 200) {
+          const index = this.products.findIndex(product => product.id === this.editedProduct.id);
+          if (index !== -1) {
+            this.products[index] = response.data;
+            this.cancelEdit();
+          }
+        } else {
+          console.error("Error al actualizar el producto:", response.data);
+        }
+      } catch (error) {
+        console.error("Error al actualizar el producto:", error);
+      }
+    },
+    cancelEdit() {
+      this.editMode = false;
+      this.editedProduct.id = null;
+      this.editedProduct.name = "";
+      this.editedProduct.price = 0;
+    },
+    async deleteProduct(productId) {
+      try {
+        const productService = new ProductService();
+        const response = await productService.delete(productId);
+        if (response.status === 204) {
+          this.products = this.products.filter(product => product.id !== productId);
+        } else {
+          console.error("Error al eliminar el producto:", response.data);
+        }
+      } catch (error) {
+        console.error("Error al eliminar el producto:", error);
+      }
+    },
     resetForm() {
       this.newProduct = {
-        nombre: "",
-        imagen: "",
-        precio: "",
-        admin: 1
+        admin: {
+          id: parseInt(sessionStorage.getItem('adminId'), 10),
+        },
+        name: "",
+        price: 0,
       };
-    }
-  }
+    },
+  },
 };
 </script>
 
@@ -115,11 +169,6 @@ export default {
   border-radius: 8px;
   text-align: center;
   background-color: #f9f9f9;
-}
-
-.product-card img {
-  max-width: 100px;
-  max-height: 100px;
 }
 
 .product-card p {
@@ -165,6 +214,7 @@ button {
   display: block;
   width: 100%;
   text-align: center;
+  margin-top: 10px;
 }
 
 button:hover {
