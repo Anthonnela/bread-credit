@@ -7,9 +7,11 @@
     </div>
     <div v-else>
       <div v-for="product in products" :key="product.id" class="product-card">
+        <!--
         <img :src="product.imagen" alt="Imagen del producto">
+        -->
         <p>{{ product.name }}</p>
-        <p>{{ product.price }}</p>
+        <p>S/. {{ product.price }}</p>
         <!--
         <p>{{ product.url }}</p>  -->
       </div>
@@ -25,10 +27,12 @@
           <label for="productPrice">Precio del Producto:</label>
           <input type="text" id="productPrice" v-model="newProduct.price">
         </div>
+        <!--
         <div class="form-group">
           <label for="productImage">URL de la Imagen:</label>
           <input type="text" id="productImage" v-model="newProduct.imagen">
         </div>
+        -->
         <button @click="addProduct">Agregar Producto</button>
       </div>
     </div>
