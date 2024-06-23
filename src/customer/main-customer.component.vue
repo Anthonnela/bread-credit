@@ -26,13 +26,13 @@
           </tr>
           </thead>
           <tbody>
-          <tr v-for="(compra, index) in historialCompras" :key="index">
-            <td>{{ index + 1 }}</td>
-            <td>{{ new Date(compra.fechaFactura).toLocaleDateString() }}</td>
-            <td>{{ new Date(compra.fechaVencimiento).toLocaleDateString() }}</td>
-            <td>{{ compra.descripcion }}</td>
-            <td>{{ compra.tipoPago }}</td>
-            <td>${{ compra.monto.toFixed(2) }}</td>
+          <tr v-for="(compras, index) in historialCompras" :key="index">
+            <td>{{ compras.installmentNumber }}</td>
+            <td>{{ new Date(compras.time).toLocaleDateString() }}</td>
+            <td>{{ new Date(compras.dueDate).toLocaleDateString() }}</td>
+            <td>{{ compras.description }}</td>
+            <td>{{ compras.tipoPago }}</td>
+            <td>${{ compras.finalCost }}</td>
           </tr>
           </tbody>
         </table>
@@ -73,6 +73,7 @@ export default {
       customerApiService: new CustomerApiService(),
       purchaseApiService: new PurchaseApiService(),
       accountApiService: new AccountApiService(),
+      
     };
   },
   async created() {
@@ -85,6 +86,11 @@ export default {
       this.saldoActual = this.cliente.currentCredit;
       this.limiteCredito = this.cliente.maxCredit;
       this.diaPago = this.cliente.billingDay;
+
+      //recuperamos las compras
+      const response2 = await this.purchaseApiService.getPurchasesByCustomerId(1);
+      console.log("lista de comptas", response2);
+      this.historialCompras = response2.data;
       
     } catch (error) {
       console.error("Error al recuperar los datos del cliente:", error);
