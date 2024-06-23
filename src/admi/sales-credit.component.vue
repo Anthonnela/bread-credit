@@ -1,10 +1,13 @@
 <template>
   <div>
     <toolbar-admin></toolbar-admin>
+
     <div class="sales-credit">
+      <h2> SISTEMA DE VENTAS </h2>
       <div class="header">
         <div class="user-info">
-          <p><strong>{{ customer ? cuenta.customer.user.firstName + ' SU SALDO ES DE S/ ' + cuenta.currentCredit : '' }}</strong></p>
+
+          <p><strong>{{ customer ? 'SALDO DEL CLIENTE ' + cuenta.customer.user.firstName + '  ES DE S/ ' + cuenta.currentCredit : '' }}</strong></p>
         </div>
       </div>
       <div class="content">
@@ -44,8 +47,10 @@
               <p><strong>{{ cuenta.customer.user.firstName }} {{cuenta.customer.user.lastName }}</strong></p>
               <p>DNI: {{ cuenta.customer.user.dni }}</p>
               <p>Celular: {{ cuenta.customer.user.phone }}</p>
-              <button @click="selectPaymentOption('single')">Pago Único</button>
-              <button @click="selectPaymentOption('installments')">Pago Cuotas</button>
+              <div class="payment-options">
+                <button @click="selectPaymentOption('single')">Pago Único</button>
+                <button @click="selectPaymentOption('installments')">Pago Cuotas</button>
+              </div>
               <div v-if="paymentOption === 'installments'">
                 <select v-model="selectedOption">
                   <option v-for="option in options" :key="option" :value="option">
@@ -87,7 +92,7 @@
           </div>
         </div>
       </div>
-      <div class="actions" v-if="customer">
+      <div class="actions" v-if="paymentOption !== null">
         <button @click="confirmPurchase" class="confirm-button">Confirmar</button>
         <button @click="cancelPurchase" class="cancel-button">Cancelar</button>
       </div>
@@ -305,10 +310,12 @@ export default {
       this.products.forEach(product => {
         product.quantity = 0;
         product.precioTotal = 0;
+
       });
       this.precioTotal = 0;
       this.customer = null;
       this.searchDNI = "";
+      this.paymentOption = null;
     },
     goToHelp() {
       console.log("Navigating to help page...");
@@ -420,6 +427,17 @@ quantity-control button:hover {
   margin-bottom: 10px;
 }
 
+.payment-options {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 15px;
+  margin-bottom: 15px;
+}
+
+.payment-options button {
+  margin-right: 10px;
+  flex-grow: 1;
+}
 .form-group label {
   display: block;
   margin-bottom: 5px;
@@ -442,6 +460,7 @@ button {
   cursor: pointer;
 }
 
+
 button:hover {
   background-color: #0056b3;
 }
@@ -456,15 +475,11 @@ button:hover {
   background-color: #28a745;
 }
 
-.confirm-button:hover {
-  background-color: #218838;
-}
+
 
 .cancel-button {
   background-color: #dc3545;
 }
 
-.cancel-button:hover {
-  background-color: #c82333;
-}
+
 </style>
