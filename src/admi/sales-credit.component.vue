@@ -18,7 +18,9 @@
           </div>
           <div v-else>
             <div v-for="product in products" :key="product.id" class="product-item">
+              <!--
               <img :src="product.image" alt="Producto" class="product-image" />
+              -->
               <div class="product-details">
                 <p>{{ product.name }}</p>
                 <p>S/ {{ product.price }}</p>
@@ -26,6 +28,7 @@
                   <button @click="decreaseQuantity(product)">-</button>
                   <span>{{ product.quantity }}</span>
                   <button @click="increaseQuantity(product)">+</button>
+                  <br>
                   <span>Total: S/ {{ product.precioTotal }}</span>
                 </div>
               </div>
