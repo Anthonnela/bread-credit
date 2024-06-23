@@ -100,7 +100,7 @@
           </div>
           <div class="info-group">
             <label>Total:</label>
-            <p>S/ {{ totalAmount }}</p>
+            <p>S/ {{ totalAmount.toFixed(2) }}</p>
           </div>
         </div>
       </div>
@@ -220,7 +220,7 @@ export default {
             this.cuenta.creditRate = (1 + (this.cuenta.creditRate/100)/30)**30 -1;
           }
 
-        this.totalAmount = this.precioTotal * (1 + this.cuenta.creditRate / 100)**this.selectedOption; // Simple interest calculation for example
+        this.totalAmount = this.selectedOption*((this.precioTotal*this.cuenta.creditRate/100)/(1-(1+this.cuenta.creditRate/100)**(-this.selectedOption))); // Simple interest calculation for example
       }
     },
     async confirmPurchase() {

@@ -39,7 +39,7 @@
       </div>
       <div class="card">
         <h2>Detalles de Intereses</h2>
-        <p>Intereses acumulados hasta la fecha de pago: ${{ interesesAcumulados.toFixed(2) }}</p>
+        <p>Intereses acumulados hasta la fecha de pago: S/.{{ totalIntereses.toFixed(2) }}</p>
       </div>
     </div>
   </div>
@@ -73,7 +73,9 @@ export default {
       customerApiService: new CustomerApiService(),
       purchaseApiService: new PurchaseApiService(),
       accountApiService: new AccountApiService(),
-      
+      totalMontoFinal: 0,
+      totalMontoInicial: 0,
+      totalIntereses: 0,
     };
   },
   async created() {
@@ -89,9 +91,20 @@ export default {
 
       //recuperamos las compras
       const response2 = await this.purchaseApiService.getPurchasesByCustomerId(customerId);
-      console.log("lista de comptas", response2);
+      console.log("lista de compras", response2);
       this.historialCompras = response2.data;
       
+
+      
+      //calculamos suma monto final y monto inicial
+      for(let i=0; i<this.historialCompras.length; i++){
+        this.totalMontoFinal += this.historialCompras[i].finalCost;
+        this.totalMontoInicial += this.historialCompras[i].initialCost;
+      }
+      this.totalIntereses = this.totalMontoFinal - this.totalMontoInicial;
+
+
+
     } catch (error) {
       console.error("Error al recuperar los datos del cliente:", error);
     }
