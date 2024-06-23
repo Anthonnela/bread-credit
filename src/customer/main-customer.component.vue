@@ -8,8 +8,8 @@
     <div class="cliente-info">
       <div class="card">
         <h2>Resumen de Cuenta</h2>
-        <p><strong>Saldo Actual:</strong> ${{ saldoActual.toFixed(2) }}</p>
-        <p><strong>Límite de Crédito:</strong> ${{ limiteCredito.toFixed(2) }}</p>
+        <p><strong>Saldo Actual:</strong> S/.{{ saldoActual.toFixed(2) }}</p>
+        <p><strong>Límite de Crédito:</strong> S/.{{ limiteCredito.toFixed(2) }}</p>
         <p><strong>Próxima Fecha de Pago:</strong> {{ new Date(diaPago).toLocaleDateString() }}</p>
       </div>
       <div class="card">
@@ -20,7 +20,7 @@
             <th>N° de cuota</th>
             <th>Fecha de factura</th>
             <th>Fecha de vencimiento</th>
-            <th>Descripción</th>
+            <th>Descripción (producto/cantidad)</th>
             <th>Tipo de pago</th>
             <th>Monto</th>
           </tr>
@@ -31,8 +31,8 @@
             <td>{{ new Date(compras.time).toLocaleDateString() }}</td>
             <td>{{ new Date(compras.dueDate).toLocaleDateString() }}</td>
             <td>{{ compras.description }}</td>
-            <td>{{ compras.tipoPago }}</td>
-            <td>${{ compras.finalCost }}</td>
+            <td>{{ getTipoPago(compras.installmentNumber)}}</td>
+            <td>S/.{{ compras.finalCost }}</td>
           </tr>
           </tbody>
         </table>
@@ -97,6 +97,9 @@ export default {
     }
   },
   methods: {
+    getTipoPago(installmentNumber) {
+      return installmentNumber !== null ? 'Cuotas' : 'Pago único';
+    },
     calcularInteresesAcumulados(historialCompras) {
       let interesesTotales = 0;
       historialCompras.forEach(compra => {

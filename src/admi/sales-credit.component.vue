@@ -151,6 +151,7 @@ export default {
     await this.loadProducts();
   },
   methods: {
+    
     requestGracePeriod(a){
       this.solicitar=a;
     },
@@ -276,7 +277,7 @@ export default {
             }
 
             if(this.pg == "parcial"){
-              const montoNuevo = this.precioTotal*(1+ this.cuenta.creditRate)**this.dias;
+              const montoNuevo = this.precioTotal*(1+ this.cuenta.creditRate/100)**this.dias;
               var Intereses = montoNuevo - this.precioTotal;
             }
 
@@ -309,6 +310,21 @@ export default {
             console.log("purchase:",example);
             alert("Compra registrada con éxito");
 
+            //
+            for(let i=0; i < productsToPurchase.length; i++){
+                const body ={
+                    purchase:{
+                      id: example.data.id,
+                    },
+                    product: {
+                      id: productsToPurchase[i].id,
+                    },
+                    count: productsToPurchase[i].quantity,
+                }
+                //se crea
+                const respuesta = await this.productPurchaseApiService.create(body);
+                console.log("respuesta",respuesta);
+              }
             //creamos installments segun las cuotas elegidas
             if(example.status===201){
               let fecha =new Date();
