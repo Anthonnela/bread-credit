@@ -145,10 +145,15 @@ export default {
       dias: 0, //dias si pide periodo de gracias
       solicitar: false,
       pg: null,
+      lastDayOfMonth: null,
+     
     };
   },
   async created() {
     await this.loadProducts();
+    let now = new Date();
+    this.lastDayOfMonth = new Date(now.getFullYear(), now.getMonth() + 1, 0);
+    console.log(this.lastDayOfMonth);
   },
   methods: {
     
@@ -213,12 +218,15 @@ export default {
       
     },
     updateTotalAmount() {
-      if (this.paymentOption === 'single') {
-        this.totalAmount = this.precioTotal;
-      } else if (this.paymentOption === 'installments') {
-        if(this.cuenta.creditTypeOfRate=="TNM"){
+      if(this.cuenta.creditTypeOfRate=="TNM"){
             this.cuenta.creditRate = (1 + (this.cuenta.creditRate/100)/30)**30 -1;
-          }
+      }
+
+      if (this.paymentOption === 'single') {
+        this.totalAmount = this.precioTotal * (1+ this.cuenta.creditRate/100)**((this.lastDayOfMonth.getDate() - this.fechaHoy.getDate())/30);
+
+      } else if (this.paymentOption === 'installments') {
+        
 
         this.totalAmount = this.selectedOption*((this.precioTotal*this.cuenta.creditRate/100)/(1-(1+this.cuenta.creditRate/100)**(-this.selectedOption))); // Simple interest calculation for example
       }
