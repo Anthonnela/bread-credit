@@ -45,7 +45,7 @@
         </form>
       </div>
       <div class="main-menu" v-if="!editMode">
-        <button @click="navigateTo('/add-product')">agregar mis productos</button>
+        <button @click="navigateTo('/add-product')">Agregar mis productos</button>
         <button @click="navigateTo('/add-customer')">Agregar Cliente</button>
         <button @click="navigateTo('/list-customer')">Lista De Clientes</button>
         <button @click="navigateTo('/sales-credit')">Ventas de crédito al cliente</button>

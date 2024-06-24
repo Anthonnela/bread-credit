@@ -3,7 +3,7 @@
   <div class="container">
     <div class="saludo">
       <p>Hola: {{ nombre}}</p>
-      <p>Número de cuenta: {{ apellido }}</p>
+      <p>Apellido: {{ apellido }}</p>
     </div>
     <div class="cliente-info">
       <div class="card">
