@@ -29,6 +29,10 @@ export class PurchaseApiService {
         return await http.get(`/purchase/topay/customer/` + customerId);
     }
 
+    async getPurchasesByAdminId(adminId) {
+        return await http.get(`/purchase/topay/admin/` + adminId);
+    }
+
     async getPurchasesByAdmin(adminId) {
         return await http.get(`/purchase?adminId=${adminId}`);
     }

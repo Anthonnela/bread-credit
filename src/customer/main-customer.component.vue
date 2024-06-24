@@ -10,7 +10,9 @@
         <h2>Resumen de Cuenta</h2>
         <p><strong>Saldo Actual:</strong> S/.{{ saldoActual.toFixed(2) }}</p>
         <p><strong>Límite de Crédito:</strong> S/.{{ limiteCredito.toFixed(2) }}</p>
+        <!--
         <p><strong>Próxima Fecha de Pago:</strong> {{ new Date(diaPago).toLocaleDateString() }}</p>
+        -->
       </div>
       <div class="card">
         <h2>Facturas</h2>
