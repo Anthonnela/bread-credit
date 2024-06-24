@@ -3,7 +3,6 @@
 
   <div class="container">
     <h3>Pagar lista de cuentas de crédito</h3>
-    
     <table class="customer-table">
       <thead>
       <tr>
