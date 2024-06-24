@@ -50,7 +50,6 @@
         <button @click="navigateTo('/list-customer')">Lista De Clientes</button>
         <button @click="navigateTo('/sales-credit')">Ventas de crédito al cliente</button>
         <button @click="navigateTo('/pay-credit')">Pagar Cuenta De Crédito</button>
-        <button @click="navigateTo('/history-credit')">Ver Historial Crediticio</button>
       </div>
     </div>
   </div>
