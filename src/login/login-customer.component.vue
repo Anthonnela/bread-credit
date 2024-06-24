@@ -7,7 +7,7 @@
       <div class="p-card-body">
         <div class="p-fluid p-formgrid">
           <div class="p-field p-col">
-            <label for="email">Correo</label>
+            <label for="email">DNI</label>
             <pv-input-text id="email" v-model="email" type="text"></pv-input-text>
           </div>
           <div class="p-field p-col">
