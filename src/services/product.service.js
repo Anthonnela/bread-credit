@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const http = axios.create({
-    baseURL: 'https://20.150.213.225:8080',
+    baseURL: 'http://20.150.213.225:8080',
 });
 
 export class ProductService {
