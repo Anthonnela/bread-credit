@@ -23,8 +23,8 @@
         <td>{{ compras.fullName }}</td>
         <td>{{ compras.installmentNumber }}</td>
         <td>{{ getTipoPago(compras.installmentNumber) }}</td>
-        <td>{{ compras.initialCost}}</td>
-        <td>{{ compras.finalCost }}</td>
+        <td>S/. {{ compras.initialCost}}</td>
+        <td>S/. {{ compras.finalCost }}</td>
         <td>{{ new Date(compras.dueDate).toLocaleDateString() }}</td>
         <td>{{ new Date(compras.time).toLocaleDateString() }}</td>
         <td><button @click="realizarPago(compras.installmentId, compras.invoiceId, compras.finalCost)">Pagar</button></td>
