@@ -11,7 +11,7 @@
         <th>Cuota N°</th>
         <th>Tipo de pago</th>
         <th>Costo Inicial</th>
-        <th>Consto Final</th>
+        <th>Costo Final</th>
         <th>Fecha de vencimiento</th>
         <th>Fecha de compra</th>
         <th>Pagar</th>
@@ -27,7 +27,7 @@
         <td>{{ compras.finalCost }}</td>
         <td>{{ new Date(compras.dueDate).toLocaleDateString() }}</td>
         <td>{{ new Date(compras.time).toLocaleDateString() }}</td>
-        <td><button @click="realizarPago(compras.id)">Pagar</button></td>
+        <td><button @click="realizarPago(compras.installmentId, compras.invoiceId, compras.finalCost)">Pagar</button></td>
       </tr>
       </tbody>
     </table>
@@ -70,29 +70,39 @@ export default {
     getTipoPago(installmentNumber) {
       return installmentNumber !== null ? 'Cuotas' : 'Pago único';
     },
-    async realizarPago(invoiceId) {
-      try {
-        const body ={
-          invoice:{
-            id: this.historialCompras.invoiceId,
-          },
-          installment:{
-            id: this.historialCompras.installmentId,
-          },
-          amount: this.historialCompras.finalCost,
+    async realizarPago(installmentId, invoiceId, finalCost) {
+      
+      
+        let body ={}
+        let response2;
+        if(installmentId ==  null){
+          body ={
+            invoice:{
+              id: invoiceId,
+            },
+            amount: finalCost,
+          }
+          response2 = await this.paymentApiService.create(body);
+        }else{
+          body ={
+            installment:{
+              id: installmentId,
+            },
+            amount: finalCost,
+          }
+          response2 = await this.paymentApiService.create(body);
         }
-
-        const response = await this.paymentApiService.create(body);
-        if (response.status === 200) {
+        console.log("body",body);
+        
+        console.log("response",response2);
+        if (response2.status === 201) {
           alert("Pago realizado con éxito");
           await this.fetchCuentas(); // Refresca la lista después del pago
         } else {
           throw new Error("Hubo un error al realizar el pago");
         }
-      } catch (error) {
-        console.error("Error realizando el pago:", error);
-        alert("Error realizando el pago: " + error.message);
-      }
+      
+      
     },
 
     async fetchCuentas() {
