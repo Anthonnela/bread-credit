@@ -7,25 +7,27 @@
       <thead>
       <tr>
         <th>DNI</th>
-        <th>Nombre</th>
-        <th>Apellido</th>
-        <th>Tipo de compra</th>
-        <th>Costo Actual</th>
+        <th>Nombre y Apellido</th>
+        <th>Cuota N°</th>
+        <th>Tipo de pago</th>
+        <th>Costo Inicial</th>
+        <th>Consto Final</th>
         <th>Fecha de vencimiento</th>
         <th>Fecha de compra</th>
         <th>Pagar</th>
       </tr>
       </thead>
       <tbody>
-      <tr v-for="cuenta in cuentas" :key="cuenta.id">
-        <td>{{ cuenta.customer.user.dni }}</td>
-        <td>{{ cuenta.customer.user.firstName }}</td>
-        <td>{{ cuenta.customer.user.lastName }}</td>
-        <td>{{ getTipoPago(cuenta.installmentNumber)}}</td>
-        <td>S/.{{ cuenta.currentCost }}</td>
-        <td>{{ new Date(cuenta.dueDate).toLocaleDateString() }}</td>
-        <td>{{ new Date(cuenta.time).toLocaleDateString() }}</td>
-        <td><button @click="realizarPago(cuenta.id)">Pagar</button></td>
+      <tr v-for="compras in historialCompras" :key="historialCompras.id">
+        <td>{{ compras.dni }}</td>
+        <td>{{ compras.fullName }}</td>
+        <td>{{ compras.installmentNumber }}</td>
+        <td>{{ getTipoPago(compras.installmentNumber) }}</td>
+        <td>{{ compras.initialCost}}</td>
+        <td>{{ compras.finalCost }}</td>
+        <td>{{ new Date(compras.dueDate).toLocaleDateString() }}</td>
+        <td>{{ new Date(compras.time).toLocaleDateString() }}</td>
+        <td><button @click="realizarPago(compras.id)">Pagar</button></td>
       </tr>
       </tbody>
     </table>
@@ -34,7 +36,7 @@
 
 <script>
 import { AccountApiService } from "../services/account-api.service.js";
-import { PaymentApiService } from "../services/payment-api-service.js";
+import { PaymentApiService } from "../services/payment-api.service.js";
 import ToolbarAdmin from "./toolbar-admin.component.vue";
 import { PurchaseApiService } from "../services/purchase-api.service.js";
 
@@ -44,6 +46,7 @@ export default {
   data() {
     return {
       cuentas: [],
+      historialCompras: [],
       purchaseApiService: new PurchaseApiService(),
       accountApiService: new AccountApiService(),
       paymentApiService: new PaymentApiService(),
@@ -52,6 +55,11 @@ export default {
   async created() {
     try {
       const adminId = sessionStorage.getItem("adminId");
+      //recuperamos las compras
+      const response2 = await this.purchaseApiService.getPurchasesByAdminId(adminId);
+      console.log("lista de compras", response2);
+      this.historialCompras = response2.data;
+      //
       const response = await this.accountApiService.GetAccountByAdmin(adminId);
       this.cuentas = response.data;
     } catch (error) {
@@ -62,9 +70,19 @@ export default {
     getTipoPago(installmentNumber) {
       return installmentNumber !== null ? 'Cuotas' : 'Pago único';
     },
-    async realizarPago(cuentaId) {
+    async realizarPago(invoiceId) {
       try {
-        const response = await this.paymentApiService.create({ cuentaId });
+        const body ={
+          invoice:{
+            id: this.historialCompras.invoiceId,
+          },
+          installment:{
+            id: this.historialCompras.installmentId,
+          },
+          amount: this.historialCompras.finalCost,
+        }
+
+        const response = await this.paymentApiService.create(body);
         if (response.status === 200) {
           alert("Pago realizado con éxito");
           await this.fetchCuentas(); // Refresca la lista después del pago
